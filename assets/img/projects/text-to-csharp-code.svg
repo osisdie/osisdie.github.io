@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="260" viewBox="0 0 980 260">
+  <rect width="980" height="260" fill="#0f172a"/>
+  <text x="40" y="40" font-family="Segoe UI, Arial, sans-serif" font-size="20" fill="#e2e8f0">
+    Self-healing pipeline
+  </text>
+
+  <rect x="40" y="80" width="150" height="50" rx="8" fill="#1e293b" stroke="#38bdf8"/>
+  <text x="55" y="112" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#e2e8f0">User Prompt</text>
+
+  <rect x="210" y="80" width="140" height="50" rx="8" fill="#1e293b" stroke="#38bdf8"/>
+  <text x="232" y="112" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#e2e8f0">Generate</text>
+
+  <rect x="370" y="80" width="140" height="50" rx="8" fill="#1e293b" stroke="#fbbf24"/>
+  <text x="392" y="112" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#e2e8f0">Validate</text>
+
+  <rect x="530" y="80" width="140" height="50" rx="8" fill="#1e293b" stroke="#60a5fa"/>
+  <text x="552" y="112" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#e2e8f0">Compile</text>
+
+  <rect x="690" y="80" width="140" height="50" rx="8" fill="#1e293b" stroke="#34d399"/>
+  <text x="716" y="112" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#e2e8f0">Execute</text>
+
+  <line x1="190" y1="105" x2="210" y2="105" stroke="#94a3b8" stroke-width="2"/>
+  <line x1="350" y1="105" x2="370" y2="105" stroke="#94a3b8" stroke-width="2"/>
+  <line x1="510" y1="105" x2="530" y2="105" stroke="#94a3b8" stroke-width="2"/>
+  <line x1="670" y1="105" x2="690" y2="105" stroke="#94a3b8" stroke-width="2"/>
+
+  <path d="M 760 140 C 760 190, 320 190, 320 140" fill="none" stroke="#f97316" stroke-width="2"/>
+  <polygon points="320,140 330,136 330,144" fill="#f97316"/>
+  <text x="420" y="190" font-family="Segoe UI, Arial, sans-serif" font-size="12" fill="#f97316">
+    on error: feed diagnostics back (max retries)
+  </text>
+</svg>
