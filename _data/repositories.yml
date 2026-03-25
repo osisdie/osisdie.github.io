@@ -4,7 +4,9 @@ github_users:
 repo_description_lines_max: 2
 
 github_repos:
-  - osisdie/claude-code-channels
+  - osisdie/fortune-poem-ai
   - osisdie/dotnet-nwpie-foundation-sdk
-  - osisdie/dotnet-webapi-k8s-boilerplate
-  - osisdie/codedrill-mock-interview
+  - osisdie/yolov11-classification-tuning
+  - osisdie/claude-loop-commands
+  - osisdie/vibe-kanban
+  - osisdie/claude-code-channels
