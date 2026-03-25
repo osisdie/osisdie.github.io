@@ -19,20 +19,19 @@ nav_order: 4
 
 ---
 
-{% if site.repo_trophies.enabled %}
 {% for user in site.data.repositories.github_users %}
-{% if site.data.repositories.github_users.size > 1 %}
-
-  <h4>{{ user }}</h4>
-  {% endif %}
-  <div class="repositories d-flex flex-wrap flex-md-row flex-column justify-content-between align-items-center">
-  {% include repository/repo_trophies.liquid username=user %}
+<div class="repositories d-flex flex-wrap flex-md-row flex-column justify-content-between align-items-center">
+  <div class="repo p-2 text-center">
+    <a href="https://github.com/{{ user }}">
+      <img class="w-100" alt="{{ user }}" src="https://github.com/{{ user }}.png?size=200" style="border-radius: 50%; max-width: 200px;">
+    </a>
+    <p class="mt-2"><a href="https://github.com/{{ user }}">@{{ user }}</a></p>
   </div>
+</div>
 
 ---
 
 {% endfor %}
-{% endif %}
 {% endif %}
 
 {% if site.data.repositories.github_repos %}
