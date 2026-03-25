@@ -36,7 +36,7 @@ RAG 的效果高度依賴「**找得到**」的前提。傳統向量相似度搜
 
 若 retriever 召回了錯誤或無關文件，LLM 傾向於「信任」並據此生成，**反而比不做 RAG 更糟**，因為模型會把錯誤資訊包裝成有根據的回答。
 
-### 5. 多跳推理（Multi-hop Reasoning）
+### 5. 跨文件推理受限（Multi-hop Reasoning）
 
 複雜問題需要跨多份文件進行推理（A → B → C），但標準 RAG 是「一次性」檢索，無法像人類一樣逐步找到中間線索再繼續深挖。
 
@@ -69,7 +69,7 @@ top_docs = sorted(scored, reverse=True)[:5]
 
 ### Agentic RAG 與 Graph RAG
 
-Agentic RAG 讓 LLM 作為 agent，根據前一次檢索的結果決定下一個查詢，支援多跳推理。**Graph RAG**（Microsoft 2024 年提出）則將知識以圖結構儲存，能捕捉實體間的關係，對「比較型」和「概念聯結型」問題效果顯著優於傳統向量 RAG。
+Agentic RAG 讓 LLM 作為 agent，根據前一次檢索的結果決定下一個查詢，支援跨文件多步推理。**Graph RAG**（Microsoft 2024 年提出）則將知識以圖結構儲存，能捕捉實體間的關係，對「比較型」和「概念聯結型」問題效果顯著優於傳統向量 RAG。
 
 ```python
 # Agentic RAG pseudocode — iterative retrieval loop
