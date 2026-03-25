@@ -14,7 +14,7 @@ footer_text: >
   Hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
 keywords: tech-blog, llm, ai, rag, dotnet, python, cloud, software-engineering
 lang: en
-icon: "\U0001F4BB"
+icon: favicon.ico
 
 url: https://osisdie.github.io
 baseurl: # leave blank for root user site

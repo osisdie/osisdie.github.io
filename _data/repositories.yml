@@ -4,4 +4,7 @@ github_users:
 repo_description_lines_max: 2
 
 github_repos:
-  - osisdie/osisdie.github.io
+  - osisdie/claude-code-channels
+  - osisdie/dotnet-nwpie-foundation-sdk
+  - osisdie/dotnet-webapi-k8s-boilerplate
+  - osisdie/codedrill-mock-interview
