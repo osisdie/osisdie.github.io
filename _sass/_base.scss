@@ -957,6 +957,31 @@ html.transition *:after {
 
 // Extra Markdown style (post Customization)
 .post {
+  font-weight: 300;
+
+  strong {
+    font-weight: 600;
+  }
+
+  h2 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  h3 {
+    font-size: 1.3rem;
+    font-weight: 500;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .mermaid svg {
+    max-width: 100%;
+    height: auto;
+  }
+
   .post-meta {
     color: var(--global-text-color-light);
     font-size: 0.875rem;
