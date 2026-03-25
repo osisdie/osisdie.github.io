@@ -262,8 +262,8 @@ jekyll-archives:
       tags: "/blog/:type/:name/"
       categories: "/blog/:type/:name/"
 
-display_tags: ["llm", "ai", "rag", "dotnet", "python", "cloud", "architecture", "devops"]
-display_categories: ["tutorials", "deep-dives", "til", "career"]
+display_tags: ["llm", "ai", "rag"]
+display_categories: []
 
 # -----------------------------------------------------------------------------
 # Jekyll Scholar
