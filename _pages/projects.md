@@ -5,7 +5,7 @@ permalink: /projects/
 description: Open source projects and experiments.
 nav: true
 nav_order: 3
-display_categories: [ai, agent, game, dotnet, tool, programming]
+display_categories: [claude, openclaw, ai, agent, game, dotnet, tool, programming]
 horizontal: false
 ---
 
