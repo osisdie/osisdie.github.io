@@ -6,7 +6,7 @@ subtitle: Software Engineer | AI & Cloud Enthusiast
 
 profile:
   align: right
-  image: # add prof_pic.jpg to assets/img/ when ready
+  image: prof_pic.jpg
   image_circular: true
   more_info: >
     <p>Building with LLMs, .NET, Python & Cloud</p>

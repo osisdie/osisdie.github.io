@@ -1,3 +1,10 @@
+# Social links - field names must match al-folio template (_includes/metadata.liquid)
+# Display order follows the order defined here
 email: osisdie@gmail.com
 github_username: osisdie
+linkedin_username: kevin-w-bb915273
+blogger_url: https://nwpie.blogspot.com
+# x_username:          # fill in your X/Twitter handle
+# medium_username:     # fill in if you write on Medium
+# scholar_userid:      # fill in your Google Scholar ID
 rss_icon: true
