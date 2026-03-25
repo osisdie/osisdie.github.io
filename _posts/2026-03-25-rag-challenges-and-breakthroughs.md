@@ -14,7 +14,49 @@ toc:
 
 ## 架構總覽
 
-{% include figure.liquid loading="eager" path="assets/img/blog/rag-challenges-overview.png" class="img-fluid rounded z-depth-1" alt="RAG 挑戰與解決方案架構圖" caption="RAG 核心挑戰與對應的突破解決方案" %}
+```mermaid
+graph LR
+  subgraph challenges["核心挑戰"]
+    C1["檢索品質瓶頸"]
+    C2["Lost in the Middle"]
+    C3["知識衝突"]
+    C4["幻覺傳染"]
+    C5["多跳推理"]
+    C6["延遲與成本"]
+  end
+
+  subgraph solutions["突破解決方案"]
+    S1["Hybrid Search + Reranking"]
+    S2["Long Context + 精確定位"]
+    S3["Faithful Prompting + 衝突偵測"]
+    S4["Agentic RAG / Graph RAG"]
+  end
+
+  C1 -->|"BM25 + Dense + Cross-Encoder"| S1
+  C2 -->|"擴展窗口 + 注意力優化"| S2
+  C3 -->|"來源優先 + 時間戳排序"| S3
+  C4 -->|"可信度評分 + 過濾"| S3
+  C5 -->|"Agent 多輪檢索"| S4
+  C6 -->|"快取 + 預計算"| S1
+
+  subgraph eval["驗證與評估"]
+    E1["Corrective RAG"]
+    E2["Self-RAG"]
+    E3["RAGAS 評估框架"]
+  end
+
+  S1 --> E3
+  S4 --> E1
+  S4 --> E2
+  E3 -->|"Faithfulness / Relevancy / Recall / Precision"| E2
+```
+
+<details>
+<summary>靜態圖片版本（點擊展開）</summary>
+
+{% include figure.liquid loading="lazy" path="assets/img/blog/rag-challenges-overview.png" class="img-fluid rounded z-depth-1" alt="RAG 挑戰與解決方案架構圖" caption="RAG 核心挑戰與對應的突破解決方案（靜態版）" %}
+
+</details>
 
 ---
 
