@@ -5,7 +5,7 @@ date: 2026-03-25 10:00:00 +0800
 description: 深入分析 2026 年 RAG 技術面臨的六大挑戰與四大突破解決方案
 tags: rag llm ai
 featured: true
-og_image: /assets/img/blog/rag-challenges-and-breakthroughs/rag-challenges-overview.png
+og_image: /assets/img/blog/2026/rag-challenges/rag-challenges-overview.png
 mermaid:
   enabled: true
   zoomable: true
@@ -13,7 +13,7 @@ toc:
   sidebar: left
 ---
 
-{% include figure.liquid loading="eager" path="assets/img/blog/rag-challenges-and-breakthroughs/rag-challenges-overview.png" class="img-fluid rounded z-depth-1" alt="RAG 挑戰與解決方案架構圖" caption="RAG 核心挑戰與對應的突破解決方案" %}
+{% include figure.liquid loading="eager" path="assets/img/blog/2026/rag-challenges/rag-challenges-overview.png" class="img-fluid rounded z-depth-1" alt="RAG 挑戰與解決方案架構圖" caption="RAG 核心挑戰與對應的突破解決方案" %}
 
 2026 年，LLM 整合 RAG 技術已經從概念驗證走向大規模生產部署，但隨之而來的核心挑戰也日益明顯。本文全面分析 RAG 面臨的六大挑戰與四大突破方向。
 
