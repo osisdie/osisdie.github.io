@@ -15,3 +15,5 @@ vendor
 firebase-debug.log
 .claude/
 .playwright-mcp/
+tmp/
+output/
