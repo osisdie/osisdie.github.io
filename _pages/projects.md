@@ -9,6 +9,18 @@ display_categories: [claude, openclaw, ai, agent, game, dotnet, tool, programmin
 horizontal: false
 ---
 
+<!-- GitHub profile -->
+<div class="repositories d-flex flex-wrap flex-md-row flex-column justify-content-between align-items-center mb-4">
+  <div class="repo p-2 text-center">
+    <a href="https://github.com/osisdie">
+      <img class="w-100" alt="osisdie" src="https://github.com/osisdie.png?size=200" style="border-radius: 50%; max-width: 200px;">
+    </a>
+    <p class="mt-2"><a href="https://github.com/osisdie">@osisdie</a></p>
+  </div>
+</div>
+
+<hr>
+
 <!-- pages/projects.md -->
 <div class="projects">
 {% if site.enable_project_categories and page.display_categories %}
