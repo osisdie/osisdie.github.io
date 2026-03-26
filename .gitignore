@@ -12,7 +12,10 @@ vendor
 .idea
 .venv
 firebase-debug.log
-.claude/
+.claude/*
+!.claude/skills/
+!.claude/agents/
+!.claude/settings.local.json
 .playwright-mcp/
 tmp/
 output/
