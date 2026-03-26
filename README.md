@@ -39,10 +39,15 @@ Tech blog covering LLM, AI, RAG, .NET, Python, and Cloud engineering.
 ## Local Development
 
 ```bash
-# Docker (recommended)
+# First time setup
+./scripts/install.sh
+
+# Subsequent runs
 docker compose up
-# Site available at http://localhost:8080
+# Site available at http://localhost:4000
 ```
+
+> Native Ruby is not supported due to gem compatibility issues (sassc, activesupport). Use Docker.
 
 ## Writing Posts
 

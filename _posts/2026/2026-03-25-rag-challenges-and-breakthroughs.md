@@ -14,7 +14,7 @@ toc:
 
 > **English Abstract** — As RAG (Retrieval-Augmented Generation) moves from proof-of-concept to production in 2026, six core challenges have emerged: retrieval quality gaps, the "Lost in the Middle" attention problem, knowledge conflicts between retrieved documents and parametric memory, hallucination propagation from bad retrievals, inability to perform multi-hop reasoning, and latency/cost at scale. This article examines each challenge and maps them to four breakthrough solutions: Hybrid Search + Reranking, Agentic RAG / Graph RAG, Self-RAG, and the RAGAS evaluation framework — with pseudocode examples and production considerations.
 
-2026 年，LLM 整合 RAG 技術已經從概念驗證走向大規模生產部署，但隨之而來的核心挑戰也日益明顯。本文全面分析 RAG 面臨的六大挑戰與四大突破方向。
+2026 年生產環境中，RAG 不再是「加分項」，而是「必備項」— 但多數團隊仍在踩雷。本文全面分析 RAG 面臨的六大核心挑戰與四大突破方向，附帶 pseudocode 與實戰注意事項。
 
 ---
 
@@ -22,27 +22,27 @@ toc:
 
 ### 1. 檢索品質的瓶頸
 
-RAG 的效果高度依賴「**找得到**」的前提。傳統向量相似度搜尋（**cosine similarity**）在語意模糊或多義詞情境下容易失準，例如查詢「蘋果市值」時可能同時召回水果和科技公司的文件。此外，文件切分（**chunking**）策略若處理不當，同一個概念被切斷後，單獨的 chunk 會失去上下文意義。
+RAG 的效果高度依賴「**找得到**」的前提。傳統向量相似度搜尋（**cosine similarity**）在語意模糊或多義詞情境下容易失準，例如查詢「蘋果市值」時可能同時召回水果和科技公司的文件。此外，文件切分（**chunking**）策略若處理不當，同一個概念被切斷後，單獨的 chunk 會失去上下文意義。→ 這正是 **Hybrid Search + Reranking** 要解決的問題。
 
 ### 2. 知識整合的挑戰（Lost in the Middle）
 
-研究顯示，當 LLM 的 **context window** 塞入大量 retrieved 文件時，**模型對位於中間位置的文件注意力顯著下降**，容易忽略關鍵資訊。這個問題在 context 超過 4k token 時尤為明顯。
+研究顯示，當 LLM 的 **context window** 塞入大量 retrieved 文件時，**模型對位於中間位置的文件注意力顯著下降**，容易忽略關鍵資訊。這個問題在 context 超過 4k token 時尤為明顯。→ 解法是 **Long-Context 重新排列**與壓縮式摘要。
 
 ### 3. 知識衝突（Knowledge Conflict）
 
-外部檢索到的文件與 LLM 本身的**參數知識**（**parametric knowledge**）可能互相矛盾。例如模型訓練時學到「X 是 CEO」，但最新文件顯示已換人，模型可能固執地相信自己的舊知識。
+外部檢索到的文件與 LLM 本身的**參數知識**（**parametric knowledge**）可能互相矛盾。例如模型訓練時學到「X 是 CEO」，但最新文件顯示已換人，模型可能固執地相信自己的舊知識。→ 需要**指令強化**明確提示「以文件為準」。
 
 ### 4. 幻覺傳染（Hallucination Propagation）
 
-若 retriever 召回了錯誤或無關文件，LLM 傾向於「信任」並據此生成，**反而比不做 RAG 更糟**，因為模型會把錯誤資訊包裝成有根據的回答。
+若 retriever 召回了錯誤或無關文件，LLM 傾向於「信任」並據此生成，**反而比不做 RAG 更糟**，因為模型會把錯誤資訊包裝成有根據的回答。→ **Faithfulness 評估模型**與 RAGAS 框架能有效偵測這個問題。
 
 ### 5. 跨文件推理受限（Multi-hop Reasoning）
 
-複雜問題需要跨多份文件進行推理（A → B → C），但標準 RAG 是「一次性」檢索，無法像人類一樣逐步找到中間線索再繼續深挖。
+複雜問題需要跨多份文件進行推理（A → B → C），但標準 RAG 是「一次性」檢索，無法像人類一樣逐步找到中間線索再繼續深挖。→ **Agentic RAG** 與 **Graph RAG** 正是為此而生。
 
 ### 6. 延遲與成本
 
-每次請求需要即時做 embedding 搜尋、重排序（reranking），加上 LLM 推理，整體延遲在生產環境中是顯著挑戰。
+每次請求需要即時做 embedding 搜尋、重排序（reranking），加上 LLM 推理，整體延遲在生產環境中是顯著挑戰。→ 透過**快取 + 預計算索引**可有效緩解。
 
 ---
 
