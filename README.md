@@ -13,52 +13,62 @@ Tech blog covering LLM, AI, RAG, .NET, Python, and Cloud engineering.
 
 - [Jekyll](https://jekyllrb.com/) with [al-folio](https://github.com/alshedivat/al-folio) theme (v0.16.3)
 - GitHub Pages + GitHub Actions CI/CD
-- Deployed automatically on push to `main`
+- Deployed automatically on push to `main` via PR workflow
 
-## Topics
+## Blog Tags
 
-| Area | Tags |
-|------|------|
-| AI / ML | `llm`, `ai`, `rag` |
-| Languages | `dotnet`, `python` |
-| Infrastructure | `cloud`, `architecture`, `devops` |
+| Tag | Area |
+|-----|------|
+| `llm`, `ai`, `rag` | Displayed on blog index page |
+| `graph-rag`, `agentic-rag`, `self-rag`, `ragas` | Post-level tags for discoverability |
+| `claude-code`, `hooks`, `automation` | Tooling & workflow |
+
+## Project Categories
+
+| Category | Count |
+|----------|-------|
+| `claude` | 3 |
+| `openclaw` | 2 |
+| `ai` | 8 |
+| `agent` | 2 |
+| `game` | 3 |
+| `dotnet` | 6 |
+| `tool` | 3 |
+| `programming` | 4 |
 
 ## Local Development
 
 ```bash
-# Docker (recommended)
-docker compose up
+# First time setup
+./scripts/install.sh
 
-# Or traditional Ruby setup
-bundle install
-bundle exec jekyll serve --livereload
+# Subsequent runs
+docker compose up
+# Site available at http://localhost:4000
 ```
+
+> Native Ruby is not supported due to gem compatibility issues (sassc, activesupport). Use Docker.
 
 ## Writing Posts
 
-Create a new file in `_posts/` with the format `YYYY-MM-DD-title.md`:
+Create a new file in `_posts/{year}/YYYY-MM-DD-title.md`:
 
 ```yaml
 ---
 layout: post
 title: "Your Post Title"
-date: 2026-03-25 10:00:00 +0800
+date: 2026-03-26 10:00:00 +0800
 description: Brief description for SEO and previews
 tags: rag llm ai
-categories: deep-dives
 featured: true
+og_image: /assets/img/blog/2026/your-slug/hero.png
 toc:
   sidebar: left
 ---
-
-Your content here...
 ```
 
-### Categories
+### Conventions
 
-| Category | Purpose |
-|----------|---------|
-| `tutorials` | Step-by-step guides |
-| `deep-dives` | In-depth technical analysis |
-| `til` | Today I Learned (short posts) |
-| `career` | Career growth, interviews, soft skills |
+- **Blog images**: `assets/img/blog/{year}/{slug}/` (e.g. `assets/img/blog/2026/rag-challenges/`)
+- **Commit messages**: use [Conventional Commits](https://www.conventionalcommits.org/) — no AI model names (enforced by pre-push hook)
+- **Workflow**: always create a feature branch and submit a PR — no direct pushes to `main`
