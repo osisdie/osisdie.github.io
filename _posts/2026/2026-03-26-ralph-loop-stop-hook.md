@@ -245,7 +245,7 @@ naming, error handling, or test coverage."
 - **Claude Code Hooks** — [Official Documentation](https://docs.anthropic.com/en/docs/claude-code/hooks)
 - **Ralph Loop Plugin** — [ralph-wiggum on npm](https://www.npmjs.com/package/ralph-wiggum)
 - **Stop Hook Deep Dive** — [Claude Code Stop Hook: Force Task Completion](https://claudefa.st/blog/tools/hooks/stop-hook-task-enforcement)
-- **Source Script** — [`ralph-loop_stop-hook.sh`](https://github.com/osisdie/osisdie.github.io/blob/main/docs/claude/hook/ralph-loop_stop-hook.sh)
+- **Source Script** — [`stop-hook.sh`](https://github.com/osisdie/osisdie.github.io/blob/main/assets/docs/code/ralph-loop/stop-hook.sh)
 
 ---
 
