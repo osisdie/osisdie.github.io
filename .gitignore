@@ -15,7 +15,7 @@ firebase-debug.log
 .claude/*
 !.claude/skills/
 !.claude/agents/
-!.claude/settings.local.json
+!.claude/settings.local.json.example
 .playwright-mcp/
 tmp/
 output/
