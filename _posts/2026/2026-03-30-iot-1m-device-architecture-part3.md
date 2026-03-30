@@ -216,5 +216,5 @@ Phase 4 (>1M):       + Redpanda + FastStream
 ## 系列連結
 
 - [Part 1：核心架構](/blog/2026/iot-1m-device-architecture/) — EMQX + TimescaleDB + FastAPI + BFF、成本估算
-- [Part 2：安全與多租戶](/blog/2026/iot-1m-device-architecture-part2/) — mTLS、Cert Rotation、RBAC、Topic ACL
+- [Part 2：安全與多租戶](/blog/2026/iot-1m-device-architecture-part2/) — HTTPS/TLS、mTLS、Cert Rotation、RBAC、Topic ACL
 - [Redpanda Documentation](https://docs.redpanda.com/) — Event Streaming（Scale-out >1M）
