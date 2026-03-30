@@ -27,10 +27,10 @@ toc:
 
 ```mermaid
 flowchart LR
-    D[異常設備] -->|10 msg/s limit| E[EMQX]
+    D[Faulty Device] -->|10 msg/s limit| E[EMQX]
     E -->|SQL filter| T[TimescaleDB]
     T -->|circuit breaker| A[FastAPI]
-    E -->|超過 10x| X1[Disconnect]
+    E -->|exceed 10x| X1[Disconnect]
 ```
 
 | 層 | 限制 | 超限動作 | 說明 |
@@ -66,14 +66,14 @@ flowchart LR
 ```mermaid
 stateDiagram-v2
     [*] --> Connected
-    Connected --> Disconnected: 網路中斷
-    Disconnected --> Retry_1s: 首次重連
-    Retry_1s --> Connected: 成功
-    Retry_1s --> Retry_2s: 失敗
-    Retry_2s --> Retry_Max5min: exponential + jitter
-    Retry_Max5min --> Connected: 成功
-    note right of Disconnected: 寫入 local buffer
-    note right of Connected: Drain buffer 重送
+    Connected --> Disconnected: Network down
+    Disconnected --> Retry1s: Retry 1s
+    Retry1s --> Connected: OK
+    Retry1s --> Retry2s: Fail
+    Retry2s --> RetryMax: Backoff + jitter
+    RetryMax --> Connected: OK
+    note right of Disconnected: Write to local buffer
+    note right of Connected: Drain buffer on reconnect
 ```
 
 | Buffer | 容量 | 持久性 | 適用 |

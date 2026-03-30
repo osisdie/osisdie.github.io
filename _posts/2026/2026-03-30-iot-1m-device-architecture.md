@@ -107,11 +107,13 @@ Backend 不直接面對前端 UI。BFF 層負責 WebSocket、API 聚合、Respon
 
 ```mermaid
 flowchart LR
-    subgraph Backend["FastAPI Backend"]
-        D[Device API] --- T[Telemetry API] --- C[Command API]
+    subgraph BE["FastAPI Backend"]
+        D[Device API]
+        T2[Telemetry API]
+        C[Command API]
     end
-    Backend -->|gRPC / REST| W[BFF-Web]
-    Backend -->|gRPC / REST| M[BFF-Mobile]
+    BE -->|gRPC / REST| W[BFF-Web]
+    BE -->|gRPC / REST| M[BFF-Mobile]
     W -->|WebSocket| WD[Dashboard]
     M -->|REST + Push| MA[Mobile App]
 ```
