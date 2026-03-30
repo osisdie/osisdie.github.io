@@ -77,11 +77,11 @@ EMQX Rule Engine 直寫 TimescaleDB，無 Event Streaming 中間層。延遲 <50
 
 MQTT v5 關鍵功能：Correlation ID、Shared subscriptions、Message expiry、Retained messages、LWT。
 
-| Broker | 1M 連線 | Clustering | 推薦 |
-|---|---|---|---|
-| **EMQX** | ✓ (100M+) | RAFT | ★★★★★ |
-| HiveMQ | ✓ | 原生 | ★★★★ |
-| Mosquitto | x (~100K) | 無 | 僅 dev |
+| Broker | 1M 連線 | Clustering | 推薦 | 說明 |
+|---|---|---|---|---|
+| **EMQX** | ✓ (100M+) | RAFT | ★★★★★ | 開源、Rule Engine 內建、社群最大 |
+| HiveMQ | ✓ | 原生 | ★★★★ | 商業授權、企業支援佳 |
+| Mosquitto | x (~100K) | 無 | 僅 dev | 單線程、無 clustering |
 
 | 部署 | AWS | GCP | 月費 |
 |---|---|---|---|
@@ -121,11 +121,11 @@ flowchart LR
 | **Backend** | Device CRUD、Telemetry、Command、RBAC、MQTT | UI 邏輯 |
 | **BFF** | WS 管理、聚合查詢、裁切、i18n | 直連 DB/MQTT |
 
-| 面向 | 選擇 |
-|---|---|
-| 語言 | FastAPI 或 Next.js API Routes |
-| BFF → Backend | gRPC（效能）或 REST（簡單） |
-| 快取 | Redis（status cache + WS pub/sub） |
+| 面向 | 選擇 | 說明 |
+|---|---|---|
+| 語言 | FastAPI 或 Next.js API Routes | 依前端團隊技術棧 |
+| BFF → Backend | gRPC 或 REST | gRPC 效能好，REST 開發快 |
+| 快取 | Redis | Status cache + WS pub/sub |
 
 ---
 
@@ -141,11 +141,11 @@ flowchart LR
 
 ## 三層儲存策略
 
-| 層 | DB | 保留 | 查詢延遲 | 月成本/TB |
-|---|---|---|---|---|
-| **Hot** | TimescaleDB | 7 days | <10ms | ~$200 |
-| **Warm** | ClickHouse | 30-90d | 50-500ms | ~$50 |
-| **Cold** | S3 + Parquet | 年 | 秒級 | ~$2-5 |
+| 層 | DB | 保留 | 查詢延遲 | 月成本/TB | 說明 |
+|---|---|---|---|---|---|
+| **Hot** | TimescaleDB | 7 days | <10ms | ~$200 | 原始解析度，Dashboard 即時查詢 |
+| **Warm** | ClickHouse | 30-90d | 50-500ms | ~$50 | 1min/5min 聚合，分析查詢 |
+| **Cold** | S3 + Parquet | 年 | 秒級 | ~$2-5 | 時/日聚合，DuckDB ad-hoc |
 
 **Continuous Aggregates** 是 Dashboard 查詢的關鍵 — 自動預聚合 1min/5min/1hr，查詢量降 600x。
 

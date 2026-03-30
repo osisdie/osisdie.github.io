@@ -25,11 +25,11 @@ toc:
 
 ### 認證方式
 
-| 方式 | 安全性 | 適用 |
-|---|---|---|
-| **mTLS (X.509)** | 最高 | **預設** — ESP32+，CA chain 免存 per-device credential |
-| PSK | 中 | 受限設備 / gateway 後方 |
-| JWT | 高 | OAuth2 生態整合 |
+| 方式 | 安全性 | 適用 | 說明 |
+|---|---|---|---|
+| **mTLS (X.509)** | 最高 | **預設** | CA chain 免存 per-device credential |
+| PSK | 中 | 受限設備 | gateway 後方使用，rotation 較痛苦 |
+| JWT | 高 | OAuth2 整合 | Stateless 驗證，需 refresh |
 
 MAC 可偽造、serial 可猜測 — **Device ID 必須搭配密碼學憑證**：
 - MQTT Client ID：`{tenant}:{type}:{serial}`
@@ -81,11 +81,11 @@ EMQX 支援 CRL + OCSP Stapling — 設備 compromise 時即時撤銷。
 
 ### Broker 隔離
 
-| 模式 | 隔離 | 適用 |
-|---|---|---|
-| **共享 EMQX + Topic ACL** | 邏輯 | 95% 租戶 |
-| Broker-per-tenant | 進程 | 法規要求（醫療/金融） |
-| **混合** | 視 tier | **推薦** |
+| 模式 | 隔離 | 適用 | 說明 |
+|---|---|---|---|
+| **共享 EMQX + Topic ACL** | 邏輯 | 95% 租戶 | 成本最低，ACL 管理 |
+| Broker-per-tenant | 進程 | 法規要求 | 醫療/金融等合規場景 |
+| **混合** | 視 tier | **推薦** | Standard 共享 + Enterprise 獨立 |
 
 ### Topic 命名空間
 
@@ -117,11 +117,11 @@ Tenant ID 永遠第一層 → ACL 前綴比對。設備禁止 wildcard subscribe
 
 ### DB Tenant 隔離
 
-| 策略 | 隔離 | 適用 |
-|---|---|---|
-| **Row-Level Security** | 邏輯 | **預設** |
-| Schema-per-tenant | 中 | 中等需求 |
-| DB-per-tenant | 最強 | Enterprise |
+| 策略 | 隔離 | 適用 | 說明 |
+|---|---|---|---|
+| **Row-Level Security** | 邏輯 | **預設** | 單 schema，policy 自動過濾 |
+| Schema-per-tenant | 中 | 中等需求 | N 個 schema migration |
+| DB-per-tenant | 最強 | Enterprise | 最高成本，完全隔離 |
 
 TimescaleDB 按 `(tenant_id, time)` 分區 → 查詢自動 pruning，可按 tenant 設定不同 retention。
 

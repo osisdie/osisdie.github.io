@@ -18,6 +18,8 @@
   --global-footer-link-color: #{$white-color};
   --global-distill-app-color: #{$grey-color};
   --global-divider-color: rgba(0, 0, 0, 0.1);
+  --global-table-border-color: rgba(0, 0, 0, 0.25);
+  --global-table-header-bg: rgba(0, 0, 0, 0.06);
   --global-card-bg-color: #{$white-color};
   --global-highlight-color: #{$red-color-dark};
   --global-back-to-top-bg-color: rgba(
@@ -90,6 +92,8 @@ html[data-theme="dark"] {
   --global-footer-link-color: #{$black-color};
   --global-distill-app-color: #{$grey-color-light};
   --global-divider-color: #424246;
+  --global-table-border-color: rgba(255, 255, 255, 0.2);
+  --global-table-header-bg: rgba(255, 255, 255, 0.08);
   --global-card-bg-color: #{$grey-900};
   --global-back-to-top-bg-color: rgba(
     #{color.channel($white-color, "red", $space: rgb)},
