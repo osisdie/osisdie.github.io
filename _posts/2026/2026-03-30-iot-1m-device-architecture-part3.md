@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "IoT 百萬設備架構選型 Part 3：運維與可靠性"
+title: "IoT 百萬設備架構選型 Part 3：運維、成本與可靠性"
 date: 2026-03-30 10:02:00 +0800
-description: "Rate Limiting、Dedup、Edge Resilience（exponential backoff + offline buffer）、Server HA、Multi-Region DR、OpenTelemetry 全鏈路監控、團隊導入風險"
+description: "Rate Limiting、Edge Resilience、Server HA、DR、OpenTelemetry、成本估算（~$17-33K/月）、團隊導入風險與 Phase 導入順序"
 tags: iot mqtt devops observability disaster-recovery
 featured: false
 og_image: /assets/img/blog/2026/iot-architecture/iot-architecture-overview.png
@@ -155,6 +155,33 @@ flowchart LR
 | 月費 | ~$17-33K | ~$17-33K | ~$8-15K + ops |
 
 GKE Autopilot 比 EKS 易上手。BigQuery 按 scan 計價對 IoT 分析較划算。
+
+---
+
+## 成本估算
+
+### 1M 設備月費（雲端 managed）
+
+| 組件 | AWS 月費 | GCP 月費 | 說明 |
+|---|---|---|---|
+| EMQX Cloud (3 node) | ~$8-15K | ~$8-15K | MQTT Broker |
+| TimescaleDB | ~$3-5K | ~$3-5K | Hot 7d + Continuous Agg |
+| ClickHouse Cloud | ~$2-4K | ~$2-4K | Warm 30-90d 分析 |
+| S3/GCS (~50 TB) | ~$1-2K | ~$1-2K | Cold 長期歸檔 |
+| K8s (Backend+BFF) | ~$2-4K | ~$2-4K | 3-5 nodes |
+| Observability | ~$1-3K | ~$1-3K | Grafana + OTel |
+| **合計** | **~$17-33K** | **~$17-33K** | |
+| + Redpanda (>1M) | +$5-10K | +$5-10K | Scale-out 時加入 |
+
+### 不同規模
+
+| 規模 | 架構 | 月費 | 說明 |
+|---|---|---|---|
+| < 10 萬 | EMQX + TimescaleDB + FastAPI + BFF | ~$3-8K | 2-3 人團隊 |
+| 10-100 萬 | + ClickHouse + S3 | ~$10-20K | 本文核心架構 |
+| > 100 萬 | + Redpanda + FastStream + DR | ~$30-60K | Event streaming |
+
+**建議：** PoC 10 萬裝置先驗證（成本約 1/5），精算後再決定 managed vs self-hosted。
 
 ---
 

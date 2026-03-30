@@ -130,4 +130,4 @@ TimescaleDB 按 `(tenant_id, time)` 分區 → 查詢自動 pruning，可按 ten
 ## 下一篇
 
 - [Part 1：核心架構](/blog/2026/iot-1m-device-architecture/) — EMQX + TimescaleDB + FastAPI + BFF、成本估算
-- [Part 3：運維與可靠性](/blog/2026/iot-1m-device-architecture-part3/) — Rate Limiting、Edge Resilience、DR、Observability
+- [Part 3：運維、成本與可靠性](/blog/2026/iot-1m-device-architecture-part3/) — Rate Limiting、Edge Resilience、DR、Observability、成本估算

@@ -170,26 +170,7 @@ flowchart LR
     B -->|WS| U[Dashboard]
 ```
 
----
-
-## 成本估算
-
-| 組件 | AWS 月費 | GCP 月費 |
-|---|---|---|
-| EMQX Cloud (3 node) | ~$8-15K | ~$8-15K |
-| TimescaleDB | ~$3-5K | ~$3-5K |
-| ClickHouse Cloud | ~$2-4K | ~$2-4K |
-| S3/GCS (~50 TB) | ~$1-2K | ~$1-2K |
-| K8s (Backend+BFF) | ~$2-4K | ~$2-4K |
-| Observability | ~$1-3K | ~$1-3K |
-| **合計** | **~$17-33K** | **~$17-33K** |
-| + Redpanda (>1M) | +$5-10K | +$5-10K |
-
-| 規模 | 架構 | 月費 |
-|---|---|---|
-| < 10 萬 | EMQX + TimescaleDB + FastAPI + BFF | ~$3-8K |
-| 10-100 萬 | + ClickHouse + S3 | ~$10-20K |
-| > 100 萬 | + Redpanda + FastStream + DR | ~$30-60K |
+> **成本估算：** 1M 設備雲端 managed 約 ~$17-33K/月（AWS/GCP），詳見 [Part 3 成本與風險](/blog/2026/iot-1m-device-architecture-part3/#成本估算)。
 
 ---
 
@@ -214,7 +195,7 @@ flowchart LR
 ## 下一篇
 
 - [Part 2：安全與多租戶](/blog/2026/iot-1m-device-architecture-part2/) — mTLS、Cert Rotation、RBAC、Topic ACL、DB 隔離
-- [Part 3：運維與可靠性](/blog/2026/iot-1m-device-architecture-part3/) — Rate Limiting、Edge Resilience、DR、Observability、團隊風險
+- [Part 3：運維、成本與可靠性](/blog/2026/iot-1m-device-architecture-part3/) — Rate Limiting、Edge Resilience、DR、Observability、成本估算、團隊風險
 
 ### 相關資源
 
