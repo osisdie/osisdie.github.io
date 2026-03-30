@@ -51,7 +51,45 @@ assets/img/blog/{year}/{slug}/
   hero.png              # Generated PNG (for og:image + figure include)
 ```
 
+## Watermark
+
+Every blog SVG must include a bottom-center watermark before `</svg>`:
+
+```svg
+<!-- Bottom attribution -->
+<g opacity="0.45">
+  <text x="{viewBox-center-x}" y="{viewBox-height - 12}" text-anchor="middle"
+        fill="#64748b" font-size="11" font-weight="600"
+        letter-spacing="0.5px">osisdie.github.io · {Post Title}</text>
+</g>
+```
+
+### Rules
+- Position: **bottom center** (`text-anchor="middle"`, x = half of viewBox width)
+- Opacity: **0.45** (visible but non-intrusive)
+- Color: `#64748b` (slate-500)
+- Font size: **11px**, weight **600**, letter-spacing **0.5px**
+- Content format: `osisdie.github.io · {Post Title}`
+- If a legacy `osisdie.github.io` text already exists, **replace** it with this format
+- Standalone PNGs (screenshots with no SVG source) get watermarked directly via Pillow
+
+### Script
+
+```bash
+# Single SVG
+./scripts/watermark.sh assets/img/blog/2026/iot-architecture/iot-architecture-overview.svg "IoT Architecture"
+
+# Standalone PNG (no SVG source)
+./scripts/watermark.sh assets/img/blog/2026/channel-plugin-dev/telegram-buttons.png
+
+# All images in a directory
+./scripts/watermark.sh assets/img/blog/2026/iot-architecture/ "IoT Architecture"
+```
+
+The script is idempotent — SVG watermarks are replaced in-place; standalone PNGs are restored from git before stamping.
+
 ## Checklist before committing
+- [ ] Watermark present (bottom center, opacity 0.45, `osisdie.github.io · Title`)
 - [ ] No proprietary fonts in SVG
 - [ ] No CSS variables in SVG
 - [ ] PNG generated with white background

@@ -22,6 +22,15 @@ Review SVG and PNG files in `assets/img/blog/` for compliance with the project's
 4. **Font size >= 11px** — text below 11px becomes unreadable in PNG
 5. **System font stack used** — should contain `-apple-system` or `Noto Sans TC`
 
+### Watermark
+1. **Watermark present** — every SVG must contain a `<!-- Bottom attribution -->` comment followed by a `<g opacity="0.45">` block with a `<text>` element
+2. **Position: bottom center** — `text-anchor="middle"`, x = half of viewBox width, y = viewBox height minus ~12px
+3. **Content format** — text must match `osisdie.github.io · {Post Title}`
+4. **Style** — `fill="#64748b"`, `font-size="11"`, `font-weight="600"`, `letter-spacing="0.5px"`
+5. **No legacy format** — if a bare `osisdie.github.io` text exists without the `<g opacity="0.45">` wrapper, flag it for replacement
+6. **Standalone PNGs** — PNGs without a matching SVG source (e.g. screenshots) must also have a watermark. Use `scripts/watermark.sh` to apply
+7. **Suggest fix** — if watermark is missing or outdated, suggest running `./scripts/watermark.sh <file> "Title"`
+
 ### PNG Files
 1. **Resolution** — width should be >= 2x the SVG viewBox width (use `file` command to check dimensions)
 2. **White background** — not transparent (transparent renders as black)

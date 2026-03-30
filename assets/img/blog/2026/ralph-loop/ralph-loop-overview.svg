@@ -140,4 +140,9 @@
 <rect x="140" y="714" width="400" height="50" rx="8" style="fill:rgb(248,248,248);stroke:rgb(200,200,200);stroke-width:0.5"/>
 <text x="340" y="735" text-anchor="middle" style="fill:rgb(80,80,80);font-family:monospace;font-size:11px">{ "decision": "block", "reason": "prompt...",</text>
 <text x="340" y="751" text-anchor="middle" style="fill:rgb(80,80,80);font-family:monospace;font-size:11px">  "systemMessage": "Ralph iteration 4 | ..." }</text>
+
+<!-- Bottom attribution -->
+<g opacity="0.45">
+  <text x="340" y="772" text-anchor="middle" fill="#64748b" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" letter-spacing="0.5px">osisdie.github.io · Ralph Loop Architecture</text>
+</g>
 </svg>
