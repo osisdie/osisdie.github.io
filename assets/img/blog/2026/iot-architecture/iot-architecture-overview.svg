@@ -182,7 +182,7 @@
   <line x1="720" y1="155" x2="805" y2="155" stroke="#f87171" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrRed)"/>
 
   <!-- EMQX → Monitoring (arc above boxes, enters left side) -->
-  <path d="M 275 105 C 275 70, 805 70, 805 130" fill="none" stroke="#fb923c" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrOrange)"/>
+  <path d="M 275 105 C 275 68, 720 65, 808 103" fill="none" stroke="#fb923c" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrOrange)"/>
 
   <!-- Reverse command: BFF → Backend → EMQX (dashed) -->
   <path d="M 605 285 Q 400 330 275 275" fill="none" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#arrYellow)"/>
