@@ -14,3 +14,11 @@ repos:
     rev: v8.24.0
     hooks:
       - id: gitleaks
+
+  - repo: local
+    hooks:
+      - id: no-commit-mentions
+        name: block AI model names and Co-Authored-By in commit message
+        entry: scripts/no-commit-mentions.sh
+        language: script
+        stages: [commit-msg]

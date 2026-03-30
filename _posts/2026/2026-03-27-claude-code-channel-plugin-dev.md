@@ -27,33 +27,30 @@ toc:
 
 ## Channel 資料流
 
-以下是完整的 channel message 流程。上半部是一般的文字訊息，下半部是本文新增的 inline button 互動流程：
+以下是 channel message 流程：
+
+**Normal Message Flow:**
 
 ```mermaid
-sequenceDiagram
-    participant U as User<br/>(Telegram/Discord)
-    participant B as Bot<br/>(grammy/discord.js)
-    participant M as MCP Server<br/>(Bun subprocess)
-    participant C as Claude Code<br/>(Session)
+flowchart LR
+    U[User] -->|message| B[Bot]
+    B -->|notification| M[MCP Server]
+    M -->|stdio| C[Claude Code]
+    C -->|reply tool| M
+    M -->|sendMessage| B
+    B --> U
+```
 
-    Note over U,C: Normal Message Flow
-    U->>B: Send message
-    B->>M: notifications/claude/channel
-    M->>C: stdio transport
-    C->>C: Process & generate response
-    C->>M: reply tool call
-    M->>B: bot.api.sendMessage
-    B->>U: Display message
+**Inline Button Flow:**
 
-    Note over U,C: Inline Button Flow
-    C->>M: reply({ text, buttons })
-    M->>B: sendMessage + inline_keyboard
-    B->>U: Display buttons
-    U->>B: callback_query (btn:label)
-    B->>B: answerCallbackQuery + editMessageText
-    B->>M: notifications/claude/channel<br/>(meta: button=true)
-    M->>C: Forward as inbound message
-    C->>C: Process button selection
+```mermaid
+flowchart LR
+    C[Claude Code] -->|reply + buttons| M[MCP Server]
+    M -->|inline_keyboard| B[Bot]
+    B --> U[User]
+    U -->|callback_query| B
+    B -->|notification| M
+    M -->|forward| C
 ```
 
 ---
