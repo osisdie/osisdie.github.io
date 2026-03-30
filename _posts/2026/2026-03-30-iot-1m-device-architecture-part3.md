@@ -117,7 +117,7 @@ Broker 恢復 → 1M 設備同時重連。Device jitter 分散 0-5min + EMQX `ma
 **Day 1 就做好**，不是事後補。
 
 ```mermaid
-flowchart LR
+flowchart TD
     E[EMQX] -->|metrics| P[Prometheus]
     A[FastAPI] -->|traces| OT[OpenTelemetry]
     BF[BFF] -->|traces| OT

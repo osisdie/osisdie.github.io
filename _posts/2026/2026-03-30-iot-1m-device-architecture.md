@@ -160,10 +160,10 @@ FROM telemetry GROUP BY bucket, device_id;
 ```
 
 ```mermaid
-flowchart LR
+flowchart TD
     D[Devices] -->|MQTT| E[EMQX]
-    E -->|Rule Engine| H[TimescaleDB<br/>Hot 7d]
-    H -->|Aggregate| W[ClickHouse<br/>Warm]
+    E -->|Rule Engine| H[TimescaleDB]
+    H -->|Aggregate| W[ClickHouse]
     W -->|Archive| C[S3 Parquet]
     H -->|Query| A[FastAPI]
     A -->|gRPC| B[BFF]
