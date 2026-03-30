@@ -177,7 +177,7 @@ flowchart LR
 ## 技術選型總表
 
 | 層 | 選擇 | AWS | GCP |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | 設備協定 | **MQTT v5** | — | — |
 | Broker | **EMQX** | EMQX Cloud | EMQX Cloud |
 | Data Ingestion | **Rule Engine** | — | — |

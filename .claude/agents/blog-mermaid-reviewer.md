@@ -53,7 +53,14 @@ Accept a file path or glob pattern. Default: all `.md` files in `_posts/2026/` w
 - Participant aliases with `<br/>` must be properly formatted
 - Message text should not contain unescaped special characters (`<`, `>`, `{`, `}`)
 
-### 8. Front Matter Check
+### 8. ViewBox Overflow / Clipping
+- CJK node labels are wider than Latin text — mermaid's auto-layout may push nodes outside the SVG viewBox
+- **WARN** if any CJK node label exceeds 8 characters (likely to overflow)
+- `flowchart TD` (top-down) with wide labels is more prone to clipping than `LR` (left-right)
+- **Suggested fix:** Use short English labels (< 15 chars), prefer `LR` layout, keep CJK in surrounding markdown text
+- This is a client-side rendering issue — cannot be detected server-side, only by visual inspection or by checking label length
+
+### 9. Front Matter Check
 - If a post contains ` ```mermaid ` blocks, it MUST have `mermaid: enabled: true` in front matter
 - **FAIL** if missing — diagrams will render as plain code blocks
 
