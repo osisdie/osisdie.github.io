@@ -60,7 +60,23 @@ Accept a file path or glob pattern. Default: all `.md` files in `_posts/2026/` w
 - **Suggested fix:** Use short English labels (< 15 chars), prefer `LR` layout, keep CJK in surrounding markdown text
 - This is a client-side rendering issue — cannot be detected server-side, only by visual inspection or by checking label length
 
-### 9. Front Matter Check
+### 9. Avoid sequenceDiagram in Blog Posts
+- `sequenceDiagram` with 4+ participants renders too dense at blog content width (~700px)
+- Multiple message lines become unreadable — readers cannot scan the flow at a glance
+- **FAIL** if a `sequenceDiagram` has 4+ participants or 10+ messages
+- **Suggested fix:** Replace with 2 simple `flowchart` diagrams (one per flow direction)
+  - Telemetry flow: `flowchart LR` (left-to-right, max 5 nodes)
+  - Command flow: `flowchart RL` (right-to-left, max 4 nodes)
+- Flowcharts are scannable in 3 seconds; sequence diagrams require 30+ seconds to parse
+- If the full sequence detail is needed, put it in a collapsible `<details>` block below the flowchart
+
+### 10. LR Chain Length Limit
+- `flowchart LR` with more than **5 nodes in a single chain** will clip on the right edge
+- **WARN** if LR chain exceeds 5 nodes
+- **Suggested fix:** Switch to `flowchart TD` (top-down), or split into 2 diagrams
+- Branching (fan-out) is OK in LR as long as the longest path is ≤ 5 nodes
+
+### 11. Front Matter Check
 - If a post contains ` ```mermaid ` blocks, it MUST have `mermaid: enabled: true` in front matter
 - **FAIL** if missing — diagrams will render as plain code blocks
 
