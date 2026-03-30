@@ -2,7 +2,7 @@
 layout: post
 title: "IoT 百萬設備架構選型 Part 2：安全與多租戶"
 date: 2026-03-30 10:01:00 +0800
-description: "mTLS X.509 設備認證、Certificate Rotation、JIT Provisioning、Multi-Tenancy Topic ACL + RLS、RBAC 四角色權限"
+description: "HTTPS/TLS 通訊加密、mTLS X.509 設備認證、Certificate Rotation、JIT Provisioning、Multi-Tenancy Topic ACL + RLS、RBAC 四角色權限"
 tags: iot mqtt security multi-tenancy rbac
 featured: false
 og_image: /assets/img/blog/2026/iot-architecture/iot-architecture-overview.png
@@ -15,7 +15,7 @@ toc:
 
 {% include figure.liquid loading="eager" path="assets/img/blog/2026/iot-architecture/iot-architecture-overview.png" class="img-fluid rounded z-depth-1" alt="IoT 1M Device Architecture Overview" caption="Phase 1 核心架構：EMQX + TimescaleDB + FastAPI + BFF + OpenTelemetry" %}
 
-> **English Abstract** — Part 2 of 3. Device security: **mTLS X.509** with software-based certificate rotation (90-365d), JIT provisioning, anti-spoofing measures. Multi-tenancy: MQTT **Topic ACL** namespace isolation, PostgreSQL **Row-Level Security**, 4-role **RBAC** model, dual-layer command authorization.
+> **English Abstract** — Part 2 of 3. Device security: **HTTPS/TLS** for all communication, **mTLS X.509** for device authentication, software-based certificate rotation (90-365d), JIT provisioning, anti-spoofing measures. Multi-tenancy: MQTT **Topic ACL** namespace isolation, PostgreSQL **Row-Level Security**, 4-role **RBAC** model, dual-layer command authorization.
 
 > **系列文章：** [Part 1 核心架構](/blog/2026/iot-1m-device-architecture/) | Part 2 安全與多租戶（本篇）| [Part 3 運維與可靠性](/blog/2026/iot-1m-device-architecture-part3/)
 

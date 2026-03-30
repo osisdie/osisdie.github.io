@@ -188,7 +188,7 @@ flowchart TD
 
 ## 下一篇
 
-- [Part 2：安全與多租戶](/blog/2026/iot-1m-device-architecture-part2/) — mTLS、Cert Rotation、RBAC、Topic ACL、DB 隔離
+- [Part 2：安全與多租戶](/blog/2026/iot-1m-device-architecture-part2/) — HTTPS/TLS、mTLS、Cert Rotation、RBAC、Topic ACL、DB 隔離
 - [Part 3：運維、成本與可靠性](/blog/2026/iot-1m-device-architecture-part3/) — Rate Limiting、Edge Resilience、DR、Observability、成本估算、團隊風險
 
 ### 相關資源
