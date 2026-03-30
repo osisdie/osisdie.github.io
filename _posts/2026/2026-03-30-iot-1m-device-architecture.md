@@ -36,31 +36,25 @@ toc:
 
 ## 架構資料流
 
+### Telemetry（Device → Dashboard）
+
 ```mermaid
-sequenceDiagram
-    participant D as Device<br/>(MQTT v5 + mTLS)
-    participant B as EMQX<br/>(Broker + Rule Engine)
-    participant T as TimescaleDB<br/>(Hot Storage)
-    participant A as FastAPI<br/>(Backend)
-    participant BFF as BFF<br/>(per UI)
-    participant U as Dashboard<br/>(Browser)
+flowchart LR
+    D[Device] -->|MQTT| B[EMQX]
+    B -->|Rule Engine| T[TimescaleDB]
+    T --> A[FastAPI]
+    A --> BFF[BFF]
+    BFF -->|WebSocket| U[Dashboard]
+```
 
-    Note over D,U: Telemetry (Device → Dashboard)
-    D->>B: PUBLISH telemetry/{device-id}
-    B->>T: Rule Engine → INSERT
-    T->>A: Continuous Aggregates
-    A->>BFF: gRPC / REST
-    BFF->>U: WebSocket push
+### Command（Dashboard → Device）
 
-    Note over D,U: Command (Dashboard → Device)
-    U->>BFF: WebSocket / REST
-    BFF->>A: Forward
-    A->>B: PUBLISH cmd/{device-id}/action (QoS 1)
-    B->>D: Deliver command
-    D->>B: PUBLISH ack
-    B->>A: Rule Engine forward
-    A->>BFF: Update
-    BFF->>U: WebSocket update
+```mermaid
+flowchart RL
+    U[Dashboard] -->|WS/REST| BFF[BFF]
+    BFF --> A[FastAPI]
+    A -->|MQTT QoS 1| B[EMQX]
+    B --> D[Device]
 ```
 
 EMQX Rule Engine 直寫 TimescaleDB，無 Event Streaming 中間層。延遲 <50ms，適合 1M 以下。>1M 需 dedup / event replay 時再加 Redpanda。
