@@ -86,10 +86,26 @@ WM
   fi
 
   if [ -n "$target_png" ]; then
+    # Detect dark background — check for gradient stop-colors below #334155
+    local is_dark=false
+    if grep -qP 'stop-color:#[0-2][0-9a-f]{5}' "$svg" 2>/dev/null; then
+      is_dark=true
+    fi
+
+    local multiplier=2
+    local bg_flag="-b white"
+    local max_w=2800
+    if [ "$is_dark" = true ]; then
+      multiplier=3
+      bg_flag=""  # dark-bg SVGs have their own background
+    fi
+
     local png_w
-    png_w=$(awk "BEGIN { printf \"%.0f\", $vb_w * 2 }")
-    rsvg-convert "$svg" -w "$png_w" -b white -o "$target_png"
-    echo "  [PNG] $target_png — regenerated at ${png_w}px wide"
+    png_w=$(awk "BEGIN { w = $vb_w * $multiplier; if (w > $max_w) w = $max_w; printf \"%.0f\", w }")
+    rsvg-convert "$svg" -w "$png_w" $bg_flag -o "$target_png"
+    local bg_label="white"
+    [ "$is_dark" = true ] && bg_label="dark (3x)"
+    echo "  [PNG] $target_png — regenerated at ${png_w}px wide ($bg_label)"
   fi
 }
 

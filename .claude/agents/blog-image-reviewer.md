@@ -19,8 +19,14 @@ Review SVG and PNG files in `assets/img/blog/` for compliance with the project's
 1. **No proprietary fonts** — grep for `Anthropic Sans`, `Inter`, or other non-system fonts
 2. **No CSS variables** — grep for `var(--` patterns
 3. **Has viewBox** — every SVG must have a fixed `viewBox` attribute
-4. **Font size >= 11px** — text below 11px becomes unreadable in PNG
+4. **Font size >= 13px** — text below 13px becomes unreadable after social media JPEG compression. Grep for `font-size` values and flag any below 13 (watermark text at 11px is exempt)
 5. **System font stack used** — should contain `-apple-system` or `Noto Sans TC`
+
+### Social Media Readability
+1. **Text element count ≤ 35** — count `<text>` elements; more than 35 becomes illegible in LinkedIn/Twitter thumbnails. Suggest splitting the image if over 35
+2. **Aspect ratio ≤ 2:1** — parse viewBox width/height; ratios wider than 2:1 get shrunk aggressively on social feeds. Suggest making the image taller
+3. **Dark-bg font weight ≥ 600** — if the SVG has a dark background (gradient with stop-color below `#334155`), check that text `font-weight` is at least 600. Thin text on dark bg suffers from JPEG halo artifacts
+4. **No dim text on dark bg** — on dark backgrounds, flag any text fill color darker than `#94a3b8` (slate-400) as it disappears after JPEG compression
 
 ### Watermark
 1. **Watermark present** — every SVG must contain a `<!-- Bottom attribution -->` comment followed by a `<g opacity="0.45">` block with a `<text>` element
@@ -32,8 +38,8 @@ Review SVG and PNG files in `assets/img/blog/` for compliance with the project's
 7. **Suggest fix** — if watermark is missing or outdated, suggest running `./scripts/watermark.sh <file> "Title"`
 
 ### PNG Files
-1. **Resolution** — width should be >= 2x the SVG viewBox width (use `file` command to check dimensions)
-2. **White background** — not transparent (transparent renders as black)
+1. **Resolution** — width should be >= 2x the SVG viewBox width (3x for dark-background SVGs). Use `file` command to check dimensions
+2. **Background** — not transparent (transparent renders as black). Dark-bg SVGs should NOT use `-b white` in rsvg-convert
 3. **File size** — should be < 500KB
 4. **Chinese text** — read the PNG and visually verify CJK characters render correctly
 
