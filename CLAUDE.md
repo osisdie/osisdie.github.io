@@ -25,3 +25,20 @@ Persistent task files in `.claude/tasks/` survive context compression. Use the `
 - Trivial one-shot requests (single file edit, quick question)
 - Tasks that will be completed within the current response
 - Only create tasks for work that spans multiple steps or might be interrupted by context compression
+
+### Capturing implicit TODOs
+
+Even in trivial one-shot requests, **scan for forward-looking language** ("等等", "之後", "later", "btw", "下次", "TODO", "remember to"). If the user mentions future work — even casually — create a `pending` task for it immediately. The cost of a spurious task file is near zero; the cost of forgetting is high.
+
+### Stale task review
+
+When the `task-planner` agent reports **3+ pending tasks**, or any task has been `pending` for **3+ days**, proactively ask the user:
+
+> "You have N pending tasks. Want to review them?"
+
+Then for each stale/pending task, ask:
+- **Continue** — keep as pending or start working on it
+- **Cancel** — mark as cancelled and archive
+- **Defer** — keep but lower priority
+
+This prevents unbounded task accumulation and keeps the list actionable.

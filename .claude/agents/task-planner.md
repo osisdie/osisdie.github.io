@@ -25,7 +25,10 @@ Execute the operation specified in the prompt. Always use UTC+8 timestamps.
 2. Read the YAML frontmatter of each file
 3. Return a markdown table sorted by: priority (high → medium → low), then status (in_progress → pending → done)
 4. Flag any task with `status: in_progress` and `updated_at` older than 24 hours as `[stale]`
-5. If no task files exist, return: "No active tasks."
+5. Flag any task with `status: pending` and `created_at` older than 3 days as `[stale]`
+6. If no task files exist, return: "No active tasks."
+7. After the table, add a summary line: "N pending, N in_progress, N done. M stale."
+8. If 3+ tasks are pending or any task is stale, append: "⚠ Recommend running a task review."
 
 Output format:
 ```
