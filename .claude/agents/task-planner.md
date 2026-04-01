@@ -8,6 +8,7 @@ tools:
   - Read
   - Write
   - Bash
+  - NotebookRead
 ---
 
 # Task Planner Agent
