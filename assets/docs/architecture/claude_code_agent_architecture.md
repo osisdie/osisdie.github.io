@@ -1,6 +1,14 @@
-# Claude Code Agent Architecture 摘要
+---
+layout: page
+title: "Agent Architecture Reference"
+permalink: /docs/architecture/agent-architecture/
+description: "從 1,902 個 TypeScript 檔案中提煉的 Agent 架構參考文件 — 21 個子系統、8 個可複用設計模式"
+nav: false
+---
 
-> Anthropic Claude Code CLI 原始碼
+# Agent Architecture 摘要
+
+> 原始碼架構參考
 > 最後更新：2026-03-31
 
 ---

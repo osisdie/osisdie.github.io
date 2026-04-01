@@ -273,7 +273,7 @@ Tool Pipeline + Hook System + State Store = 可生產的 Agent
 ## 相關連結
 
 - **昨日文章** — [本地 Agent Swarm 框架全解析]({% raw %}{% post_url 2026-03-31-local-agent-swarm %}{% endraw %})
-- **Agent-Swarm Architecture Reference** — [本文分析的架構文件來源]({{ '/assets/docs/architecture/claude_code_agent_architecture.md' | relative_url }})
+- **Agent Architecture Reference** — [本文分析的架構文件來源](/docs/architecture/agent-architecture/)
 - **Claude Code** — [Anthropic 官方 Agent Coding Tool](https://docs.anthropic.com/en/docs/claude-code)
 - **LangGraph** — [github.com/langchain-ai/langgraph](https://github.com/langchain-ai/langgraph) — 企業級圖工作流引擎
 - **CrewAI** — [github.com/crewAIInc/crewAI](https://github.com/crewAIInc/crewAI) — 角色分工框架
