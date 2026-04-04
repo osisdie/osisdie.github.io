@@ -31,7 +31,7 @@ toc:
 
 整個流程分為 6 個階段，每個階段由獨立的 Python 模組負責：
 
-{% include figure.liquid loading="lazy" path="assets/img/blog/2026/yt2pdf-pipeline/yt2pdf-pipeline-detail.png" class="img-fluid rounded z-depth-1" alt="yt2pdf 6-stage pipeline detail" caption="完整 6 階段架構：字幕擷取三層降級 + 轉換 Pipeline + Tech Stack" %}
+{% include figure.liquid loading="lazy" path="assets/img/blog/2026/yt2pdf-pipeline/yt2pdf-pipeline-detail.png" class="img-fluid rounded z-depth-1" alt="yt2pdf 6-stage pipeline detail" caption="完整 6 階段架構：字幕擷取三層 Fallback + 轉換 Pipeline + Tech Stack" %}
 
 簡化流程圖：
 
@@ -61,7 +61,7 @@ flowchart LR
 
 | 模組 | 職責 | 輸入 | 輸出 | 說明 |
 |------|------|------|------|------|
-| `get_transcript.py` | 字幕擷取 + Whisper 降級 | Video ID | Plain text | 三層降級確保有字幕 |
+| `get_transcript.py` | 字幕擷取 + Whisper Fallback | Video ID | Plain text | 三層 Fallback確保有字幕 |
 | `build_html.py` | Markdown → 排版 HTML | `.md` file | `.html` file | Base64 圖片嵌入 |
 | `build_pdf.py` | HTML → PDF | `.html` file | `.pdf` file | Headless Chrome 渲染 |
 | `upload_b2.py` | 上傳 B2 + 產生連結 | `.pdf` file | Presigned URL | 7 天限時下載 |
@@ -69,9 +69,9 @@ flowchart LR
 
 ---
 
-## 字幕擷取的三層降級策略
+## 字幕擷取的三層 Fallback策略
 
-字幕擷取是整個 Pipeline 最不確定的環節——不是每支影片都有字幕。`get_transcript.py` 實作了三層降級：
+字幕擷取是整個 Pipeline 最不確定的環節——不是每支影片都有字幕。`get_transcript.py` 實作了三層 Fallback：
 
 | 方法 | 來源 | 工具 | 延遲 | 準確度 | 適用場景 |
 |------|------|------|------|--------|---------|
@@ -103,7 +103,7 @@ def get_transcript(video_id: str) -> str | None:
     return None
 ```
 
-> **Production Notes** — Whisper 降級會增加 30-120 秒延遲（取決於影片長度），而且 HuggingFace Inference API 有 rate limit。建議在頻道回覆中先發 "Processing..." 訊息，讓使用者知道系統正在處理。SRT 解析會自動去除時間戳和序號，只保留純文字。
+> **Production Notes** — Whisper Fallback會增加 30-120 秒延遲（取決於影片長度），而且 HuggingFace Inference API 有 rate limit。建議在頻道回覆中先發 "Processing..." 訊息，讓使用者知道系統正在處理。SRT 解析會自動去除時間戳和序號，只保留純文字。
 
 ---
 
