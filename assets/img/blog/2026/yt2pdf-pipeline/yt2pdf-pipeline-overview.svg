@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 400" width="680" height="400">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="flow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ef4444"/>
+      <stop offset="50%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#22c55e"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="680" height="400" fill="url(#bg)" rx="12"/>
+
+  <!-- Title -->
+  <text x="340" y="52" text-anchor="middle" fill="#e2e8f0" font-family="system-ui,sans-serif" font-size="24" font-weight="700">/yt2pdf</text>
+  <text x="340" y="78" text-anchor="middle" fill="#94a3b8" font-family="system-ui,sans-serif" font-size="15" font-weight="600">YouTube → Bilingual PDF Summary</text>
+
+  <!-- Flow gradient bar -->
+  <rect x="60" y="120" width="560" height="4" rx="2" fill="url(#flow)" opacity="0.4"/>
+
+  <!-- Phase 1: YouTube (left) -->
+  <rect x="40" y="140" width="180" height="160" rx="14" fill="#1e293b" stroke="#ef4444" stroke-width="2"/>
+  <text x="130" y="190" text-anchor="middle" fill="#ef4444" font-family="system-ui,sans-serif" font-size="36" font-weight="700">▶</text>
+  <text x="130" y="225" text-anchor="middle" fill="#e2e8f0" font-family="system-ui,sans-serif" font-size="16" font-weight="700">YouTube</text>
+  <text x="130" y="248" text-anchor="middle" fill="#94a3b8" font-family="system-ui,sans-serif" font-size="13" font-weight="600">Transcript + Metadata</text>
+  <text x="130" y="268" text-anchor="middle" fill="#94a3b8" font-family="system-ui,sans-serif" font-size="13" font-weight="600">Whisper ASR Fallback</text>
+
+  <!-- Arrow 1→2 -->
+  <path d="M230 220 L250 220" stroke="url(#flow)" stroke-width="3" fill="none"/>
+  <polygon points="250,214 264,220 250,226" fill="#3b82f6"/>
+
+  <!-- Phase 2: AI (center) -->
+  <rect x="270" y="140" width="140" height="160" rx="14" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+  <text x="340" y="195" text-anchor="middle" fill="#3b82f6" font-family="system-ui,sans-serif" font-size="32" font-weight="700">AI</text>
+  <text x="340" y="228" text-anchor="middle" fill="#e2e8f0" font-family="system-ui,sans-serif" font-size="15" font-weight="700">Summary</text>
+  <text x="340" y="252" text-anchor="middle" fill="#94a3b8" font-family="system-ui,sans-serif" font-size="13" font-weight="600">EN + 繁體中文</text>
+
+  <!-- Arrow 2→3 -->
+  <path d="M420 220 L440 220" stroke="url(#flow)" stroke-width="3" fill="none"/>
+  <polygon points="440,214 454,220 440,226" fill="#22c55e"/>
+
+  <!-- Phase 3: PDF (right) -->
+  <rect x="460" y="140" width="180" height="160" rx="14" fill="#1e293b" stroke="#22c55e" stroke-width="2"/>
+  <text x="550" y="190" text-anchor="middle" fill="#22c55e" font-family="system-ui,sans-serif" font-size="36" font-weight="700">PDF</text>
+  <text x="550" y="225" text-anchor="middle" fill="#e2e8f0" font-family="system-ui,sans-serif" font-size="15" font-weight="700">Download</text>
+  <text x="550" y="248" text-anchor="middle" fill="#94a3b8" font-family="system-ui,sans-serif" font-size="13" font-weight="600">Headless Chrome</text>
+  <text x="550" y="268" text-anchor="middle" fill="#94a3b8" font-family="system-ui,sans-serif" font-size="13" font-weight="600">B2 Presigned URL</text>
+
+  <!-- Tagline -->
+  <text x="340" y="345" text-anchor="middle" fill="#cbd5e1" font-family="system-ui,sans-serif" font-size="14" font-weight="600">6-Stage Pipeline · yt-dlp · Whisper · Chrome · Backblaze B2</text>
+
+  <!-- Bottom attribution -->
+  <g opacity="0.45">
+    <text x="340" y="380" text-anchor="middle" fill="#94a3b8" font-family="system-ui,sans-serif" font-size="13" font-weight="600">osisdie.github.io · yt2pdf Pipeline</text>
+  </g>
+</svg>
