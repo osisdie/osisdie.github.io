@@ -42,3 +42,13 @@ Then for each stale/pending task, ask:
 - **Defer** — keep but lower priority
 
 This prevents unbounded task accumulation and keeps the list actionable.
+
+## Blog Post Conventions
+
+### Tags
+
+When creating or updating a blog post, always include comprehensive `tags:` in frontmatter (aim for 5-8 tags). The blog page auto-generates a tag list with counts from `site.tags` — no manual config update is needed.
+
+- **Reuse existing tags** — check with: `grep -h '^tags:' _posts/**/*.md`
+- **Avoid synonyms** — use the established form (e.g. `automation` not `automated`)
+- **Cover key topics** — tools, frameworks, patterns, and domains mentioned in the post
