@@ -29,24 +29,21 @@ pagination:
   </div>
   {% endif %}
 
-{% if site.display_tags and site.display_tags.size > 0 or site.display_categories and site.display_categories.size > 0 %}
+{% if site.tags.size > 0 %}
+
+  {% comment %} Build tag list sorted by post count (descending) {% endcomment %}
+  {% capture tags_with_count %}{% for tag in site.tags %}{{ tag[1].size | prepend: "00000" | slice: -5, 5 }}:{{ tag[0] }}{% unless forloop.last %}|{% endunless %}{% endfor %}{% endcapture %}
+  {% assign sorted_tags = tags_with_count | split: "|" | sort | reverse %}
 
   <div class="tag-category-list">
     <ul class="p-0 m-0">
-      {% for tag in site.display_tags %}
+      {% for entry in sorted_tags %}
+        {% assign parts = entry | split: ":" %}
+        {% assign tag_name = parts[1] %}
+        {% assign tag_posts = site.tags[tag_name] %}
         <li>
-          <i class="fa-solid fa-hashtag fa-sm"></i> <a href="{{ tag | slugify | prepend: '/blog/tag/' | relative_url }}">{{ tag }}</a>
-        </li>
-        {% unless forloop.last %}
-          <p>&bull;</p>
-        {% endunless %}
-      {% endfor %}
-      {% if site.display_categories.size > 0 and site.display_tags.size > 0 %}
-        <p>&bull;</p>
-      {% endif %}
-      {% for category in site.display_categories %}
-        <li>
-          <i class="fa-solid fa-tag fa-sm"></i> <a href="{{ category | slugify | prepend: '/blog/category/' | relative_url }}">{{ category }}</a>
+          <i class="fa-solid fa-hashtag fa-sm"></i> <a href="{{ tag_name | slugify | prepend: '/blog/tag/' | relative_url }}">{{ tag_name }}</a>
+          <span class="text-muted">({{ tag_posts.size }})</span>
         </li>
         {% unless forloop.last %}
           <p>&bull;</p>
