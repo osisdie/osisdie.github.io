@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 540" width="680" height="540">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="arrow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ef4444"/>
+      <stop offset="50%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#22c55e"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="680" height="540" fill="url(#bg)" rx="12"/>
+
+  <!-- Title -->
+  <text x="340" y="38" text-anchor="middle" fill="#e2e8f0" font-family="system-ui,sans-serif" font-size="18" font-weight="700">/yt2pdf Pipeline Detail</text>
+  <text x="340" y="58" text-anchor="middle" fill="#94a3b8" font-family="system-ui,sans-serif" font-size="13" font-weight="600">6-Stage Architecture</text>
+
+  <!-- Flow arrow background -->
+  <rect x="40" y="90" width="600" height="6" rx="3" fill="url(#arrow)" opacity="0.25"/>
+
+  <!-- Stage 1: Parse URL -->
+  <rect x="30" y="80" width="90" height="90" rx="10" fill="#1e293b" stroke="#ef4444" stroke-width="1.5"/>
+  <text x="75" y="108" text-anchor="middle" fill="#ef4444" font-family="system-ui,sans-serif" font-size="20" font-weight="700">1</text>
+  <text x="75" y="128" text-anchor="middle" fill="#e2e8f0" font-family="system-ui,sans-serif" font-size="13" font-weight="600">Parse URL</text>
+  <text x="75" y="145" text-anchor="middle" fill="#94a3b8" font-family="system-ui,sans-serif" font-size="13" font-weight="600">Extract ID</text>
+
+  <!-- Arrow 1→2 -->
+  <path d="M125 125 L148 125" stroke="#94a3b8" stroke-width="1.5" fill="none"/>
+
+  <!-- Stage 2: Thumbnail -->
+  <rect x="152" y="80" width="90" height="90" rx="10" fill="#1e293b" stroke="#f97316" stroke-width="1.5"/>
+  <text x="197" y="108" text-anchor="middle" fill="#f97316" font-family="system-ui,sans-serif" font-size="20" font-weight="700">2</text>
+  <text x="197" y="128" text-anchor="middle" fill="#e2e8f0" font-family="system-ui,sans-serif" font-size="13" font-weight="600">Thumbnail</text>
+  <text x="197" y="145" text-anchor="middle" fill="#94a3b8" font-family="system-ui,sans-serif" font-size="13" font-weight="600">+ Metadata</text>
+
+  <!-- Arrow 2→3 -->
+  <path d="M247 125 L270 125" stroke="#94a3b8" stroke-width="1.5" fill="none"/>
+
+  <!-- Stage 3: Transcript -->
+  <rect x="274" y="80" width="110" height="90" rx="10" fill="#1e293b" stroke="#eab308" stroke-width="1.5"/>
+  <text x="329" y="108" text-anchor="middle" fill="#eab308" font-family="system-ui,sans-serif" font-size="20" font-weight="700">3</text>
+  <text x="329" y="128" text-anchor="middle" fill="#e2e8f0" font-family="system-ui,sans-serif" font-size="13" font-weight="600">Transcript</text>
+  <text x="329" y="145" text-anchor="middle" fill="#94a3b8" font-family="system-ui,sans-serif" font-size="13" font-weight="600">3-layer fallback</text>
+
+  <!-- Arrow 3→4 -->
+  <path d="M389 125 L412 125" stroke="#94a3b8" stroke-width="1.5" fill="none"/>
+
+  <!-- Stage 4: Summary -->
+  <rect x="416" y="80" width="100" height="90" rx="10" fill="#1e293b" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="466" y="108" text-anchor="middle" fill="#3b82f6" font-family="system-ui,sans-serif" font-size="20" font-weight="700">4</text>
+  <text x="466" y="128" text-anchor="middle" fill="#e2e8f0" font-family="system-ui,sans-serif" font-size="13" font-weight="600">AI Summary</text>
+  <text x="466" y="145" text-anchor="middle" fill="#94a3b8" font-family="system-ui,sans-serif" font-size="13" font-weight="600">EN + zh-TW</text>
+
+  <!-- Arrow 4→5 -->
+  <path d="M521 125 L544 125" stroke="#94a3b8" stroke-width="1.5" fill="none"/>
+
+  <!-- Stage 5-6: PDF + Upload -->
+  <rect x="548" y="80" width="102" height="90" rx="10" fill="#1e293b" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="599" y="108" text-anchor="middle" fill="#22c55e" font-family="system-ui,sans-serif" font-size="20" font-weight="700">5-6</text>
+  <text x="599" y="128" text-anchor="middle" fill="#e2e8f0" font-family="system-ui,sans-serif" font-size="13" font-weight="600">PDF + Upload</text>
+  <text x="599" y="145" text-anchor="middle" fill="#94a3b8" font-family="system-ui,sans-serif" font-size="13" font-weight="600">B2 Presigned</text>
+
+  <!-- Transcript Fallback Detail Box -->
+  <rect x="30" y="200" width="300" height="160" rx="10" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+  <text x="180" y="225" text-anchor="middle" fill="#e2e8f0" font-family="system-ui,sans-serif" font-size="14" font-weight="700">Transcript Fallback Chain</text>
+
+  <rect x="50" y="240" width="260" height="30" rx="6" fill="#0f172a" stroke="#22c55e" stroke-width="1"/>
+  <text x="180" y="260" text-anchor="middle" fill="#22c55e" font-family="system-ui,sans-serif" font-size="13" font-weight="600">Layer 1: Manual Subtitles (yt-dlp)</text>
+
+  <path d="M180 270 L180 288" stroke="#475569" stroke-width="1.5" fill="none" stroke-dasharray="4,3"/>
+
+  <rect x="50" y="290" width="260" height="30" rx="6" fill="#0f172a" stroke="#eab308" stroke-width="1"/>
+  <text x="180" y="310" text-anchor="middle" fill="#eab308" font-family="system-ui,sans-serif" font-size="13" font-weight="600">Layer 2: Auto-generated Subs (yt-dlp)</text>
+
+  <path d="M180 320 L180 338" stroke="#475569" stroke-width="1.5" fill="none" stroke-dasharray="4,3"/>
+
+  <rect x="50" y="340" width="260" height="30" rx="6" fill="#0f172a" stroke="#ef4444" stroke-width="1"/>
+  <text x="180" y="360" text-anchor="middle" fill="#ef4444" font-family="system-ui,sans-serif" font-size="13" font-weight="600">Layer 3: Whisper ASR (HuggingFace)</text>
+
+  <!-- Conversion Pipeline Detail Box -->
+  <rect x="350" y="200" width="300" height="160" rx="10" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+  <text x="500" y="225" text-anchor="middle" fill="#e2e8f0" font-family="system-ui,sans-serif" font-size="14" font-weight="700">Conversion Pipeline</text>
+
+  <rect x="370" y="240" width="260" height="26" rx="6" fill="#0f172a" stroke="#8b5cf6" stroke-width="1"/>
+  <text x="500" y="258" text-anchor="middle" fill="#c4b5fd" font-family="system-ui,sans-serif" font-size="13" font-weight="600">Markdown → HTML (base64 images)</text>
+
+  <path d="M500 266 L500 286" stroke="#475569" stroke-width="1.5" fill="none"/>
+
+  <rect x="370" y="288" width="260" height="26" rx="6" fill="#0f172a" stroke="#3b82f6" stroke-width="1"/>
+  <text x="500" y="306" text-anchor="middle" fill="#93c5fd" font-family="system-ui,sans-serif" font-size="13" font-weight="600">HTML → PDF (headless Chrome)</text>
+
+  <path d="M500 314 L500 334" stroke="#475569" stroke-width="1.5" fill="none"/>
+
+  <rect x="370" y="336" width="260" height="26" rx="6" fill="#0f172a" stroke="#22c55e" stroke-width="1"/>
+  <text x="500" y="354" text-anchor="middle" fill="#86efac" font-family="system-ui,sans-serif" font-size="13" font-weight="600">PDF → B2 Upload (Presigned URL)</text>
+
+  <!-- Tech Stack Row -->
+  <rect x="30" y="390" width="620" height="36" rx="10" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+  <text x="90" y="413" text-anchor="middle" fill="#cbd5e1" font-family="system-ui,sans-serif" font-size="13" font-weight="700">yt-dlp</text>
+  <text x="190" y="413" text-anchor="middle" fill="#cbd5e1" font-family="system-ui,sans-serif" font-size="13" font-weight="700">ffmpeg</text>
+  <text x="290" y="413" text-anchor="middle" fill="#cbd5e1" font-family="system-ui,sans-serif" font-size="13" font-weight="700">Whisper</text>
+  <text x="400" y="413" text-anchor="middle" fill="#cbd5e1" font-family="system-ui,sans-serif" font-size="13" font-weight="700">Chrome</text>
+  <text x="500" y="413" text-anchor="middle" fill="#cbd5e1" font-family="system-ui,sans-serif" font-size="13" font-weight="700">Python</text>
+  <text x="590" y="413" text-anchor="middle" fill="#cbd5e1" font-family="system-ui,sans-serif" font-size="13" font-weight="700">B2 Cloud</text>
+
+  <!-- Output Summary Row -->
+  <rect x="30" y="440" width="300" height="32" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+  <text x="180" y="461" text-anchor="middle" fill="#94a3b8" font-family="system-ui,sans-serif" font-size="13" font-weight="600">Output: EN PDF + zh-TW PDF (base64)</text>
+
+  <rect x="350" y="440" width="300" height="32" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+  <text x="500" y="461" text-anchor="middle" fill="#94a3b8" font-family="system-ui,sans-serif" font-size="13" font-weight="600">Delivery: Presigned URL (7-day TTL)</text>
+
+  <!-- Bottom attribution -->
+  <g opacity="0.45">
+    <text x="340" y="500" text-anchor="middle" fill="#94a3b8" font-family="system-ui,sans-serif" font-size="13" font-weight="600">osisdie.github.io · yt2pdf Pipeline</text>
+  </g>
+</svg>

@@ -1,6 +1,6 @@
 ---
 name: blog-mermaid-reviewer
-description: Validate mermaid diagram syntax in blog posts — check for CJK issues, subgraph conflicts, node ID collisions, and deprecated syntax
+description: Validate mermaid diagram syntax in blog posts — check for CJK issues, subgraph conflicts, node ID collisions, LR rendering width overflow, and deprecated syntax
 model: haiku
 tools:
   - Grep
@@ -70,11 +70,27 @@ Accept a file path or glob pattern. Default: all `.md` files in `_posts/2026/` w
 - Flowcharts are scannable in 3 seconds; sequence diagrams require 30+ seconds to parse
 - If the full sequence detail is needed, put it in a collapsible `<details>` block below the flowchart
 
-### 10. LR Chain Length Limit
-- `flowchart LR` with more than **5 nodes in a single chain** will clip on the right edge
-- **WARN** if LR chain exceeds 5 nodes
-- **Suggested fix:** Switch to `flowchart TD` (top-down), or split into 2 diagrams
-- Branching (fan-out) is OK in LR as long as the longest path is ≤ 5 nodes
+### 10. LR Rendering Width Limit
+Blog content width is ~700px. `flowchart LR` diagrams overflow when they have too many nodes or subgraphs arranged horizontally.
+
+**10a. Chain length:**
+- **WARN** if the longest left-to-right path exceeds **5 nodes**
+- Count by tracing `A --> B --> C --> ...` chains (the longest path, not total nodes)
+
+**10b. Total node count:**
+- **WARN** if a `flowchart LR` diagram has **more than 8 total nodes**
+- Even with branching, too many nodes push the SVG viewBox beyond 700px
+
+**10c. Subgraph horizontal spread:**
+- **FAIL** if a `flowchart LR` diagram has **3+ subgraphs**
+- Each subgraph adds padding + border, dramatically increasing width
+- 2 subgraphs is the practical max for LR at blog width
+
+**Suggested fixes:**
+- Switch to `flowchart TB` (top-to-bottom) — vertical space is unlimited in a blog post
+- Remove subgraphs and use node grouping by naming convention instead
+- Split into 2 smaller diagrams with prose in between
+- Merge nodes where possible (e.g., "Thumbnail + Metadata" as one node instead of two)
 
 ### 11. Front Matter Check
 - If a post contains ` ```mermaid ` blocks, it MUST have `mermaid: enabled: true` in front matter

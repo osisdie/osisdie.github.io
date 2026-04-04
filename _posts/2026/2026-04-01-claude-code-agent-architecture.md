@@ -14,7 +14,7 @@ toc:
 
 > **English Abstract** — This post dissects the internal architecture of a production agent system, extracting 8 reusable design patterns from 1,902 TypeScript source files: Tool Registration Pipeline, Side-Query for cost-efficient routing, Coordinator/Worker with XML result injection, Hook Event System (16×5×7 combinatorics), and Context Compaction three-layer strategy. Each pattern includes pseudocode and practical adoption guidance.
 
-[昨天的文章]({% raw %}{% post_url 2026-03-31-local-agent-swarm %}{% endraw %})從外部比較了主流 Agent Swarm 框架。今天我們換一個角度：**深入一個 production 級 agent 系統的原始碼**，看它是怎麼設計的。
+[昨天的文章]({% post_url 2026-03-31-local-agent-swarm %})從外部比較了主流 Agent Swarm 框架。今天我們換一個角度：**深入一個 production 級 agent 系統的原始碼**，看它是怎麼設計的。
 
 我們分析了 1,902 個 TypeScript 檔案、21 個子系統，提煉出 **8 個可直接複用的設計模式**。不論你用的是 CrewAI、LangGraph 還是自建框架，這些模式都能直接套用。
 
@@ -230,7 +230,7 @@ if (continuations >= 3 && tokenDelta < 500) {
 }
 ```
 
-> **Production Notes** — 這就是我們[上一篇]({% raw %}{% post_url 2026-03-31-local-agent-swarm %}{% endraw %})討論 task planner 的原因 — 壓縮會丟失 in-progress 的 task 狀態。解法是把 task 持久化到檔案系統（`.claude/tasks/`），讓它不受 context 壓縮影響。
+> **Production Notes** — 這就是我們[上一篇]({% post_url 2026-03-31-local-agent-swarm %})討論 task planner 的原因 — 壓縮會丟失 in-progress 的 task 狀態。解法是把 task 持久化到檔案系統（`.claude/tasks/`），讓它不受 context 壓縮影響。
 
 ---
 
@@ -272,7 +272,7 @@ Tool Pipeline + Hook System + State Store = 可生產的 Agent
 
 ## 相關連結
 
-- **昨日文章** — [本地 Agent Swarm 框架全解析]({% raw %}{% post_url 2026-03-31-local-agent-swarm %}{% endraw %})
+- **昨日文章** — [本地 Agent Swarm 框架全解析]({% post_url 2026-03-31-local-agent-swarm %})
 - **Agent Architecture Reference** — [本文分析的架構文件來源](/docs/architecture/agent-architecture/)
 - **Claude Code** — [Anthropic 官方 Agent Coding Tool](https://docs.anthropic.com/en/docs/claude-code)
 - **LangGraph** — [github.com/langchain-ai/langgraph](https://github.com/langchain-ai/langgraph) — 企業級圖工作流引擎
