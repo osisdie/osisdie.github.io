@@ -587,17 +587,44 @@ footer.sticky-bottom {
   border-bottom: 1px solid var(--global-divider-color);
   text-align: center;
   padding-top: 0.5rem;
+  padding-bottom: 0.75rem;
 
   ul {
     justify-content: center;
-    display: flow-root;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
 
-    p,
     li {
       list-style: none;
-      display: inline-block;
-      padding: 0.4rem 0.25rem;
-      color: var(--global-text-color-light);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 1rem;
+      background: var(--global-code-bg-color);
+      font-size: 0.85rem;
+      transition: background 0.2s;
+
+      &:hover {
+        background: var(--global-theme-color);
+
+        a,
+        .tag-count {
+          color: white;
+        }
+      }
+
+      a {
+        color: var(--global-text-color);
+        text-decoration: none;
+      }
+
+      .tag-count {
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: var(--global-text-color-light);
+      }
     }
   }
 }

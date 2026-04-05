@@ -31,23 +31,21 @@ pagination:
 
 {% if site.tags.size > 0 %}
 
-  {% comment %} Build tag list sorted by post count (descending) {% endcomment %}
-  {% capture tags_with_count %}{% for tag in site.tags %}{{ tag[1].size | prepend: "00000" | slice: -5, 5 }}:{{ tag[0] }}{% unless forloop.last %}|{% endunless %}{% endfor %}{% endcapture %}
+  {% comment %} Build tag list sorted by post count (descending), show only tags with 2+ posts {% endcomment %}
+  {% capture tags_with_count %}{% for tag in site.tags %}{% if tag[1].size >= 2 %}{{ tag[1].size | prepend: "00000" | slice: -5, 5 }}:{{ tag[0] }}|{% endif %}{% endfor %}{% endcapture %}
   {% assign sorted_tags = tags_with_count | split: "|" | sort | reverse %}
 
   <div class="tag-category-list">
     <ul class="p-0 m-0">
       {% for entry in sorted_tags %}
+        {% if entry == "" %}{% continue %}{% endif %}
         {% assign parts = entry | split: ":" %}
         {% assign tag_name = parts[1] %}
         {% assign tag_posts = site.tags[tag_name] %}
         <li>
-          <i class="fa-solid fa-hashtag fa-sm"></i> <a href="{{ tag_name | slugify | prepend: '/blog/tag/' | relative_url }}">{{ tag_name }}</a>
-          <span class="text-muted">({{ tag_posts.size }})</span>
+          <a href="{{ tag_name | slugify | prepend: '/blog/tag/' | relative_url }}">{{ tag_name }}</a>
+          <span class="tag-count">{{ tag_posts.size }}</span>
         </li>
-        {% unless forloop.last %}
-          <p>&bull;</p>
-        {% endunless %}
       {% endfor %}
     </ul>
   </div>
