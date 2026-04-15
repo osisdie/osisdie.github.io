@@ -28,6 +28,17 @@ Review SVG and PNG files in `assets/img/blog/` for compliance with the project's
 3. **Dark-bg font weight ≥ 600** — if the SVG has a dark background (gradient with stop-color below `#334155`), check that text `font-weight` is at least 600. Thin text on dark bg suffers from JPEG halo artifacts
 4. **No dim text on dark bg** — on dark backgrounds, flag any text fill color darker than `#94a3b8` (slate-400) as it disappears after JPEG compression
 
+### Hybrid Layout (White-Head + Dark-Detail)
+1. **Hybrid marker** — if SVG has both white and dark background regions, verify `<!-- layout: hybrid -->` comment is present after the opening `<svg>` tag
+2. **Hero viewBox** — for files named `*-overview.svg`, verify viewBox is `1200 630` (LinkedIn optimal)
+3. **Head zone readability** — in hybrid SVGs, the title text (in the white head zone, y < 370) must have `font-size` >= 24px for LinkedIn thumbnail readability at 42% scale
+4. **Head zone contrast** — text in the white zone (y < 370) must use dark fills (`#1e293b`, `#475569`, or darker) — not light fills meant for dark backgrounds like `#e2e8f0` or `#94a3b8`
+5. **Head zone pill/badge overflow** — verify text content fits within its container rect width. Estimate: `char_count × font_size × 0.55` should be less than `rect_width - 20px` padding. Flag any text that likely overflows its pill/badge
+6. **Transition gradient** — verify a gradient transition exists between the white and dark zones (typically y=370-400)
+7. **Detail zone text size >= 15px** — all text in the detail zone (y >= 400) should use font-size >= 15px for labels/titles (13px OK for secondary purpose lines). Flag any detail zone label at 13-14px as too small
+8. **Detail zone content must add value** — each box/cell in the detail zone must have at least 2 lines: a label AND a purpose/description line. Flag any box with only a single-word or single-line label — it adds no information and wastes space
+9. **Detail zone grid centering** — for horizontal box grids in the detail zone, verify the grid is centered: left margin and right margin should be approximately equal (within ±50px). Calculate: `first_box_x` vs `viewBox_width - last_box_x - last_box_width`
+
 ### Watermark
 1. **Watermark present** — every SVG must contain a `<!-- Bottom attribution -->` comment followed by a `<g opacity="0.45">` block with a `<text>` element
 2. **Position: bottom center** — `text-anchor="middle"`, x = half of viewBox width, y = viewBox height minus ~12px

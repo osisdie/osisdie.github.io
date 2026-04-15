@@ -80,6 +80,47 @@ LinkedIn, Twitter, and Facebook re-encode images as **JPEG**, which degrades tex
 - Avoid grey text below `#94a3b8` (slate-400) — it disappears after compression
 - PNG export: use **3x viewBox width** (not 2x) to counteract JPEG quality loss
 
+### Hybrid Layout (White-Head + Dark-Detail) — Recommended for Hero Images
+
+All-dark hero images appear as "black rectangles" on LinkedIn/Twitter — content is invisible without clicking to zoom. **Use the hybrid layout for all hero/overview images.**
+
+**Layout (viewBox 1200×630):**
+
+```
+┌──────────────────────────────────────────────────┐
+│  WHITE HEAD ZONE  (y: 0–370, ~60%)               │
+│  Title: 32px, #1e293b, weight 700                │
+│  Subtitle: 18px, #475569, weight 600             │
+│  2-3 key takeaway pills (pastel bg + dark text)  │
+├── gradient fade (#f1f5f9 → #1e293b, 30px) ───────┤
+│  DARK DETAIL ZONE  (y: 400–630, ~40%)            │
+│  Architecture boxes / code / comparison           │
+│  Accent colors: cyan, green, orange               │
+└──────────────────────────────────────────────────┘
+```
+
+**Rules:**
+- **Standard viewBox**: `1200x630` for all hero images (LinkedIn optimal at 1.9:1 ratio)
+- **SVG marker**: add `<!-- layout: hybrid -->` comment after opening `<svg>` tag
+- **Head zone**: white `#ffffff` background, title >= 24px, dark text (`#1e293b`, `#475569`)
+- **Takeaway pills**: pastel backgrounds (`#dcfce7` green, `#dbeafe` blue, `#fef3c7` amber) with bold dark text
+- **Transition**: 30px vertical `linearGradient` from `#f1f5f9` to `#1e293b` (y=370→400)
+- **Detail zone**: same rules as dark-bg (weight >= 600, accents, no text below `#94a3b8`)
+- **Detail zone minimum font: 15px** for labels/titles (13px only for secondary purpose lines)
+- **Detail zone boxes must include purpose** — a label-only box adds no value; always pair `Label` + `one-line purpose description`
+- **Center grids horizontally** — calculate left/right margins to ensure visual balance (±50px tolerance)
+- **Head zone pill overflow** — verify text fits its container: `char_count × font_size × 0.55 < rect_width - 20`
+- **PNG export**: 3x scaling + `-b white` (the white head zone needs it; the dark zone has its own rect)
+- **Reference template**: see `assets/docs/hero-template.svg`
+
+**Font sizing for LinkedIn readability (42% scale at 504px thumbnail):**
+| SVG size | At 504px | Readable? |
+|----------|----------|-----------|
+| 32px     | ~13px    | Yes — title |
+| 24px     | ~10px    | Yes — pills with bold |
+| 18px     | ~7.5px   | Marginal — keep bold weight |
+| 14px     | ~6px     | Detail zone only (not thumbnail-critical) |
+
 ## Watermark
 
 Every blog SVG must include a bottom-center watermark before `</svg>`:
@@ -129,3 +170,6 @@ The script is idempotent — SVG watermarks are replaced in-place; standalone PN
 - [ ] PNG width >= 2x viewBox (3x for dark-bg images)
 - [ ] Chinese text renders correctly in PNG (check with `Read` tool)
 - [ ] File size < 500KB
+- [ ] **Hero images**: viewBox `1200x630`, hybrid layout with `<!-- layout: hybrid -->` marker
+- [ ] **Hybrid head zone**: title >= 24px, dark fills (`#1e293b`, `#475569`), no light-on-dark text
+- [ ] **Hybrid detail zone**: weight >= 600, accent colors, same dark-bg rules

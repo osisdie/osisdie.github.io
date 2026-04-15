@@ -1,228 +1,128 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 540" font-family="-apple-system, system-ui, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <!-- layout: hybrid -->
   <defs>
-    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#0f172a;stop-opacity:1"/>
-      <stop offset="100%" style="stop-color:#1e293b;stop-opacity:1"/>
+    <linearGradient id="transitionGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f1f5f9"/>
+      <stop offset="100%" style="stop-color:#1e293b"/>
+    </linearGradient>
+    <linearGradient id="detailBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="100%" style="stop-color:#1e293b"/>
     </linearGradient>
     <filter id="shadow">
-      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.4"/>
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.12"/>
     </filter>
-    <marker id="arrCyan" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-      <polygon points="0 0, 8 3, 0 6" fill="#22d3ee"/>
-    </marker>
-    <marker id="arrPurple" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-      <polygon points="0 0, 8 3, 0 6" fill="#a78bfa"/>
-    </marker>
-    <marker id="arrGreen" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-      <polygon points="0 0, 8 3, 0 6" fill="#34d399"/>
-    </marker>
-    <marker id="arrYellow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-      <polygon points="0 0, 8 3, 0 6" fill="#fbbf24"/>
-    </marker>
-    <marker id="arrBlue" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-      <polygon points="0 0, 8 3, 0 6" fill="#60a5fa"/>
-    </marker>
-    <marker id="arrOrange" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-      <polygon points="0 0, 8 3, 0 6" fill="#fb923c"/>
-    </marker>
-    <marker id="arrRed" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-      <polygon points="0 0, 8 3, 0 6" fill="#f87171"/>
+    <marker id="arrRight" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#94a3b8"/>
     </marker>
   </defs>
 
-  <!-- Background -->
-  <rect width="1000" height="540" fill="url(#bgGrad)" rx="12"/>
+  <!-- === BACKGROUND === -->
+  <rect width="1200" height="630" fill="#ffffff"/>
+  <rect y="390" width="1200" height="240" fill="url(#detailBgGrad)"/>
+  <rect y="370" width="1200" height="30" fill="url(#transitionGrad)"/>
 
-  <!-- Grid -->
-  <g opacity="0.04" stroke="#fff" stroke-width="0.5">
-    <line x1="0" y1="100" x2="1000" y2="100"/><line x1="0" y1="200" x2="1000" y2="200"/>
-    <line x1="0" y1="300" x2="1000" y2="300"/><line x1="0" y1="400" x2="1000" y2="400"/>
-    <line x1="200" y1="0" x2="200" y2="540"/><line x1="400" y1="0" x2="400" y2="540"/>
-    <line x1="600" y1="0" x2="600" y2="540"/><line x1="800" y1="0" x2="800" y2="540"/>
+  <!-- === HEAD ZONE === -->
+  <text x="600" y="68" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans TC, sans-serif"
+        font-size="32" font-weight="700" fill="#1e293b">
+    IoT 1M Device Architecture
+  </text>
+  <text x="600" y="105" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+        font-size="18" font-weight="600" fill="#475569">
+    EMQX + TimescaleDB + FastAPI + BFF
+  </text>
+  <line x1="300" y1="125" x2="900" y2="125" stroke="#e2e8f0" stroke-width="1.5"/>
+
+  <!-- 5 layer cards in a flow -->
+  <!-- Devices -->
+  <g transform="translate(140, 240)">
+    <rect x="-95" y="-70" width="190" height="170" rx="14" fill="#a5f3fc" stroke="#0891b2" stroke-width="3"/>
+    <text x="0" y="-32" text-anchor="middle" font-family="sans-serif" font-size="20" font-weight="700" fill="#155e75">1M Devices</text>
+    <text x="0" y="-8" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#0e7490">MQTT v5 + mTLS</text>
+    <text x="0" y="16" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#0e7490">X.509 Certificates</text>
+    <rect x="-36" y="32" width="72" height="22" rx="11" fill="#0891b2"/>
+    <text x="0" y="48" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#fff">Edge</text>
   </g>
 
-  <!-- Title -->
-  <text x="500" y="30" text-anchor="middle" fill="#fff" font-size="22" font-weight="700" letter-spacing="0.5">IoT 1M Device Architecture</text>
-  <text x="500" y="50" text-anchor="middle" fill="#94a3b8" font-size="12">Phase 1: EMQX + TimescaleDB + FastAPI + BFF (1M Device Real-time IoT)</text>
+  <!-- Arrow -->
+  <line x1="240" y1="240" x2="280" y2="240" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrRight)"/>
 
-  <!-- metrics + traces label (above all boxes, no overlap) -->
-  <text x="550" y="66" text-anchor="middle" fill="#fb923c" font-size="12" font-weight="500">metrics + traces</text>
-
-  <!-- Layer labels -->
-  <text x="90" y="92" text-anchor="middle" fill="#67e8f9" font-size="11" font-weight="600">Edge</text>
-  <text x="275" y="92" text-anchor="middle" fill="#c4b5fd" font-size="11" font-weight="600">Broker</text>
-  <text x="477" y="92" text-anchor="middle" fill="#6ee7b7" font-size="11" font-weight="600">Storage</text>
-  <text x="690" y="92" text-anchor="middle" fill="#fde68a" font-size="11" font-weight="600">Backend + BFF + UI</text>
-  <text x="890" y="92" text-anchor="middle" fill="#fca5a5" font-size="11" font-weight="600">Monitoring</text>
-
-  <!-- ===== CORE FLOW (top row, shifted down 15px) ===== -->
-
-  <!-- Layer 1: Devices -->
-  <g filter="url(#shadow)">
-    <rect x="25" y="100" width="130" height="185" rx="12" fill="#0c2d48" stroke="#22d3ee" stroke-width="1.5"/>
+  <!-- EMQX -->
+  <g transform="translate(370, 240)">
+    <rect x="-95" y="-70" width="190" height="170" rx="14" fill="#ddd6fe" stroke="#7c3aed" stroke-width="3"/>
+    <text x="0" y="-32" text-anchor="middle" font-family="sans-serif" font-size="20" font-weight="700" fill="#5b21b6">EMQX</text>
+    <text x="0" y="-8" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#6d28d9">3-5 Node Cluster</text>
+    <text x="0" y="16" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#6d28d9">Rule Engine + ACL</text>
+    <rect x="-40" y="32" width="80" height="22" rx="11" fill="#7c3aed"/>
+    <text x="0" y="48" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#fff">Broker</text>
   </g>
-  <rect x="42" y="117" width="96" height="28" rx="5" fill="#164e63" stroke="#22d3ee" stroke-width="1"/>
-  <circle cx="56" cy="131" r="5" fill="#22d3ee" opacity="0.6"/>
-  <text x="72" y="135" fill="#67e8f9" font-size="11">Sensor A</text>
-  <rect x="42" y="151" width="96" height="28" rx="5" fill="#164e63" stroke="#22d3ee" stroke-width="1"/>
-  <circle cx="56" cy="165" r="5" fill="#22d3ee" opacity="0.6"/>
-  <text x="72" y="169" fill="#67e8f9" font-size="11">Sensor B</text>
-  <text x="90" y="197" text-anchor="middle" fill="#67e8f9" font-size="14">...</text>
-  <text x="90" y="220" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">1M Devices</text>
-  <rect x="52" y="230" width="76" height="18" rx="3" fill="#164e63" stroke="#22d3ee" stroke-width="0.8"/>
-  <text x="90" y="243" text-anchor="middle" fill="#22d3ee" font-size="11">HTTPS / TLS</text>
-  <text x="90" y="262" text-anchor="middle" fill="#67e8f9" font-size="11">mTLS + X.509</text>
 
-  <!-- Layer 2: EMQX -->
-  <g filter="url(#shadow)">
-    <rect x="200" y="105" width="150" height="170" rx="12" fill="#1e1145" stroke="#a78bfa" stroke-width="1.5"/>
+  <!-- Arrow -->
+  <line x1="470" y1="240" x2="510" y2="240" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrRight)"/>
+
+  <!-- TimescaleDB -->
+  <g transform="translate(600, 240)">
+    <rect x="-95" y="-70" width="190" height="170" rx="14" fill="#bbf7d0" stroke="#16a34a" stroke-width="3"/>
+    <text x="0" y="-32" text-anchor="middle" font-family="sans-serif" font-size="20" font-weight="700" fill="#166534">TimescaleDB</text>
+    <text x="0" y="-8" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#15803d">100K writes/sec</text>
+    <text x="0" y="16" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#15803d">Hot 7d + Cold S3</text>
+    <rect x="-44" y="32" width="88" height="22" rx="11" fill="#16a34a"/>
+    <text x="0" y="48" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#fff">Storage</text>
   </g>
-  <circle cx="275" cy="140" r="20" fill="none" stroke="#a78bfa" stroke-width="2"/>
-  <text x="275" y="146" text-anchor="middle" fill="#a78bfa" font-size="13" font-weight="700">E</text>
-  <text x="275" y="180" text-anchor="middle" fill="#fff" font-size="14" font-weight="600">EMQX</text>
-  <text x="275" y="197" text-anchor="middle" fill="#a78bfa" font-size="11">MQTT v5 Broker</text>
-  <text x="275" y="213" text-anchor="middle" fill="#7c3aed" font-size="11">3-5 node cluster</text>
-  <rect x="215" y="225" width="120" height="18" rx="4" fill="#2d1a5e" stroke="#7c3aed" stroke-width="1"/>
-  <text x="275" y="238" text-anchor="middle" fill="#c4b5fd" font-size="11">Rule Engine</text>
-  <rect x="215" y="247" width="120" height="18" rx="4" fill="#2d1a5e" stroke="#7c3aed" stroke-width="1"/>
-  <text x="275" y="260" text-anchor="middle" fill="#c4b5fd" font-size="11">Rate Limit + ACL</text>
 
-  <!-- Layer 3: TimescaleDB -->
-  <g filter="url(#shadow)">
-    <rect x="400" y="105" width="155" height="170" rx="12" fill="#0a2e1e" stroke="#34d399" stroke-width="1.5"/>
+  <!-- Arrow -->
+  <line x1="700" y1="240" x2="740" y2="240" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrRight)"/>
+
+  <!-- FastAPI + BFF -->
+  <g transform="translate(830, 240)">
+    <rect x="-95" y="-70" width="190" height="170" rx="14" fill="#fde68a" stroke="#d97706" stroke-width="3"/>
+    <text x="0" y="-32" text-anchor="middle" font-family="sans-serif" font-size="20" font-weight="700" fill="#92400e">FastAPI + BFF</text>
+    <text x="0" y="-8" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#b45309">Device RBAC</text>
+    <text x="0" y="16" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#b45309">WebSocket + API Agg</text>
+    <rect x="-44" y="32" width="88" height="22" rx="11" fill="#d97706"/>
+    <text x="0" y="48" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#fff">Backend</text>
   </g>
-  <circle cx="477" cy="140" r="20" fill="none" stroke="#34d399" stroke-width="2"/>
-  <text x="477" y="146" text-anchor="middle" fill="#34d399" font-size="13" font-weight="700">T</text>
-  <text x="477" y="180" text-anchor="middle" fill="#fff" font-size="14" font-weight="600">TimescaleDB</text>
-  <text x="477" y="197" text-anchor="middle" fill="#34d399" font-size="11">Hot Storage (7 days)</text>
-  <text x="477" y="213" text-anchor="middle" fill="#6ee7b7" font-size="11">100K writes/sec</text>
-  <rect x="413" y="225" width="128" height="18" rx="4" fill="#164e3a" stroke="#34d399" stroke-width="1"/>
-  <text x="477" y="238" text-anchor="middle" fill="#6ee7b7" font-size="11">Continuous Agg</text>
-  <rect x="413" y="247" width="128" height="18" rx="4" fill="#12121e" stroke="#64748b" stroke-width="1" stroke-dasharray="3,2"/>
-  <text x="477" y="260" text-anchor="middle" fill="#94a3b8" font-size="11">Cold: ClickHouse + S3</text>
 
-  <!-- Layer 4a: FastAPI Backend -->
-  <g filter="url(#shadow)">
-    <rect x="605" y="105" width="115" height="120" rx="12" fill="#2a1a0e" stroke="#fbbf24" stroke-width="1.5"/>
+  <!-- Arrow -->
+  <line x1="930" y1="240" x2="970" y2="240" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrRight)"/>
+
+  <!-- Observability -->
+  <g transform="translate(1060, 240)">
+    <rect x="-95" y="-70" width="190" height="170" rx="14" fill="#fecaca" stroke="#dc2626" stroke-width="3"/>
+    <text x="0" y="-32" text-anchor="middle" font-family="sans-serif" font-size="20" font-weight="700" fill="#991b1b">Observability</text>
+    <text x="0" y="-8" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#b91c1c">Prometheus + Grafana</text>
+    <text x="0" y="16" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#b91c1c">OpenTelemetry</text>
+    <rect x="-48" y="32" width="96" height="22" rx="11" fill="#dc2626"/>
+    <text x="0" y="48" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#fff">Monitoring</text>
   </g>
-  <text x="662" y="130" text-anchor="middle" fill="#fff" font-size="13" font-weight="600">FastAPI</text>
-  <text x="662" y="147" text-anchor="middle" fill="#fbbf24" font-size="11">Backend</text>
-  <rect x="618" y="157" width="90" height="18" rx="3" fill="#0d0d0d" stroke="#333" stroke-width="1"/>
-  <text x="663" y="170" text-anchor="middle" fill="#fbbf24" font-size="11">Device + RBAC</text>
-  <rect x="618" y="179" width="90" height="18" rx="3" fill="#0d0d0d" stroke="#333" stroke-width="1"/>
-  <text x="663" y="192" text-anchor="middle" fill="#34d399" font-size="11">Telemetry API</text>
-  <rect x="618" y="201" width="90" height="18" rx="3" fill="#0d0d0d" stroke="#333" stroke-width="1"/>
-  <text x="663" y="214" text-anchor="middle" fill="#fb923c" font-size="11">Command API</text>
 
-  <!-- Layer 4b: BFF -->
-  <g filter="url(#shadow)">
-    <rect x="605" y="237" width="115" height="60" rx="10" fill="#1a1e2e" stroke="#818cf8" stroke-width="1.5"/>
-  </g>
-  <text x="662" y="257" text-anchor="middle" fill="#fff" font-size="12" font-weight="600">BFF</text>
-  <text x="662" y="273" text-anchor="middle" fill="#a5b4fc" font-size="11">WebSocket Mgmt</text>
-  <text x="662" y="288" text-anchor="middle" fill="#818cf8" font-size="11">API Aggregation</text>
+  <!-- === DETAIL ZONE: Scale-out phases with purpose === -->
+  <text x="600" y="420" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+        font-size="16" font-weight="700" fill="#cbd5e1">Scale-Out Roadmap</text>
 
-  <!-- Dashboard box right of BFF -->
-  <rect x="730" y="237" width="62" height="60" rx="8" fill="#1e293b" stroke="#60a5fa" stroke-width="1"/>
-  <text x="761" y="259" text-anchor="middle" fill="#60a5fa" font-size="11" font-weight="600">UI</text>
-  <polyline points="738,275 745,269 752,272 759,265 766,268 773,263 780,266" fill="none" stroke="#60a5fa" stroke-width="1.5"/>
-  <circle cx="780" cy="266" r="2" fill="#60a5fa">
-    <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
-  </circle>
-  <text x="761" y="291" text-anchor="middle" fill="#475569" font-size="11">Web/Mobile</text>
+  <rect x="60" y="436" width="345" height="52" rx="8" fill="#0f172a" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="232" y="457" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="700" fill="#4ade80">Phase 1: EMQX + TimescaleDB + FastAPI</text>
+  <text x="232" y="477" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="600" fill="#94a3b8">Day 1 production stack</text>
 
-  <!-- ===== MONITORING LAYER (right column, shifted down) ===== -->
-  <g filter="url(#shadow)">
-    <rect x="805" y="100" width="170" height="180" rx="12" fill="#1a0e0e" stroke="#f87171" stroke-width="1.5"/>
-  </g>
-  <text x="890" y="123" text-anchor="middle" fill="#f87171" font-size="12" font-weight="600">Observability</text>
+  <rect x="428" y="436" width="345" height="52" rx="8" fill="#0f172a" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="600" y="457" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="700" fill="#fcd34d">Phase 2: + Redpanda + Dedup</text>
+  <text x="600" y="477" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="600" fill="#94a3b8">Stream processing + dedup</text>
 
-  <rect x="820" y="133" width="140" height="22" rx="4" fill="#2a1515" stroke="#fb923c" stroke-width="1"/>
-  <circle cx="834" cy="144" r="5" fill="#fb923c"/>
-  <text x="845" y="148" fill="#fdba74" font-size="11">Prometheus</text>
-
-  <rect x="820" y="161" width="140" height="22" rx="4" fill="#1a2a15" stroke="#34d399" stroke-width="1"/>
-  <circle cx="834" cy="172" r="5" fill="#34d399"/>
-  <text x="845" y="176" fill="#6ee7b7" font-size="11">Grafana Dashboard</text>
-
-  <rect x="820" y="189" width="140" height="22" rx="4" fill="#1a1a2e" stroke="#818cf8" stroke-width="1"/>
-  <circle cx="834" cy="200" r="5" fill="#818cf8"/>
-  <text x="845" y="204" fill="#a5b4fc" font-size="11">OpenTelemetry</text>
-
-  <rect x="820" y="217" width="140" height="22" rx="4" fill="#2a1a1a" stroke="#f87171" stroke-width="1"/>
-  <text x="836" y="232" fill="#fca5a5" font-size="13">!</text>
-  <text x="845" y="232" fill="#fca5a5" font-size="11">Alerting (PagerDuty)</text>
-
-  <rect x="820" y="245" width="68" height="22" rx="4" fill="#1e1a2e" stroke="#c084fc" stroke-width="1"/>
-  <text x="854" y="260" text-anchor="middle" fill="#d8b4fe" font-size="11">Jaeger</text>
-  <rect x="892" y="245" width="68" height="22" rx="4" fill="#1a1e2e" stroke="#93c5fd" stroke-width="1"/>
-  <text x="926" y="260" text-anchor="middle" fill="#bfdbfe" font-size="11">Loki</text>
-
-  <!-- ===== CORE FLOW ARROWS ===== -->
-
-  <!-- Device → EMQX -->
-  <line x1="155" y1="185" x2="200" y2="185" stroke="#22d3ee" stroke-width="2" marker-end="url(#arrCyan)"/>
-  <text x="177" y="177" text-anchor="middle" fill="#67e8f9" font-size="11">MQTT</text>
-
-  <!-- EMQX → TimescaleDB -->
-  <line x1="350" y1="185" x2="400" y2="185" stroke="#a78bfa" stroke-width="2" marker-end="url(#arrPurple)"/>
-  <text x="375" y="177" text-anchor="middle" fill="#c4b5fd" font-size="11">Rule</text>
-
-  <!-- TimescaleDB → FastAPI Backend -->
-  <line x1="555" y1="185" x2="605" y2="185" stroke="#34d399" stroke-width="2" marker-end="url(#arrGreen)"/>
-  <text x="580" y="177" text-anchor="middle" fill="#6ee7b7" font-size="11">SQL</text>
-
-  <!-- FastAPI Backend → BFF -->
-  <line x1="662" y1="225" x2="662" y2="237" stroke="#818cf8" stroke-width="1.5" marker-end="url(#arrPurple)"/>
-
-  <!-- BFF → Dashboard UI -->
-  <line x1="720" y1="267" x2="730" y2="267" stroke="#60a5fa" stroke-width="1.5" marker-end="url(#arrBlue)"/>
-
-  <!-- FastAPI → Monitoring (straight line, no overlap now) -->
-  <line x1="720" y1="155" x2="805" y2="155" stroke="#f87171" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrRed)"/>
-
-  <!-- EMQX → Monitoring (arc above boxes, enters left side) -->
-  <path d="M 275 105 C 275 68, 730 65, 820 140" fill="none" stroke="#fb923c" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrOrange)"/>
-
-  <!-- Reverse command: BFF → Backend → EMQX (dashed) -->
-  <path d="M 605 285 Q 400 330 275 275" fill="none" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#arrYellow)"/>
-  <text x="420" y="320" text-anchor="middle" fill="#fde68a" font-size="11">cmd/{device-id} (reverse command)</text>
-
-  <!-- ===== BOTTOM: Multi-tenant + Scale note ===== -->
+  <rect x="796" y="436" width="345" height="52" rx="8" fill="#0f172a" stroke="#ef4444" stroke-width="1.5"/>
+  <text x="968" y="457" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="700" fill="#f87171">Phase 3: + ClickHouse + DR</text>
+  <text x="968" y="477" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="600" fill="#94a3b8">OLAP analytics + disaster recovery</text>
 
   <!-- Multi-tenant bar -->
-  <rect x="25" y="345" width="950" height="32" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1"/>
-  <text x="500" y="366" text-anchor="middle" fill="#94a3b8" font-size="11">Multi-Tenant: Topic ACL + PostgreSQL RLS + RBAC (Super Admin / Tenant Admin / Operator / Viewer)</text>
-
-  <!-- Scale-out hint -->
-  <rect x="25" y="390" width="950" height="68" rx="10" fill="#0f172a" stroke="#475569" stroke-width="1" stroke-dasharray="5,4"/>
-  <text x="500" y="412" text-anchor="middle" fill="#64748b" font-size="12" font-weight="600">Scale-Out Options (10M+ devices)</text>
-
-  <rect x="50" y="423" width="130" height="24" rx="5" fill="#2d1533" stroke="#ec4899" stroke-width="1"/>
-  <text x="115" y="439" text-anchor="middle" fill="#f9a8d4" font-size="11">+ Redpanda (Kafka)</text>
-
-  <rect x="195" y="423" width="130" height="24" rx="5" fill="#1a1a0e" stroke="#fbbf24" stroke-width="1"/>
-  <text x="260" y="439" text-anchor="middle" fill="#fde68a" font-size="11">+ ClickHouse OLAP</text>
-
-  <rect x="340" y="423" width="130" height="24" rx="5" fill="#1a1e2e" stroke="#60a5fa" stroke-width="1"/>
-  <text x="405" y="439" text-anchor="middle" fill="#93c5fd" font-size="11">+ Flink CEP</text>
-
-  <rect x="485" y="423" width="140" height="24" rx="5" fill="#1a2e1e" stroke="#34d399" stroke-width="1"/>
-  <text x="555" y="439" text-anchor="middle" fill="#6ee7b7" font-size="11">+ Multi-Region DR</text>
-
-  <rect x="640" y="423" width="148" height="24" rx="5" fill="#1e1a2e" stroke="#a78bfa" stroke-width="1"/>
-  <text x="714" y="439" text-anchor="middle" fill="#c4b5fd" font-size="11">+ FastStream / Benthos</text>
-
-  <rect x="803" y="423" width="148" height="24" rx="5" fill="#0c2d48" stroke="#22d3ee" stroke-width="1"/>
-  <text x="877" y="439" text-anchor="middle" fill="#67e8f9" font-size="11">+ Edge Gateway Agg</text>
-
-  <!-- Phase labels -->
-  <text x="25" y="483" fill="#475569" font-size="11">Phase 1: EMQX + TimescaleDB + FastAPI (Day 1)</text>
-  <text x="400" y="483" fill="#475569" font-size="11">Phase 2: + Streaming + Dedup (Month 3)</text>
-  <text x="720" y="483" fill="#475569" font-size="11">Phase 3: + OLAP + DR (Month 5+)</text>
+  <rect x="150" y="508" width="900" height="36" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+  <text x="600" y="531" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+        font-size="15" font-weight="600" fill="#cbd5e1">Multi-Tenant: Topic ACL + PostgreSQL RLS + RBAC</text>
 
   <!-- Bottom attribution -->
   <g opacity="0.45">
-    <text x="500" y="528" text-anchor="middle" fill="#64748b" font-family="-apple-system, system-ui, Arial, sans-serif" font-size="11" font-weight="600" letter-spacing="0.5px">osisdie.github.io · IoT Architecture</text>
+    <text x="600" y="618" text-anchor="middle" fill="#64748b" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" letter-spacing="0.5px">osisdie.github.io · IoT Architecture</text>
   </g>
 </svg>

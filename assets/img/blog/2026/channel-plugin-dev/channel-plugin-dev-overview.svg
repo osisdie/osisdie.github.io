@@ -1,8 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 400" font-family="Segoe UI, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <!-- layout: hybrid -->
   <defs>
-    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#1a1a2e;stop-opacity:1"/>
-      <stop offset="100%" style="stop-color:#16213e;stop-opacity:1"/>
+    <linearGradient id="transitionGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f1f5f9"/>
+      <stop offset="100%" style="stop-color:#1e293b"/>
+    </linearGradient>
+    <linearGradient id="detailBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="100%" style="stop-color:#1e293b"/>
     </linearGradient>
     <linearGradient id="telegramGrad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#2AABEE"/>
@@ -16,138 +21,112 @@
       <stop offset="0%" style="stop-color:#D97706"/>
       <stop offset="100%" style="stop-color:#F59E0B"/>
     </linearGradient>
-    <filter id="glow">
-      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-      <feMerge>
-        <feMergeNode in="coloredBlur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
     <filter id="shadow">
-      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.3"/>
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.12"/>
     </filter>
   </defs>
 
-  <!-- Background -->
-  <rect width="900" height="400" fill="url(#bgGrad)" rx="12"/>
+  <!-- === BACKGROUND === -->
+  <rect width="1200" height="630" fill="#ffffff"/>
+  <rect y="390" width="1200" height="240" fill="url(#detailBgGrad)"/>
+  <rect y="370" width="1200" height="30" fill="url(#transitionGrad)"/>
 
-  <!-- Subtle grid pattern -->
-  <g opacity="0.05" stroke="#fff" stroke-width="0.5">
-    <line x1="0" y1="50" x2="900" y2="50"/><line x1="0" y1="100" x2="900" y2="100"/>
-    <line x1="0" y1="150" x2="900" y2="150"/><line x1="0" y1="200" x2="900" y2="200"/>
-    <line x1="0" y1="250" x2="900" y2="250"/><line x1="0" y1="300" x2="900" y2="300"/>
-    <line x1="0" y1="350" x2="900" y2="350"/>
-    <line x1="100" y1="0" x2="100" y2="400"/><line x1="200" y1="0" x2="200" y2="400"/>
-    <line x1="300" y1="0" x2="300" y2="400"/><line x1="400" y1="0" x2="400" y2="400"/>
-    <line x1="500" y1="0" x2="500" y2="400"/><line x1="600" y1="0" x2="600" y2="400"/>
-    <line x1="700" y1="0" x2="700" y2="400"/><line x1="800" y1="0" x2="800" y2="400"/>
+  <!-- === HEAD ZONE === -->
+  <text x="600" y="68" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans TC, sans-serif"
+        font-size="32" font-weight="700" fill="#1e293b">
+    Channel Plugin Architecture
+  </text>
+  <text x="600" y="105" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+        font-size="18" font-weight="600" fill="#475569">
+    Telegram Inline Buttons + MCP Server + Cache Patching
+  </text>
+  <line x1="350" y1="125" x2="850" y2="125" stroke="#e2e8f0" stroke-width="1.5"/>
+
+  <!-- 3 component cards -->
+  <!-- Telegram -->
+  <g transform="translate(200, 235)">
+    <rect x="-130" y="-65" width="260" height="170" rx="16" fill="#bfdbfe" stroke="#229ED9" stroke-width="3"/>
+    <circle cx="-90" cy="-20" r="16" fill="url(#telegramGrad)"/>
+    <text x="-90" y="-14" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="700" fill="#fff">T</text>
+    <text x="15" y="-14" text-anchor="middle"
+          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+          font-size="24" font-weight="700" fill="#1e3a5f">Telegram</text>
+    <text x="0" y="18" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#1d4ed8">grammy Bot Framework</text>
+    <text x="0" y="42" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#1d4ed8">Inline Buttons + Callback</text>
+    <text x="0" y="66" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#1d4ed8">Bidirectional Messaging</text>
+    <rect x="-44" y="78" width="88" height="22" rx="11" fill="#229ED9"/>
+    <text x="0" y="94" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#fff">Channel</text>
   </g>
 
-  <!-- ===== Telegram Box ===== -->
-  <g filter="url(#shadow)">
-    <rect x="40" y="80" width="200" height="240" rx="16" fill="#0f3460" stroke="#2AABEE" stroke-width="2"/>
-  </g>
-  <!-- Telegram icon -->
-  <circle cx="140" cy="130" r="30" fill="url(#telegramGrad)"/>
-  <path d="M125 130l20-8 20 8-8 18-12-4-12 4z" fill="#fff" opacity="0.9"/>
-  <text x="140" y="180" text-anchor="middle" fill="#fff" font-size="16" font-weight="600">Telegram</text>
-  <text x="140" y="200" text-anchor="middle" fill="#8899aa" font-size="11">grammy Bot</text>
-
-  <!-- Inline buttons mockup -->
-  <rect x="70" y="220" width="60" height="28" rx="6" fill="#2AABEE" opacity="0.9"/>
-  <text x="100" y="239" text-anchor="middle" fill="#fff" font-size="12" font-weight="500">Yes</text>
-  <rect x="140" y="220" width="60" height="28" rx="6" fill="#2AABEE" opacity="0.9"/>
-  <text x="170" y="239" text-anchor="middle" fill="#fff" font-size="12" font-weight="500">No</text>
-
-  <text x="140" y="275" text-anchor="middle" fill="#556677" font-size="10">callback_query</text>
-  <rect x="65" y="282" width="150" height="22" rx="4" fill="#1a3a5c" stroke="#334455" stroke-width="1"/>
-  <text x="140" y="297" text-anchor="middle" fill="#6688aa" font-size="10" font-style="italic">btn:Yes</text>
-
-  <!-- ===== MCP Server Box ===== -->
-  <g filter="url(#shadow)">
-    <rect x="340" y="80" width="220" height="240" rx="16" fill="#1a1a3e" stroke="url(#mcpGrad)" stroke-width="2"/>
-  </g>
-  <!-- MCP icon -->
-  <circle cx="450" cy="125" r="24" fill="none" stroke="url(#mcpGrad)" stroke-width="2.5"/>
-  <circle cx="450" cy="125" r="8" fill="url(#mcpGrad)" opacity="0.6"/>
-  <line x1="450" y1="101" x2="450" y2="109" stroke="url(#mcpGrad)" stroke-width="2"/>
-  <line x1="450" y1="141" x2="450" y2="149" stroke="url(#mcpGrad)" stroke-width="2"/>
-  <line x1="426" y1="125" x2="434" y2="125" stroke="url(#mcpGrad)" stroke-width="2"/>
-  <line x1="466" y1="125" x2="474" y2="125" stroke="url(#mcpGrad)" stroke-width="2"/>
-
-  <text x="450" y="170" text-anchor="middle" fill="#fff" font-size="16" font-weight="600">MCP Server</text>
-  <text x="450" y="190" text-anchor="middle" fill="#8899aa" font-size="11">Bun subprocess</text>
-
-  <!-- stdio label -->
-  <rect x="380" y="210" width="140" height="30" rx="6" fill="#2a1a4e" stroke="#7c3aed" stroke-width="1"/>
-  <text x="450" y="230" text-anchor="middle" fill="#a78bfa" font-size="11">stdio transport</text>
-
-  <!-- Cache patching indicator -->
-  <rect x="375" y="260" width="150" height="44" rx="8" fill="#1a2a1a" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="4,3"/>
-  <text x="450" y="279" text-anchor="middle" fill="#4ade80" font-size="11" font-weight="600">cache patching</text>
-  <text x="450" y="295" text-anchor="middle" fill="#22c55e" font-size="9">--cwd → local fork</text>
-
-  <!-- ===== Claude Code Box ===== -->
-  <g filter="url(#shadow)">
-    <rect x="660" y="80" width="200" height="240" rx="16" fill="#2a1a0e" stroke="url(#claudeGrad)" stroke-width="2"/>
-  </g>
-  <!-- Claude icon -->
-  <circle cx="760" cy="130" r="28" fill="url(#claudeGrad)" opacity="0.15"/>
-  <circle cx="760" cy="130" r="18" fill="url(#claudeGrad)" opacity="0.3"/>
-  <text x="760" y="137" text-anchor="middle" fill="#F59E0B" font-size="20" font-weight="700">C</text>
-
-  <text x="760" y="178" text-anchor="middle" fill="#fff" font-size="16" font-weight="600">Claude Code</text>
-  <text x="760" y="198" text-anchor="middle" fill="#8899aa" font-size="11">Session</text>
-
-  <!-- Terminal mockup -->
-  <rect x="690" y="215" width="140" height="70" rx="6" fill="#0d0d0d" stroke="#333" stroke-width="1"/>
-  <text x="700" y="233" fill="#22c55e" font-size="9" font-family="monospace">$ claude --channels</text>
-  <text x="700" y="248" fill="#666" font-size="9" font-family="monospace">  plugin:telegram</text>
-  <text x="700" y="263" fill="#F59E0B" font-size="9" font-family="monospace">reply({ buttons })</text>
-  <rect x="700" y="270" width="40" height="2" fill="#F59E0B" opacity="0.6">
-    <animate attributeName="opacity" values="0.6;0;0.6" dur="1.5s" repeatCount="indefinite"/>
-  </rect>
-
-  <!-- ===== Connection Arrows ===== -->
-  <!-- Telegram → MCP -->
-  <g filter="url(#glow)">
-    <line x1="240" y1="170" x2="340" y2="170" stroke="#2AABEE" stroke-width="2" marker-end="url(#arrowBlue)"/>
-    <line x1="340" y1="195" x2="240" y2="195" stroke="#2AABEE" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrowBlueR)"/>
-  </g>
-  <!-- MCP → Claude -->
-  <g filter="url(#glow)">
-    <line x1="560" y1="170" x2="660" y2="170" stroke="#a78bfa" stroke-width="2" marker-end="url(#arrowPurple)"/>
-    <line x1="660" y1="195" x2="560" y2="195" stroke="#F59E0B" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrowOrangeR)"/>
+  <!-- MCP Server -->
+  <g transform="translate(600, 235)">
+    <rect x="-130" y="-65" width="260" height="170" rx="16" fill="#f5d0fe" stroke="#d946ef" stroke-width="3"/>
+    <circle cx="-90" cy="-20" r="16" fill="none" stroke="#d946ef" stroke-width="2"/>
+    <circle cx="-90" cy="-20" r="5" fill="#d946ef" opacity="0.6"/>
+    <text x="20" y="-14" text-anchor="middle"
+          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+          font-size="24" font-weight="700" fill="#701a75">MCP Server</text>
+    <text x="0" y="18" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#a21caf">Bun Subprocess (stdio)</text>
+    <text x="0" y="42" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#a21caf">Cache Patching (--cwd)</text>
+    <text x="0" y="66" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#a21caf">Notification Bridge</text>
+    <rect x="-44" y="78" width="88" height="22" rx="11" fill="#d946ef"/>
+    <text x="0" y="94" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#fff">Bridge</text>
   </g>
 
-  <!-- Arrow markers -->
-  <defs>
-    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#2AABEE"/>
-    </marker>
-    <marker id="arrowBlueR" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#2AABEE"/>
-    </marker>
-    <marker id="arrowPurple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#a78bfa"/>
-    </marker>
-    <marker id="arrowOrangeR" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#F59E0B"/>
-    </marker>
-  </defs>
+  <!-- Claude Code -->
+  <g transform="translate(1000, 235)">
+    <rect x="-130" y="-65" width="260" height="170" rx="16" fill="#fde68a" stroke="#d97706" stroke-width="3"/>
+    <circle cx="-90" cy="-20" r="16" fill="url(#claudeGrad)" opacity="0.3"/>
+    <text x="-90" y="-14" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="700" fill="#d97706">C</text>
+    <text x="15" y="-14" text-anchor="middle"
+          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+          font-size="24" font-weight="700" fill="#92400e">Claude Code</text>
+    <text x="0" y="18" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#b45309">Session Management</text>
+    <text x="0" y="42" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#b45309">Tool Call Execution</text>
+    <text x="0" y="66" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#b45309">Hook Event System</text>
+    <rect x="-44" y="78" width="88" height="22" rx="11" fill="#d97706"/>
+    <text x="0" y="94" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#fff">Engine</text>
+  </g>
 
-  <!-- Flow labels -->
-  <text x="290" y="162" text-anchor="middle" fill="#5599cc" font-size="9">message</text>
-  <text x="290" y="212" text-anchor="middle" fill="#5599cc" font-size="9">reply</text>
-  <text x="610" y="162" text-anchor="middle" fill="#8b7bc8" font-size="9">notification</text>
-  <text x="610" y="212" text-anchor="middle" fill="#d4a054" font-size="9">tool call</text>
+  <!-- === DETAIL ZONE: Data flow (centered, with purpose) === -->
+  <text x="600" y="418" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+        font-size="16" font-weight="700" fill="#cbd5e1">Data Flow</text>
 
-  <!-- Title -->
-  <text x="450" y="45" text-anchor="middle" fill="#fff" font-size="22" font-weight="700" letter-spacing="0.5">Claude Code Channel Plugin Architecture</text>
-  <text x="450" y="68" text-anchor="middle" fill="#6688aa" font-size="13">Telegram Inline Buttons + Cache Patching</text>
+  <!-- 4 boxes × 210px + 3 arrows × 30px = 930px. margin = (1200-930)/2 = 135 -->
+  <rect x="135" y="435" width="210" height="55" rx="8" fill="#0f172a" stroke="#229ED9" stroke-width="1.5"/>
+  <text x="240" y="457" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="700" fill="#229ED9">User Message</text>
+  <text x="240" y="477" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="600" fill="#94a3b8">Telegram bot receives</text>
+
+  <text x="370" y="467" text-anchor="middle" font-family="sans-serif" font-size="20" font-weight="700" fill="#475569">→</text>
+
+  <rect x="395" y="435" width="210" height="55" rx="8" fill="#0f172a" stroke="#d946ef" stroke-width="1.5"/>
+  <text x="500" y="457" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="700" fill="#d946ef">MCP Notify</text>
+  <text x="500" y="477" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="600" fill="#94a3b8">Bridge to session</text>
+
+  <text x="630" y="467" text-anchor="middle" font-family="sans-serif" font-size="20" font-weight="700" fill="#475569">→</text>
+
+  <rect x="655" y="435" width="210" height="55" rx="8" fill="#0f172a" stroke="#d97706" stroke-width="1.5"/>
+  <text x="760" y="457" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="700" fill="#F59E0B">Tool Call</text>
+  <text x="760" y="477" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="600" fill="#94a3b8">Execute + respond</text>
+
+  <text x="890" y="467" text-anchor="middle" font-family="sans-serif" font-size="20" font-weight="700" fill="#475569">→</text>
+
+  <rect x="915" y="435" width="210" height="55" rx="8" fill="#0f172a" stroke="#229ED9" stroke-width="1.5"/>
+  <text x="1020" y="457" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="700" fill="#229ED9">Reply + Buttons</text>
+  <text x="1020" y="477" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="600" fill="#94a3b8">Inline keyboard sent</text>
+
+  <!-- Return path -->
+  <text x="600" y="530" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+        font-size="15" font-weight="600" fill="#94a3b8">
+    callback_query → MCP → Tool Call → Reply (bidirectional loop)
+  </text>
 
   <!-- Bottom attribution -->
   <g opacity="0.45">
-    <text x="450" y="388" text-anchor="middle" fill="#64748b" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" letter-spacing="0.5px">osisdie.github.io · Channel Plugin Architecture</text>
+    <text x="600" y="618" text-anchor="middle" fill="#64748b" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" letter-spacing="0.5px">osisdie.github.io · Channel Plugin Architecture</text>
   </g>
 </svg>

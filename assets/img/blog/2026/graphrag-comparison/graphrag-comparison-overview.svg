@@ -1,135 +1,222 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <!-- layout: hybrid -->
   <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#1a1a2e"/>
-      <stop offset="100%" style="stop-color:#16213e"/>
+    <linearGradient id="transitionGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f1f5f9"/>
+      <stop offset="100%" style="stop-color:#1e293b"/>
     </linearGradient>
-    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#22c55e"/>
-      <stop offset="100%" style="stop-color:#16a34a"/>
+    <linearGradient id="detailBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="100%" style="stop-color:#1e293b"/>
     </linearGradient>
-    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#3b82f6"/>
-      <stop offset="100%" style="stop-color:#2563eb"/>
-    </linearGradient>
-    <linearGradient id="orangeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#f59e0b"/>
-      <stop offset="100%" style="stop-color:#d97706"/>
-    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.12"/>
+    </filter>
   </defs>
 
-  <!-- Background -->
-  <rect width="1200" height="630" fill="url(#bg)"/>
+  <!-- === BACKGROUND LAYERS === -->
+  <rect width="1200" height="630" fill="#ffffff"/>
+  <rect y="390" width="1200" height="240" fill="url(#detailBgGrad)"/>
+  <rect y="370" width="1200" height="30" fill="url(#transitionGrad)"/>
+
+  <!-- === HEAD ZONE === -->
 
   <!-- Title -->
-  <text x="600" y="68" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="32" font-weight="700" fill="#e2e8f0">GraphRAG Framework Comparison</text>
+  <text x="600" y="72" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans TC, sans-serif"
+        font-size="34" font-weight="700" fill="#1e293b">
+    GraphRAG Framework Comparison
+  </text>
 
   <!-- Subtitle -->
-  <text x="600" y="100" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="600" fill="#94a3b8">9 Dimensions · Long-term RAG Infrastructure · 2026</text>
+  <text x="600" y="108" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans TC, sans-serif"
+        font-size="18" font-weight="600" fill="#475569">
+    9 Dimensions for Long-term RAG Infrastructure Selection
+  </text>
 
-  <!-- Divider line -->
-  <line x1="200" y1="120" x2="1000" y2="120" stroke="#334155" stroke-width="1"/>
+  <!-- Divider -->
+  <line x1="350" y1="130" x2="850" y2="130" stroke="#e2e8f0" stroke-width="1.5"/>
 
-  <!-- === Column 1: Graphiti (Left) === -->
-  <g transform="translate(200, 165)">
-    <!-- Card background -->
-    <rect x="-120" y="-30" width="240" height="390" rx="16" fill="#0f172a" stroke="#22c55e" stroke-width="2" opacity="0.9"/>
+  <!-- === Framework Cards (head zone) === -->
 
+  <!-- Graphiti card -->
+  <g transform="translate(200, 220)">
+    <rect x="-140" y="-60" width="280" height="170" rx="16" fill="#bbf7d0" stroke="#16a34a" stroke-width="3"/>
     <!-- Graph icon -->
-    <circle cx="0" cy="30" r="12" fill="url(#greenGrad)"/>
-    <circle cx="-35" cy="65" r="8" fill="#22c55e" opacity="0.7"/>
-    <circle cx="35" cy="65" r="8" fill="#22c55e" opacity="0.7"/>
-    <line x1="0" y1="42" x2="-35" y2="57" stroke="#22c55e" stroke-width="1.5" opacity="0.6"/>
-    <line x1="0" y1="42" x2="35" y2="57" stroke="#22c55e" stroke-width="1.5" opacity="0.6"/>
-
-    <!-- Title -->
-    <text x="0" y="115" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#f0fdf4">Graphiti</text>
-
-    <!-- Tagline -->
-    <text x="0" y="140" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="600" fill="#94a3b8">Agent Long-term Memory</text>
-    <text x="0" y="160" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="600" fill="#94a3b8">Bi-temporal · Zero Migration</text>
-
-    <!-- Key strengths -->
-    <rect x="-95" y="190" width="190" height="22" rx="4" fill="#22c55e" opacity="0.15"/>
-    <text x="0" y="206" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#4ade80">Swap Embedder = No Re-ingest</text>
-    <rect x="-95" y="218" width="190" height="22" rx="4" fill="#22c55e" opacity="0.15"/>
-    <text x="0" y="234" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#4ade80">Auto Fact Invalidation</text>
-    <rect x="-95" y="246" width="190" height="22" rx="4" fill="#22c55e" opacity="0.15"/>
-    <text x="0" y="262" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#4ade80">Pluggable Graph Backend</text>
-
+    <circle cx="-80" cy="-20" r="8" fill="#22c55e"/>
+    <circle cx="-60" cy="-35" r="6" fill="#22c55e" opacity="0.7"/>
+    <circle cx="-60" cy="-5" r="6" fill="#22c55e" opacity="0.7"/>
+    <line x1="-80" y1="-20" x2="-60" y2="-35" stroke="#22c55e" stroke-width="1.5" opacity="0.6"/>
+    <line x1="-80" y1="-20" x2="-60" y2="-5" stroke="#22c55e" stroke-width="1.5" opacity="0.6"/>
+    <!-- Name -->
+    <text x="0" y="-14" text-anchor="middle"
+          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+          font-size="26" font-weight="700" fill="#166534">Graphiti</text>
+    <!-- Strengths -->
+    <text x="0" y="18" text-anchor="middle"
+          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+          font-size="14" font-weight="600" fill="#15803d">Swap Embedder = No Re-ingest</text>
+    <text x="0" y="42" text-anchor="middle"
+          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+          font-size="14" font-weight="600" fill="#15803d">Auto Fact Invalidation</text>
+    <text x="0" y="66" text-anchor="middle"
+          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+          font-size="14" font-weight="600" fill="#15803d">Bi-temporal Tracking</text>
     <!-- Badge -->
-    <rect x="-72" y="284" width="144" height="28" rx="14" fill="url(#greenGrad)"/>
-    <text x="0" y="303" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" fill="#052e16">Long-term Memory</text>
+    <rect x="-60" y="78" width="120" height="24" rx="12" fill="#22c55e"/>
+    <text x="0" y="95" text-anchor="middle"
+          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+          font-size="13" font-weight="700" fill="#ffffff">Long-term Memory</text>
   </g>
 
-  <!-- === Column 2: Neo4j (Center) === -->
-  <g transform="translate(600, 165)">
-    <!-- Card background -->
-    <rect x="-120" y="-30" width="240" height="390" rx="16" fill="#0f172a" stroke="#3b82f6" stroke-width="2" opacity="0.9"/>
-
-    <!-- Cylinder + graph icon -->
-    <ellipse cx="0" cy="25" rx="28" ry="9" fill="none" stroke="#3b82f6" stroke-width="2"/>
-    <rect x="-28" y="25" width="56" height="35" fill="#0f172a" stroke="none"/>
-    <line x1="-28" y1="25" x2="-28" y2="60" stroke="#3b82f6" stroke-width="2"/>
-    <line x1="28" y1="25" x2="28" y2="60" stroke="#3b82f6" stroke-width="2"/>
-    <ellipse cx="0" cy="60" rx="28" ry="9" fill="none" stroke="#3b82f6" stroke-width="2"/>
-
-    <!-- Title -->
-    <text x="0" y="115" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#dbeafe">Neo4j</text>
-
-    <!-- Tagline -->
-    <text x="0" y="140" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="600" fill="#94a3b8">Enterprise Graph DB</text>
-    <text x="0" y="160" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="600" fill="#94a3b8">Full Control · Mature Ecosystem</text>
-
-    <!-- Key strengths -->
-    <rect x="-95" y="190" width="190" height="22" rx="4" fill="#3b82f6" opacity="0.15"/>
-    <text x="0" y="206" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#93c5fd">Most Mature Ecosystem</text>
-    <rect x="-95" y="218" width="190" height="22" rx="4" fill="#3b82f6" opacity="0.15"/>
-    <text x="0" y="234" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#93c5fd">HybridCypherRetriever</text>
-    <rect x="-95" y="246" width="190" height="22" rx="4" fill="#3b82f6" opacity="0.15"/>
-    <text x="0" y="262" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#93c5fd">Full Cypher Control</text>
-
+  <!-- Neo4j card -->
+  <g transform="translate(600, 220)">
+    <rect x="-140" y="-60" width="280" height="170" rx="16" fill="#bfdbfe" stroke="#2563eb" stroke-width="3"/>
+    <!-- Cylinder icon -->
+    <ellipse cx="-80" cy="-25" rx="14" ry="5" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+    <rect x="-94" y="-25" width="28" height="18" fill="#bfdbfe" stroke="none"/>
+    <line x1="-94" y1="-25" x2="-94" y2="-7" stroke="#3b82f6" stroke-width="1.5"/>
+    <line x1="-66" y1="-25" x2="-66" y2="-7" stroke="#3b82f6" stroke-width="1.5"/>
+    <ellipse cx="-80" cy="-7" rx="14" ry="5" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+    <!-- Name -->
+    <text x="0" y="-14" text-anchor="middle"
+          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+          font-size="26" font-weight="700" fill="#1e3a5f">Neo4j</text>
+    <!-- Strengths -->
+    <text x="0" y="18" text-anchor="middle"
+          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+          font-size="14" font-weight="600" fill="#1d4ed8">Most Mature Ecosystem</text>
+    <text x="0" y="42" text-anchor="middle"
+          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+          font-size="14" font-weight="600" fill="#1d4ed8">HybridCypherRetriever</text>
+    <text x="0" y="66" text-anchor="middle"
+          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+          font-size="14" font-weight="600" fill="#1d4ed8">Full Cypher Control</text>
     <!-- Badge -->
-    <rect x="-52" y="284" width="104" height="28" rx="14" fill="transparent" stroke="#3b82f6" stroke-width="1.5"/>
-    <text x="0" y="303" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" fill="#93c5fd">Enterprise</text>
+    <rect x="-48" y="78" width="96" height="24" rx="12" fill="#2563eb"/>
+    <text x="0" y="95" text-anchor="middle"
+          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+          font-size="13" font-weight="700" fill="#ffffff">Enterprise</text>
   </g>
 
-  <!-- === Column 3: T-GRAG (Right) === -->
-  <g transform="translate(1000, 165)">
-    <!-- Card background -->
-    <rect x="-120" y="-30" width="240" height="390" rx="16" fill="#0f172a" stroke="#f59e0b" stroke-width="2" opacity="0.9"/>
-
+  <!-- T-GRAG card -->
+  <g transform="translate(1000, 220)">
+    <rect x="-140" y="-60" width="280" height="170" rx="16" fill="#fde68a" stroke="#d97706" stroke-width="3"/>
     <!-- Clock icon -->
-    <circle cx="0" cy="40" r="26" fill="none" stroke="#f59e0b" stroke-width="2"/>
-    <line x1="0" y1="40" x2="0" y2="26" stroke="#f59e0b" stroke-width="2.5"/>
-    <line x1="0" y1="40" x2="12" y2="40" stroke="#f59e0b" stroke-width="2.5"/>
-
-    <!-- Title -->
-    <text x="0" y="115" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#fef3c7">T-GRAG</text>
-
-    <!-- Tagline -->
-    <text x="0" y="140" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="600" fill="#94a3b8">Temporal GraphRAG</text>
-    <text x="0" y="160" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="600" fill="#94a3b8">Research · 3-Layer Retriever</text>
-
-    <!-- Key strengths -->
-    <rect x="-95" y="190" width="190" height="22" rx="4" fill="#f59e0b" opacity="0.15"/>
-    <text x="0" y="206" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#fcd34d">Best Temporal Concepts</text>
-    <rect x="-95" y="218" width="190" height="22" rx="4" fill="#f59e0b" opacity="0.15"/>
-    <text x="0" y="234" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#fcd34d">3-Layer Temporal Retriever</text>
-    <rect x="-95" y="246" width="190" height="22" rx="4" fill="#f59e0b" opacity="0.15"/>
-    <text x="0" y="262" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="700" fill="#fcd34d">Flexible DB Backend</text>
-
+    <circle cx="-80" cy="-18" r="14" fill="none" stroke="#d97706" stroke-width="1.5"/>
+    <line x1="-80" y1="-18" x2="-80" y2="-26" stroke="#d97706" stroke-width="2"/>
+    <line x1="-80" y1="-18" x2="-73" y2="-18" stroke="#d97706" stroke-width="2"/>
+    <!-- Name -->
+    <text x="0" y="-14" text-anchor="middle"
+          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+          font-size="26" font-weight="700" fill="#92400e">T-GRAG</text>
+    <!-- Strengths -->
+    <text x="0" y="18" text-anchor="middle"
+          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+          font-size="14" font-weight="600" fill="#b45309">Best Temporal Concepts</text>
+    <text x="0" y="42" text-anchor="middle"
+          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+          font-size="14" font-weight="600" fill="#b45309">3-Layer Temporal Retriever</text>
+    <text x="0" y="66" text-anchor="middle"
+          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+          font-size="14" font-weight="600" fill="#b45309">Flexible DB Backend</text>
     <!-- Badge -->
-    <rect x="-46" y="284" width="92" height="28" rx="14" fill="transparent" stroke="#f59e0b" stroke-width="1.5"/>
-    <text x="0" y="303" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" fill="#fcd34d">Research</text>
+    <rect x="-44" y="78" width="88" height="24" rx="12" fill="#d97706"/>
+    <text x="0" y="95" text-anchor="middle"
+          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+          font-size="13" font-weight="700" fill="#ffffff">Research</text>
   </g>
 
-  <!-- VS connectors -->
-  <text x="400" y="360" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="700" fill="#475569">vs</text>
-  <text x="800" y="360" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="700" fill="#475569">vs</text>
+  <!-- === DETAIL ZONE: Scenario-based check/cross grid === -->
+  <!-- Grid centered: questions right-align at x=340, columns at x=520/720/920 -->
 
-  <!-- Bottom tech keywords -->
-  <text x="600" y="580" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="600" fill="#64748b">Temporal · Hybrid Search · Embedding Migration · Knowledge Graph · Production RAG</text>
+  <!-- Scenario label -->
+  <text x="340" y="418" text-anchor="end"
+        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+        font-size="14" font-weight="700" fill="#cbd5e1">What happens when you...</text>
+
+  <!-- Column headers -->
+  <text x="520" y="418" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+        font-size="14" font-weight="700" fill="#4ade80">Graphiti</text>
+  <text x="720" y="418" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+        font-size="14" font-weight="700" fill="#93c5fd">Neo4j</text>
+  <text x="920" y="418" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+        font-size="14" font-weight="700" fill="#fcd34d">T-GRAG</text>
+
+  <!-- Separator -->
+  <line x1="100" y1="428" x2="1050" y2="428" stroke="#334155" stroke-width="0.5"/>
+
+  <!-- Row 1: Swap embedding model -->
+  <text x="340" y="456" text-anchor="end"
+        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+        font-size="13" font-weight="600" fill="#cbd5e1">Swap embedding model?</text>
+  <!-- Graphiti: green check -->
+  <circle cx="468" cy="451" r="10" fill="#22c55e" opacity="0.2"/>
+  <text x="468" y="456" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="700" fill="#4ade80">&#x2713;</text>
+  <text x="485" y="456" font-family="sans-serif" font-size="13" font-weight="600" fill="#94a3b8">Still works</text>
+  <!-- Neo4j: red cross -->
+  <circle cx="668" cy="451" r="10" fill="#ef4444" opacity="0.2"/>
+  <text x="668" y="456" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="700" fill="#f87171">&#x2717;</text>
+  <text x="685" y="456" font-family="sans-serif" font-size="13" font-weight="600" fill="#94a3b8">Re-embed all</text>
+  <!-- T-GRAG: red cross -->
+  <circle cx="868" cy="451" r="10" fill="#ef4444" opacity="0.2"/>
+  <text x="868" y="456" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="700" fill="#f87171">&#x2717;</text>
+  <text x="885" y="456" font-family="sans-serif" font-size="13" font-weight="600" fill="#94a3b8">Recompute</text>
+
+  <!-- Row 2: A fact becomes outdated -->
+  <text x="340" y="490" text-anchor="end"
+        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+        font-size="13" font-weight="600" fill="#cbd5e1">A fact becomes outdated?</text>
+  <!-- Graphiti: green check -->
+  <circle cx="468" cy="485" r="10" fill="#22c55e" opacity="0.2"/>
+  <text x="468" y="490" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="700" fill="#4ade80">&#x2713;</text>
+  <text x="485" y="490" font-family="sans-serif" font-size="13" font-weight="600" fill="#94a3b8">Auto-invalidate</text>
+  <!-- Neo4j: red cross -->
+  <circle cx="668" cy="485" r="10" fill="#ef4444" opacity="0.2"/>
+  <text x="668" y="490" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="700" fill="#f87171">&#x2717;</text>
+  <text x="685" y="490" font-family="sans-serif" font-size="13" font-weight="600" fill="#94a3b8">Manual delete</text>
+  <!-- T-GRAG: red cross -->
+  <circle cx="868" cy="485" r="10" fill="#ef4444" opacity="0.2"/>
+  <text x="868" y="490" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="700" fill="#f87171">&#x2717;</text>
+  <text x="885" y="490" font-family="sans-serif" font-size="13" font-weight="600" fill="#94a3b8">No mechanism</text>
+
+  <!-- Row 3: Need multi-hop query -->
+  <text x="340" y="524" text-anchor="end"
+        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+        font-size="13" font-weight="600" fill="#cbd5e1">Need multi-hop query?</text>
+  <!-- Graphiti: green check -->
+  <circle cx="468" cy="519" r="10" fill="#22c55e" opacity="0.2"/>
+  <text x="468" y="524" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="700" fill="#4ade80">&#x2713;</text>
+  <text x="485" y="524" font-family="sans-serif" font-size="13" font-weight="600" fill="#94a3b8">Graph traversal</text>
+  <!-- Neo4j: green check -->
+  <circle cx="668" cy="519" r="10" fill="#22c55e" opacity="0.2"/>
+  <text x="668" y="524" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="700" fill="#93c5fd">&#x2713;</text>
+  <text x="685" y="524" font-family="sans-serif" font-size="13" font-weight="600" fill="#94a3b8">Full Cypher</text>
+  <!-- T-GRAG: red cross -->
+  <circle cx="868" cy="519" r="10" fill="#ef4444" opacity="0.2"/>
+  <text x="868" y="524" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="700" fill="#f87171">&#x2717;</text>
+  <text x="885" y="524" font-family="sans-serif" font-size="13" font-weight="600" fill="#94a3b8">Vec only</text>
+
+  <!-- Row 4: Deploy to production -->
+  <text x="340" y="558" text-anchor="end"
+        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+        font-size="13" font-weight="600" fill="#cbd5e1">Deploy to production?</text>
+  <!-- Graphiti: green check -->
+  <circle cx="468" cy="553" r="10" fill="#22c55e" opacity="0.2"/>
+  <text x="468" y="558" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="700" fill="#4ade80">&#x2713;</text>
+  <text x="485" y="558" font-family="sans-serif" font-size="13" font-weight="600" fill="#94a3b8">SDK ready</text>
+  <!-- Neo4j: green check -->
+  <circle cx="668" cy="553" r="10" fill="#22c55e" opacity="0.2"/>
+  <text x="668" y="558" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="700" fill="#93c5fd">&#x2713;</text>
+  <text x="685" y="558" font-family="sans-serif" font-size="13" font-weight="600" fill="#94a3b8">Enterprise</text>
+  <!-- T-GRAG: red cross -->
+  <circle cx="868" cy="553" r="10" fill="#ef4444" opacity="0.2"/>
+  <text x="868" y="558" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="700" fill="#f87171">&#x2717;</text>
+  <text x="885" y="558" font-family="sans-serif" font-size="13" font-weight="600" fill="#94a3b8">Research only</text>
 
   <!-- Bottom attribution -->
   <g opacity="0.45">
