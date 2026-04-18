@@ -39,16 +39,13 @@ toc:
 graph LR
     Q[User Query] --> I[Intent Classify]
     Q --> T[Temporal Parse]
-    I --> E[Embed Cleaned Query]
-    T --> E
-    E --> H[Hybrid Search<br/>Dense + Sparse]
-    T --> F[Date Filter]
-    H --> F
-    F --> R[Recency Rerank]
-    I --> B[Intent Boost]
-    R --> B
-    B --> C["Citations + Confidence"]
+    I --> H[Hybrid Search]
+    T --> H
+    H --> R[Filter + Rerank]
+    R --> C["Calibrated Confidence<br/>+ Citations"]
 ```
+
+> Intent Classify 與 Temporal Parse 可並行執行（兩者無相依）；Intent 提供 collection boost、Temporal 提供 cleaned query 與 date range，共同進入 Hybrid Search。Filter + Rerank 使用 date range 做 hard filter 與 recency decay；Intent boost 在最後 score 聚合時乘入。
 
 三層對應三個責任：
 
