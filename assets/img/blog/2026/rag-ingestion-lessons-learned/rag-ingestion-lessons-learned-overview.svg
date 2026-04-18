@@ -20,12 +20,12 @@
   <text x="600" y="68" text-anchor="middle"
         font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans TC, sans-serif"
         font-size="32" font-weight="700" fill="#1e293b">
-    Multi-Source RAG Ingestion Lessons
+    Production RAG Pipeline Lessons
   </text>
   <text x="600" y="105" text-anchor="middle"
         font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
         font-size="18" font-weight="600" fill="#475569">
-    6 Production Pitfalls · Content Versioning · Eval Debt
+    6 RAG Pitfalls · Temporal Layers · Intent Routing · Eval Debt
   </text>
   <line x1="280" y1="128" x2="920" y2="128" stroke="#e2e8f0" stroke-width="1.5"/>
 
@@ -45,19 +45,19 @@
     <text x="0" y="90" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#fff">Lesson 1</text>
   </g>
 
-  <!-- Content Versioning -->
+  <!-- Temporal RAG -->
   <g transform="translate(600, 240)">
     <rect x="-140" y="-65" width="280" height="170" rx="16" fill="#bbf7d0" stroke="#16a34a" stroke-width="3"/>
     <text x="0" y="-25" text-anchor="middle"
           font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
-          font-size="22" font-weight="700" fill="#166534">Content</text>
+          font-size="22" font-weight="700" fill="#166534">Temporal</text>
     <text x="0" y="2" text-anchor="middle"
           font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
-          font-size="22" font-weight="700" fill="#166534">Versioning</text>
-    <text x="0" y="34" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#15803d">SHA-256 + Skip + Orphan</text>
-    <text x="0" y="56" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#15803d">Cleanup + Safety Guard</text>
+          font-size="22" font-weight="700" fill="#166534">RAG</text>
+    <text x="0" y="34" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#15803d">Query Clean + Date Filter</text>
+    <text x="0" y="56" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#15803d">+ Recency Rerank</text>
     <rect x="-50" y="74" width="100" height="22" rx="11" fill="#16a34a"/>
-    <text x="0" y="90" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#fff">Pattern</text>
+    <text x="0" y="90" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#fff">3 Layers</text>
   </g>
 
   <!-- Eval Debt -->
@@ -78,7 +78,7 @@
   <!-- === DETAIL ZONE: 6 lessons === -->
   <text x="600" y="420" text-anchor="middle"
         font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
-        font-size="16" font-weight="700" fill="#cbd5e1">6 Lessons → Eval Backlog → Event-Driven Cache</text>
+        font-size="16" font-weight="700" fill="#cbd5e1">6 RAG Lessons → Layered Debug → Eval Backlog</text>
 
   <!-- 6-step lesson row, centered (6 boxes × 175 + 5 gaps × 8 = 1090, start x = (1200-1090)/2 = 55) -->
   <g font-family="sans-serif" font-size="13" font-weight="700">
@@ -87,29 +87,29 @@
     <text x="142.5" y="468" text-anchor="middle" font-size="15" fill="#60a5fa">L1 — Caller Query</text>
     <text x="142.5" y="488" text-anchor="middle" font-size="12" font-weight="600" fill="#94a3b8">Respect caller's value</text>
 
-    <!-- L2 RAG Cache Flush -->
+    <!-- L2 Temporal Layers -->
     <rect x="238" y="445" width="175" height="56" rx="8" fill="#0f172a" stroke="#fbbf24" stroke-width="1.5"/>
-    <text x="325.5" y="468" text-anchor="middle" font-size="15" fill="#fcd34d">L2 — Cache Flush</text>
-    <text x="325.5" y="488" text-anchor="middle" font-size="12" font-weight="600" fill="#94a3b8">After re-ingest</text>
+    <text x="325.5" y="468" text-anchor="middle" font-size="15" fill="#fcd34d">L2 — Temporal Layers</text>
+    <text x="325.5" y="488" text-anchor="middle" font-size="12" font-weight="600" fill="#94a3b8">3-layer defense</text>
 
-    <!-- L3 SPA Select -->
+    <!-- L3 Intent Routing -->
     <rect x="421" y="445" width="175" height="56" rx="8" fill="#0f172a" stroke="#a78bfa" stroke-width="1.5"/>
-    <text x="508.5" y="468" text-anchor="middle" font-size="15" fill="#a78bfa">L3 — SPA Select</text>
-    <text x="508.5" y="488" text-anchor="middle" font-size="12" font-weight="600" fill="#94a3b8">select_option, not click</text>
+    <text x="508.5" y="468" text-anchor="middle" font-size="15" fill="#a78bfa">L3 — Intent Routing</text>
+    <text x="508.5" y="488" text-anchor="middle" font-size="12" font-weight="600" fill="#94a3b8">Route + boost</text>
 
-    <!-- L4 UUID Stability -->
+    <!-- L4 Short Query -->
     <rect x="604" y="445" width="175" height="56" rx="8" fill="#0f172a" stroke="#4ade80" stroke-width="1.5"/>
-    <text x="691.5" y="468" text-anchor="middle" font-size="15" fill="#4ade80">L4 — UUID Stable?</text>
-    <text x="691.5" y="488" text-anchor="middle" font-size="12" font-weight="600" fill="#94a3b8">Strip + content hash</text>
+    <text x="691.5" y="468" text-anchor="middle" font-size="15" fill="#4ade80">L4 — Short Query</text>
+    <text x="691.5" y="488" text-anchor="middle" font-size="12" font-weight="600" fill="#94a3b8">Embedding drifts</text>
 
-    <!-- L5 Config Cache -->
+    <!-- L5 Soft Fallback -->
     <rect x="787" y="445" width="175" height="56" rx="8" fill="#0f172a" stroke="#22d3ee" stroke-width="1.5"/>
-    <text x="874.5" y="468" text-anchor="middle" font-size="15" fill="#22d3ee">L5 — Config Cache</text>
-    <text x="874.5" y="488" text-anchor="middle" font-size="12" font-weight="600" fill="#94a3b8">Writer flushes reader</text>
+    <text x="874.5" y="468" text-anchor="middle" font-size="15" fill="#22d3ee">L5 — Soft Fallback</text>
+    <text x="874.5" y="488" text-anchor="middle" font-size="12" font-weight="600" fill="#94a3b8">7 → 30 → 90 → off</text>
 
-    <!-- L6 Chain Order -->
+    <!-- L6 Layered Debug -->
     <rect x="970" y="445" width="175" height="56" rx="8" fill="#0f172a" stroke="#f87171" stroke-width="1.5"/>
-    <text x="1057.5" y="468" text-anchor="middle" font-size="15" fill="#f87171">L6 — Chain Order</text>
+    <text x="1057.5" y="468" text-anchor="middle" font-size="15" fill="#f87171">L6 — Layered Debug</text>
     <text x="1057.5" y="488" text-anchor="middle" font-size="12" font-weight="600" fill="#94a3b8">Bypass each layer</text>
   </g>
 
@@ -117,11 +117,11 @@
   <text x="600" y="545" text-anchor="middle"
         font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
         font-size="15" font-weight="600" fill="#94a3b8">
-    Qdrant · BGE-M3 · Playwright · Redis · Honest Eval
+    Qdrant · BGE-M3 · Hybrid Search · Temporal · Intent · Honest Eval
   </text>
 
   <!-- Bottom attribution -->
   <g opacity="0.45">
-    <text x="600" y="618" text-anchor="middle" fill="#64748b" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" letter-spacing="0.5px">osisdie.github.io · RAG Ingestion Lessons Learned</text>
+    <text x="600" y="618" text-anchor="middle" fill="#64748b" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" letter-spacing="0.5px">osisdie.github.io · Production RAG Pipeline Lessons</text>
   </g>
 </svg>
