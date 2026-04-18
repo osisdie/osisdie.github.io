@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <!-- layout: hybrid -->
+  <defs>
+    <linearGradient id="transitionGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f1f5f9"/>
+      <stop offset="100%" style="stop-color:#1e293b"/>
+    </linearGradient>
+    <linearGradient id="detailBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="100%" style="stop-color:#1e293b"/>
+    </linearGradient>
+  </defs>
+
+  <!-- === BACKGROUND === -->
+  <rect width="1200" height="630" fill="#ffffff"/>
+  <rect y="390" width="1200" height="240" fill="url(#detailBgGrad)"/>
+  <rect y="370" width="1200" height="30" fill="url(#transitionGrad)"/>
+
+  <!-- === HEAD ZONE === -->
+  <text x="600" y="68" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans TC, sans-serif"
+        font-size="32" font-weight="700" fill="#1e293b">
+    Multi-Source RAG Ingestion Lessons
+  </text>
+  <text x="600" y="105" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+        font-size="18" font-weight="600" fill="#475569">
+    6 Production Pitfalls · Content Versioning · Eval Debt
+  </text>
+  <line x1="280" y1="128" x2="920" y2="128" stroke="#e2e8f0" stroke-width="1.5"/>
+
+  <!-- 3 takeaway cards -->
+  <!-- Caller / Callee Contract -->
+  <g transform="translate(200, 240)">
+    <rect x="-140" y="-65" width="280" height="170" rx="16" fill="#bfdbfe" stroke="#2563eb" stroke-width="3"/>
+    <text x="0" y="-25" text-anchor="middle"
+          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+          font-size="22" font-weight="700" fill="#1e3a5f">Caller / Callee</text>
+    <text x="0" y="2" text-anchor="middle"
+          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+          font-size="22" font-weight="700" fill="#1e3a5f">Contract</text>
+    <text x="0" y="34" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#1d4ed8">Don't silently override</text>
+    <text x="0" y="56" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#1d4ed8">caller's arguments</text>
+    <rect x="-50" y="74" width="100" height="22" rx="11" fill="#2563eb"/>
+    <text x="0" y="90" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#fff">Lesson 1</text>
+  </g>
+
+  <!-- Content Versioning -->
+  <g transform="translate(600, 240)">
+    <rect x="-140" y="-65" width="280" height="170" rx="16" fill="#bbf7d0" stroke="#16a34a" stroke-width="3"/>
+    <text x="0" y="-25" text-anchor="middle"
+          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+          font-size="22" font-weight="700" fill="#166534">Content</text>
+    <text x="0" y="2" text-anchor="middle"
+          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+          font-size="22" font-weight="700" fill="#166534">Versioning</text>
+    <text x="0" y="34" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#15803d">SHA-256 + Skip + Orphan</text>
+    <text x="0" y="56" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#15803d">Cleanup + Safety Guard</text>
+    <rect x="-50" y="74" width="100" height="22" rx="11" fill="#16a34a"/>
+    <text x="0" y="90" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#fff">Pattern</text>
+  </g>
+
+  <!-- Eval Debt -->
+  <g transform="translate(1000, 240)">
+    <rect x="-140" y="-65" width="280" height="170" rx="16" fill="#fde68a" stroke="#d97706" stroke-width="3"/>
+    <text x="0" y="-25" text-anchor="middle"
+          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+          font-size="22" font-weight="700" fill="#92400e">Eval</text>
+    <text x="0" y="2" text-anchor="middle"
+          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+          font-size="22" font-weight="700" fill="#92400e">Debt</text>
+    <text x="0" y="34" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#b45309">Magic numbers without</text>
+    <text x="0" y="56" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#b45309">a golden query set</text>
+    <rect x="-50" y="74" width="100" height="22" rx="11" fill="#d97706"/>
+    <text x="0" y="90" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#fff">Backlog</text>
+  </g>
+
+  <!-- === DETAIL ZONE: 6 lessons === -->
+  <text x="600" y="420" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+        font-size="16" font-weight="700" fill="#cbd5e1">6 Lessons → Eval Backlog → Event-Driven Cache</text>
+
+  <!-- 6-step lesson row, centered (6 boxes × 175 + 5 gaps × 8 = 1090, start x = (1200-1090)/2 = 55) -->
+  <g font-family="sans-serif" font-size="13" font-weight="700">
+    <!-- L1 Caller Query -->
+    <rect x="55" y="445" width="175" height="56" rx="8" fill="#0f172a" stroke="#60a5fa" stroke-width="1.5"/>
+    <text x="142.5" y="468" text-anchor="middle" font-size="15" fill="#60a5fa">L1 — Caller Query</text>
+    <text x="142.5" y="488" text-anchor="middle" font-size="12" font-weight="600" fill="#94a3b8">Respect caller's value</text>
+
+    <!-- L2 RAG Cache Flush -->
+    <rect x="238" y="445" width="175" height="56" rx="8" fill="#0f172a" stroke="#fbbf24" stroke-width="1.5"/>
+    <text x="325.5" y="468" text-anchor="middle" font-size="15" fill="#fcd34d">L2 — Cache Flush</text>
+    <text x="325.5" y="488" text-anchor="middle" font-size="12" font-weight="600" fill="#94a3b8">After re-ingest</text>
+
+    <!-- L3 SPA Select -->
+    <rect x="421" y="445" width="175" height="56" rx="8" fill="#0f172a" stroke="#a78bfa" stroke-width="1.5"/>
+    <text x="508.5" y="468" text-anchor="middle" font-size="15" fill="#a78bfa">L3 — SPA Select</text>
+    <text x="508.5" y="488" text-anchor="middle" font-size="12" font-weight="600" fill="#94a3b8">select_option, not click</text>
+
+    <!-- L4 UUID Stability -->
+    <rect x="604" y="445" width="175" height="56" rx="8" fill="#0f172a" stroke="#4ade80" stroke-width="1.5"/>
+    <text x="691.5" y="468" text-anchor="middle" font-size="15" fill="#4ade80">L4 — UUID Stable?</text>
+    <text x="691.5" y="488" text-anchor="middle" font-size="12" font-weight="600" fill="#94a3b8">Strip + content hash</text>
+
+    <!-- L5 Config Cache -->
+    <rect x="787" y="445" width="175" height="56" rx="8" fill="#0f172a" stroke="#22d3ee" stroke-width="1.5"/>
+    <text x="874.5" y="468" text-anchor="middle" font-size="15" fill="#22d3ee">L5 — Config Cache</text>
+    <text x="874.5" y="488" text-anchor="middle" font-size="12" font-weight="600" fill="#94a3b8">Writer flushes reader</text>
+
+    <!-- L6 Chain Order -->
+    <rect x="970" y="445" width="175" height="56" rx="8" fill="#0f172a" stroke="#f87171" stroke-width="1.5"/>
+    <text x="1057.5" y="468" text-anchor="middle" font-size="15" fill="#f87171">L6 — Chain Order</text>
+    <text x="1057.5" y="488" text-anchor="middle" font-size="12" font-weight="600" fill="#94a3b8">Bypass each layer</text>
+  </g>
+
+  <!-- Tagline -->
+  <text x="600" y="545" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+        font-size="15" font-weight="600" fill="#94a3b8">
+    Qdrant · BGE-M3 · Playwright · Redis · Honest Eval
+  </text>
+
+  <!-- Bottom attribution -->
+  <g opacity="0.45">
+    <text x="600" y="618" text-anchor="middle" fill="#64748b" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" letter-spacing="0.5px">osisdie.github.io · RAG Ingestion Lessons Learned</text>
+  </g>
+</svg>
