@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "Production RAG 的 6 個踩坑教訓 — Temporal、Intent 與 Eval Debt"
+title: "Production-Ready RAG Pipeline：Intent Routing + Temporal-Aware Retrieval 完整實作"
 date: 2026-04-18 10:00:00 +0800
-description: "從 RAG pipeline production 修通一條 query 過程得到的 6 個 RAG-specific 教訓 — 涵蓋 caller/callee 契約、Temporal 三層防線、Pre-RAG Intent Classification、短 query embedding 飄掉、Temporal fallback 該漸進式擴大，加上一份誠實的 RAG Eval Debt 清單"
+description: "針對時序敏感、多元 intent 的 production RAG 場景，提出 pre-RAG intent classification、三層 temporal-aware retrieval (query cleaning + date filter + recency rerank) 與 eval-driven confidence calibration 的完整 pipeline 設計，含具體 recency weight 表、soft fallback 策略與 magic number 的可驗證路徑"
 tags: rag retrieval embedding qdrant ai pipeline python evaluation
 featured: true
 og_image: /assets/img/blog/2026/rag-ingestion-lessons-learned/rag-ingestion-lessons-learned-overview.png
@@ -13,21 +13,27 @@ toc:
   sidebar: left
 ---
 
-{% include figure.liquid loading="eager" path="assets/img/blog/2026/rag-ingestion-lessons-learned/rag-ingestion-lessons-learned-overview.png" class="img-fluid rounded z-depth-1" alt="Production RAG Lessons — 6 RAG Pitfalls + Temporal Layers + Intent Routing + Eval Debt" caption="Production RAG — 6 個 RAG-specific 踩坑教訓 + Temporal、Intent 與 Eval Debt" %}
+{% include figure.liquid loading="eager" path="assets/img/blog/2026/rag-ingestion-lessons-learned/rag-ingestion-lessons-learned-overview.png" class="img-fluid rounded z-depth-1" alt="Production-Ready RAG Pipeline — Intent Routing + Temporal-Aware Retrieval + Calibrated Confidence" caption="Production-Ready RAG Pipeline — Intent Routing、Temporal-Aware Retrieval 與 Calibrated Confidence 三層完整架構" %}
 
-> **Abstract** — Six RAG-specific production lessons learned from debugging a single query path («下個月的 release 有什麼？») end-to-end. Covers caller/callee contract violations in `rag.search()`, three-layer temporal-aware retrieval (query cleaning + date filter + recency rerank), pre-RAG intent classification for routing and conditional boosts, the silent killer of overly-cleaned short queries, gradual temporal fallback (instead of all-or-nothing), and a layered debug methodology — plus an honest tally of the RAG eval debt that nobody talks about.
+> **Abstract** — A complete production-ready RAG architecture covering three pillars that basic hybrid search alone doesn't solve: (1) pre-search intent classification for routing and short-circuiting, (2) three-layer temporal-aware retrieval (embedding query cleaning + Qdrant date filter + exponential-decay recency rerank with soft fallback), and (3) eval-driven confidence calibration to replace guessed thresholds. Includes concrete recency weight tables, final-score formula, pattern-priority rules, and a per-intent eval checklist.
 
 ---
 
 ## 前言
 
-[前一篇 FAQ Hybrid Search RAG]({% post_url 2026-04-16-faq-hybrid-search-rag %}) 講的是搜尋 pipeline 怎麼**搭起來** — dense + sparse 雙路、RRF fusion、dense cosine 校準信心分數。這篇是同一個 pipeline 在 production **跌過跤之後**整理出來的 6 個 RAG-specific 教訓。
+[前一篇 FAQ Hybrid Search RAG]({% post_url 2026-04-16-faq-hybrid-search-rag %}) 談的是 RAG pipeline 的骨架 — dense + sparse 雙路、RRF fusion、dense cosine 校準 confidence。那是「搭起來」的部分。
 
-這些都是從一條真實 query「下個月的 release 有什麼？」修通過程踩出來的 — happy path 修通了不等於 production ready，過程中發現一堆 magic number 其實從來沒驗過。本帖只談 RAG 相關（temporal、intent、信心分數、eval），ingestion / cache invalidation / 爬蟲 / UUID 設計這些非 RAG 議題之後另寫。
+這篇講 production 上**還缺哪幾層**。當知識庫包含時序資料（release notes、incident log、版本更新）、又要接多種 intent（FAQ 問答、changelog 查詢、閒聊、轉人工），只靠 hybrid search 會碰到三個現象：
+
+1. **時序敏感 query 被舊資料污染**：「最近的 release」會被 dense embedding 拉到去年某篇標題含「最近一波更新」的舊 entry
+2. **路由混亂**：`chitchat` 和 `handoff` 類 query 也走完整 retrieval，浪費 latency 又容易撈到錯東西
+3. **Confidence threshold 無從驗證**：`0.6` 是直覺設定的值，沒有數據背書
+
+本帖提出的解法是把 RAG pipeline 拆成三層：**Intent Routing → Temporal-Aware Retrieval → Calibrated Confidence**，並在最後把 magic number 用 eval infrastructure 收束回可驗證的範圍。
 
 ---
 
-## RAG Pipeline 架構（這篇談的範圍）
+## 整體架構
 
 ```mermaid
 graph LR
@@ -44,152 +50,154 @@ graph LR
     B --> C["Citations + Confidence"]
 ```
 
-關鍵元件：
+三層對應三個責任：
 
-| 元件 | 角色 | 對應 Lesson |
+| 層 | 責任 | 輸出 |
 | --- | --- | --- |
-| Intent Classify | 路由 + 條件 boost | Lesson 3 |
-| Temporal Parse | 時間詞解析 + cleaned query | Lessons 2、4、5 |
-| Hybrid Search | Dense + Sparse + RRF | （前一篇） |
-| Date Filter + Recency Rerank | Time-aware retrieval 三層防線 | Lesson 2 |
-| Caller / Library 契約 | `rag.search()` API 設計 | Lesson 1 |
+| **Layer 1 — Intent Routing** | 分類 query 類型、決定是否走 retrieval、決定 boost | `intent_category` + `intent_boost` + (可選) date hint |
+| **Layer 2 — Temporal-Aware Retrieval** | Cleaning → Date Filter → Recency Rerank | 候選 citations + recency-adjusted score |
+| **Layer 3 — Calibrated Confidence** | 把 score 轉成可解釋的 confidence + threshold 決定 handoff | `confidence` + `has_answer` |
 
 ---
 
-## 6 個 RAG 踩坑教訓
+## Layer 1：Pre-RAG Intent Classification
 
-### Lesson 1 — Library function 不該偷偷覆寫 caller 的 query
+### 為什麼要在 retrieval 之前分類
 
-**症狀**：用戶問「下個月的 release 有什麼？」。Caller 已經做了 query enrichment — 加上產品名變成「Acme Cloud 下個月的 release」，再補一個 context 詞「changelog」湊到夠長。但 `rag.search()` 內部為了「temporal cleaning」把 query 整個換掉，最後 embedding 的詞只剩「release」，confidence 卡在 0.55 過不了 0.6 threshold，bot 直接轉人工。
+不是所有 query 都該走同一條 pipeline：
 
-**根因**：`rag.search()` 看到 caller 傳了 `temporal_hint`，就直接拿 `temporal_hint.cleaned_query` 取代 caller 傳進來的 `query`，把 caller 辛苦補的 enrichment 全部丟掉。
+- `chitchat`（「你好」、「謝謝」）走 retrieval 等於浪費 100ms + 可能 hit 到無關 entry
+- `handoff`（「轉客服」、「我要投訴」）應該 short-circuit 到人工路由，不該被當 retrieval miss
+- `changelog`（「最新版本支援 SSO 嗎」）應該 boost changelog collection；`faq`（「忘記密碼」）應該 boost FAQ collection — hybrid search 自己分辨不出來
 
-**修法**：把責任邊界拆開 — `embed_query()` 一律用 caller 傳進來的值，cleaning 由 caller 自己決定要不要做。
+### 實作：Fast LLM Classifier
+
+用快速 model（e.g. Gemini Flash Lite 或 GPT-4o-mini），單次 call 同時回傳 category 與 optional temporal hint：
 
 ```python
-# Before — library 偷偷蓋掉 caller 的 query
-def search(query: str, temporal_hint: Optional[TemporalHint] = None):
-    if temporal_hint:
-        query = temporal_hint.cleaned_query  # ← caller 的 enrichment 被丟掉
-    embedding = embed(query)
-    ...
+class IntentResult(BaseModel):
+    category: Literal["faq", "changelog", "status", "chitchat", "handoff"]
+    temporal: bool = False  # 是否含時間敏感訊號
+    date_hint: Optional[str] = None  # 可選的推測日期範圍
 
-# After — caller 決定要 embed 什麼
-def search(
-    query: str,
-    embed_query_override: Optional[str] = None,
-    temporal_hint: Optional[TemporalHint] = None,
-):
-    embedding = embed(embed_query_override or query)  # caller 說了算
-    ...
+async def classify_intent(query: str) -> IntentResult:
+    try:
+        return await llm.parse(
+            model="flash-lite",
+            prompt=INTENT_PROMPT.format(query=query),
+            response_model=IntentResult,
+            timeout=5.0,
+        )
+    except (TimeoutError, Exception):
+        return IntentResult(category="faq")  # 安全預設
 ```
 
-**Generalizable rule**：RAG library 不應該偷偷修改 caller 傳進來的 query。如果 cleaning 是可選 behavior，**暴露兩個 param**（`query` + `embed_query_override`）讓 caller 決定，而不是看到某個 hint 就自作主張。**RAG 的可調參數本來就多，library 暗箱操作只會讓問題更難 debug**。
+### Intent Categories 與行為對照
 
----
-
-### Lesson 2 — Temporal-aware RAG 不是只加 date filter 就好
-
-**問題**：FAQ-style 知識庫一旦加上時序資料（release notes、incident records、changelog），查詢「最近的 release」就不能單靠 dense+sparse hybrid search。「最近」這個詞會被 BGE-M3 embed 成跟「最新 / 近期 / 上次」這些詞語意接近的 vector，**結果 retrieval top-1 可能是去年的某篇講「最近一波更新」的舊文**。
-
-**解法 — 三層防線**：
-
-| Layer | 機制 | 做什麼 |
+| Intent | 行為 | Collection Boost |
 | --- | --- | --- |
-| **L1 — Embedding Query Cleaning** | regex strip 時間詞 | 「最近的 release」→ embed 「release」（避免 semantic match 到舊 entries） |
-| **L2 — Date Filter** | Qdrant payload `date` keyword index 範圍過濾 | 只取最近 N 天的 entries |
-| **L3 — Recency Rerank** | 指數衰減加分，half-life 90 天 | 即使在 filter 範圍內，越新的 entries 分數加成越多 |
-
-每層的 Recency weight 由原始時間詞決定（強度 ∝ 時間具體性）：
-
-| 時間表達 | 範圍 | Recency weight |
-| --- | --- | --- |
-| 上一次 / 最近一次 | 14 天 | 1.0 |
-| 最近 | 30 天 | 0.8 |
-| 今天 / 明天 / 昨天 | 單日 | 0.5 |
-| 這週 / 上週 / 下週 | 7 天區間 | 0.6 |
-| 5月 / 5月10日 (無年份) | 當年該月/該日 | 0.3 |
-| 今年 / 去年 | 全年 | 0.2 |
-| （無時間詞） | 不過濾 | 0.3（微量 baseline） |
-
-**為什麼三層都要**：
-- 只做 L1 → 沒有 hard filter，舊 entries 還是會被搜到
-- 只做 L2 → 過濾邊界硬，剛好過界的「fresh enough」entries 被砍掉
-- 只做 L3 → 沒先過濾，候選池被舊 entries 稀釋，rerank 救不回來
-
-**Pattern priority 細節**：時間 regex 用 first-match-wins，順序是 `YYYY年M月D日` → `YYYY年M月` → `M月D日` → `M月` → 相對時間 → 年度。要小心 negative lookahead，例如 `今年(?!球季)` 避免「今年的計畫」誤抓。
-
----
-
-### Lesson 3 — Pre-RAG Intent Classification：不是所有 query 都該走同一條 pipeline
-
-**問題**：把所有 query 都丟進 hybrid search，會出現幾類失敗：
-- 「你好」、「謝謝」這種 chitchat 也跑 dense+sparse，浪費 latency
-- 「轉客服」這種 handoff 應該直接 short-circuit，不該被當 retrieval miss
-- 「最新 release 支援 SSO 嗎」應該 boost changelog collection；「忘記密碼」應該 boost FAQ。但 hybrid search 自己分不出來
-
-**解法**：在 RAG search 之前加一層 LLM intent classifier（用 fast model，~100ms）：
-
-| Intent | 行為 | Boost |
-| --- | --- | --- |
-| `faq` | 走 RAG，搜 FAQ collection | 無 |
-| `changelog` | 走 RAG + temporal | × 1.3 changelog |
+| `faq` | 走 RAG，搜 FAQ collection | — |
+| `changelog` | 走 RAG + temporal layer 全開 | × 1.3 changelog |
 | `status` | 走 RAG + 短 TTL fresh data | × 1.2 status |
-| `chitchat` | Short-circuit, LLM 直接回應 | N/A |
-| `handoff` | Short-circuit, 路由到人工 | N/A |
+| `chitchat` | Short-circuit，LLM 直接回應 | N/A |
+| `handoff` | Short-circuit，路由到人工 | N/A |
 
-**Final score 公式**：
+### Final Score 公式
 
 ```text
 final_score = raw_dense_cosine × recency_boost × intent_boost
 ```
 
-- `raw_dense_cosine`：calibrated 0~1 score（前一篇談過為什麼用它而非 RRF）
-- `recency_boost`：來自 Lesson 2 的 L3，weight 範圍 `[1-w/2, 1+w/2]`
-- `intent_boost`：來自 intent classifier，僅在 intent 對應的 collection 內套用
+- `raw_dense_cosine`：0~1 可解釋的 cosine similarity（詳見前一篇 hybrid search 討論）
+- `recency_boost`：來自 Layer 2 的 L3，範圍 `[1 − w/2, 1 + w/2]`
+- `intent_boost`：僅當 intent 對應 collection 時套用，例如 `changelog` intent + changelog collection → × 1.3
 
-**Tradeoff**：~100ms 額外延遲（intent LLM call）vs 大幅減少 false retrieval + 路由更乾淨。對 first-token latency 敏感的場景可考慮 streaming intent classification 或 client-side cached intent。
+### Timeout 與 Fallback
 
-**Timeout 一定要設**：intent classifier 失敗（網路 / model error）→ fallback 到 `faq` intent，**絕對不要因為 intent 掛掉整個 RAG 不能用**。
+Intent classifier 失敗（timeout、model error）→ fallback 到 `faq` intent，**絕對不能讓 intent 掛斷整條 RAG pipeline**。
+
+> 💡 **設計考量 — Library 與 caller 的責任邊界**
+>
+> Query cleaning 與 enrichment（例如加上 tenant / 產品名稱至 embedding query）應由 caller 控制，library 內 `rag.search()` 不要隱式覆寫 caller 傳進來的 `query`。建議 API 形如 `search(query, embed_query_override=None, temporal_hint=None)` — caller 可以自由疊加 enrichment 與 cleaning，不會被 library 以 `temporal_hint.cleaned_query` 偷換掉。RAG pipeline 可調參數多，library 任何隱含副作用都會大幅提高 debug 難度。
 
 ---
 
-### Lesson 4 — Cleaned Query 過短 = Embedding 飄掉
+## Layer 2：Temporal-Aware Retrieval（三層防線）
 
-**症狀**：「下個月的 release」經過 Lesson 2 的 L1 cleaning 之後只剩「release」一字。BGE-M3 embed 出來的 vector 漂在 latent space 很泛的位置 — top-1 cosine 0.55，過不了 0.6 threshold。
+當知識庫含有時序資料，「最近 X」「下個月的 Y」「5月的 Z」這類 query 不能只靠 dense+sparse。dense embedding 會把「最近」這個詞在 latent space 中對齊到「最新 / 近期 / 上次」這些語意相近的 token，結果 top-1 可能是一年前的某篇標題含「最近一波更新」的舊文章。
 
-**為什麼短 query 會飄**：BGE-M3 是 contextual embedding，少於 N tokens 的 query 缺乏 disambiguation 依據 — 「release」可能指軟體 release、新聞稿 release、釋放、解放...embedding 模型沒辦法選邊站，結果 vector 落在「平均」位置，**跟誰算 cosine 都不會太高也不會太低**。
+解法是**三層獨立但互補的機制**：
 
-**Workaround（短期）**：caller 端在 cleaned query 前後補產品名 / context 詞湊到 ≥ 20 字：
+### L1 — Embedding Query Cleaning
+
+以 regex 把 query 中的時間詞 strip 掉，再送去 embed。「最近的 release」→ embed 「release」，避免 semantic match 到含「最近」「最新」的舊 entries。
+
+### L2 — Date Filter
+
+以 Qdrant payload `date` keyword index 做範圍過濾（例如：只取最近 14 天的 entries）。與 Layer 1 的 cleaning 互補 — cleaning 只能讓 embedding 不被時間詞帶偏，但沒有 hard 排除舊資料。
 
 ```python
-cleaned = temporal_parse(query).cleaned_query  # "release"
-if len(cleaned) < MIN_EMBED_LEN:
-    cleaned = f"{tenant.product_name} {cleaned} 變更內容"  # → "Acme Cloud release 變更內容"
-embedding = embed(cleaned)
+date_filter = Filter(
+    must=[FieldCondition(
+        key="date",
+        range=DateRange(gte=datetime.now() - timedelta(days=14)),
+    )]
+)
+results = await qdrant.query_points(
+    collection_name=col,
+    prefetch=[...],
+    query=FusionQuery(fusion=Fusion.RRF),
+    query_filter=date_filter,
+    limit=top_k,
+)
 ```
 
-**正解（長期）**：
-1. Embedding layer 自己拒絕 < N tokens 的 query → caller 收到 error 自己處理
-2. 或自動 query expansion：對短 query 用 LLM 擴寫 3 個變體，全部 embed 後 average pool
+所有 collection 的 `date` 欄位需事先建 keyword index，否則 range filter 會 fallback 成 full scan。
 
-**Generalizable rule**：**短 query 是 RAG 的隱形殺手**，要在 pipeline 一開始就量測 query length distribution，找出「容易變短的 cleaning step」並補強。
+### L3 — Recency Rerank（Exponential Decay）
 
----
+即使在 filter 範圍內，還是該讓較新的 entries 分數更高。用指數衰減 boost，half-life 90 天：
 
-### Lesson 5 — Temporal Fallback 不該一刀切
+```text
+recency_boost(age_days) = exp(−ln(2) × age_days / half_life)
+adjusted_score = raw_dense_cosine × [1 − w/2, 1 + w/2] of recency_boost
+```
 
-**問題**：Lesson 2 的 date filter 過濾完 0 結果（例如休賽期問「上週的 incident」但那一週剛好沒有）。常見做法是「移除 filter 重試」一刀切 — 立刻退化成「全歷史的 incident」。
+其中 `w`（recency weight）由原始時間詞決定 — 時間表達越具體、weight 越大。
 
-**副作用**：用戶問「上週的 incident」想要的是最近的東西，結果回了 2 年前的 entry，confidence 還很高（因為跟 query 語意完全相關）。**Hard miss 比軟降級可能還好** — 至少用戶知道你沒資料。
+### Recency Weight 對照表
 
-**解法 — 漸進式擴大（gradual relaxation）**：
+| 時間表達 | 範圍 | Recency weight |
+| --- | --- | --- |
+| 上一次 / 最近一次 / 前一次 | 14 天 | 1.0 |
+| 最近 | 30 天 | 0.8 |
+| 今天 / 明天 / 昨天 | 單日 | 0.5 |
+| 這週 / 上週 / 下週 | 7 天區間 | 0.6 |
+| M月 / M月D日（無年份） | 當年該月/該日 | 0.3 |
+| 今年 / 去年 | 全年 | 0.2 |
+| （無時間詞） | 不過濾 | 0.3（微量 baseline） |
+
+### Pattern Priority（First-Match-Wins）
+
+時間 regex 的比對順序很重要，錯誤順序會導致「2026年5月」被匹配成「2026年 + 5月」兩次。建議順序：
+
+```text
+YYYY年M月D日  →  YYYY年M月  →  M月D日  →  M月
+               →  相對時間（上週 / 下個月 / 昨天）
+               →  年度（今年 / 去年）
+```
+
+同時使用 negative lookahead 避免誤抓，例如 `今年(?!球季)` 避免「今年的計畫」被抓成年度 token。
+
+### Soft Fallback：漸進式擴大（Graceful Degradation）
+
+Date filter 過濾完若 0 結果，**不要直接移除 filter** — 那會讓「上週的 incident」一瞬間退化成「全歷史的 incident」，可能回到兩年前的 entry 而 confidence 看起來還不低（因為語意完全相關）。正確做法是漸進式放寬：
 
 ```python
 DATE_RANGES = [
     timedelta(days=7),    # 原始範圍
-    timedelta(days=30),   # 第一次 fallback
-    timedelta(days=90),   # 第二次 fallback
+    timedelta(days=30),   # 第一次擴大
+    timedelta(days=90),   # 第二次擴大
     None,                 # 最後才完全移除 filter
 ]
 
@@ -199,114 +207,116 @@ for date_range in DATE_RANGES:
         log.info(f"hit at fallback level {date_range}")
         return results
 
-return []  # 真的沒資料，誠實回 empty
+return []  # 沒有可信結果，誠實回 empty
 ```
 
-**Bonus — log fallback level**：每次觸發 fallback 都記下來，accumulate 之後可以看出：
-- 哪些 query pattern 常觸發 fallback → 補資料缺口
+**同時 log fallback level**，累積後可以看出：
+
+- 哪些 query pattern 經常觸發 fallback → 補資料缺口
 - 哪些 base 範圍（7 天 / 14 天）設得不合理 → 調整 default
-- 是否有特定時段（節假日、休季）系統性 0 結果 → 預先準備 fallback 內容
+- 是否有特定時段系統性 0 結果 → 預先準備 fallback 內容或直接導引到人工
 
-**Generalizable rule**：**RAG 的 fallback 不是 binary（有 / 沒有）**，是 spectrum（多放寬一點 / 多放寬很多 / 完全不限）。任何時候你看到 if 條件 → 0 結果 → 移除限制，都應該想想中間態怎麼設計。
+> 💡 **設計考量 — Cleaned query 過短的 embedding 行為**
+>
+> Layer 2 L1 的 cleaning 會把「下個月的 release」縮成「release」。BGE-M3 是 contextual embedding — 少於 N tokens 的 query 缺乏 disambiguation 依據，生成的 vector 落在 latent space 中性區域，cosine similarity 會對所有候選都不高也不低。處理方式：
+>
+> 1. **Caller 端補 enrichment**：在 cleaned query 前後加產品名 / context 詞補足至 ≥ 20 字，例如 `"Acme Cloud release 變更內容"`
+> 2. **Embedding layer 做 length gate**：低於 min tokens 直接回報 error，由 caller 決定要補 context 還是 abort
+> 3. **自動 query expansion**：對短 query 用 LLM 生成 3 個擴寫變體，全部 embed 後 mean pool
+>
+> 量測 query length distribution 是 RAG pipeline 很早就應該加的 instrumentation — 短 query 比例過高，通常代表 cleaning 或 intent classifier 出了邊界問題。
 
 ---
 
-### Lesson 6 — RAG Bug 通常跨層，要分層獨立驗證
+## Layer 3：Calibrated Confidence
 
-**問題**：「下個月的 release」回傳 confidence 0.55 → 看起來就是 retrieval miss。但實際根因可能是這 4 層裡的任意一層在做隱形的事：
+前一篇 post 已經討論過為什麼 **confidence 應該用 dense cosine re-scoring 而不是 RRF fusion score** — RRF 是 rank-based 的合併分數，不具有「0 = 完全無關、1 = 完全一致」的可解釋性；dense cosine 才能當 threshold。
 
-| 層級 | 角色 | 失敗時症狀（都長得像 confidence 太低）|
+但即使用了 dense cosine，threshold 設在 0.6 仍然是估計值：
+
+- 為什麼 0.6 不是 0.55 或 0.65？
+- 不同 intent category 該不該有不同 threshold？
+- Paraphrase / 口語化 query 平均 confidence 較低，會不會系統性地被判 handoff？
+
+這些問題沒有 eval infrastructure 就無法回答。下一節就是解法。
+
+---
+
+## Eval Infrastructure — 把 Magic Number 變成數據
+
+Pipeline 各層在運行時會用到一組常數，其值來源目前多為「經驗估計」：
+
+| 常數 | 目前值 | 需驗證的假設 |
 | --- | --- | --- |
-| L1 — Temporal parser | 認得「下個月」/「5月」這些 pattern | 時間詞 miss → 沒 date filter → 撈到全歷史 |
-| L2 — Data | Qdrant 有對應時段的 entries | Source 沒 ingest → 沒得搜 |
-| L3 — Query enrichment | Caller 補長度 + Library 尊重 caller | 短 query embedding 飄掉（Lesson 4） |
-| L4 — Intent / Boost | Intent classifier 抓對 + boost 套對 collection | 路由錯誤搜錯 collection |
+| `CONFIDENCE_THRESHOLD` | 0.6 | 降到 0.55 → handoff false positive 會減少多少？尚無數據 |
+| `CITATION_MIN_SCORE` | 0.5 | 把 score 0.5 的 citation 送進 LLM 是否會誘發錯誤答案？尚無數據 |
+| Intent boost 倍率 | × 1.3 | 1.2 / 1.3 / 1.5 之間的差異從未測量 |
+| Recency half-life | 90 天 | 高頻發版期 vs 維護期是否應使用不同半衰期？尚未實驗 |
+| Recency weight 分級 | 1.0 / 0.8 / 0.6 / 0.5 / 0.3 | 分級未經 user study 或 A/B 支撐 |
+| `MIN_EMBED_LEN` | < 20 / < 8 字 | 20 是依直覺設定；15 或 25 效果如何無人知道 |
+| Intent classifier timeout | 5s | 太長拖 latency、太短 fallback 頻繁 — 無量測依據 |
 
-**一個症狀（confidence 低）對應多個 root cause**。RAG bug 幾乎不可能用「看 endpoint output」debug，必須**分層 bypass**：
+這些數值全部都**應該由數據決定**，而不是開發者的直覺。必要的 eval infrastructure：
 
-```text
-1. parse_temporal_query("下個月")        → 確認 date range 對
-2. qdrant.scroll(date_filter=...)        → 確認該時段有資料
-3. embed(cleaned_query) → cosine 距離     → 確認短 query 沒飄
-4. rag.search(query, bypass_cache=True)  → 比對 raw confidence
-5. 比對 actual endpoint confidence vs step 4
-```
+| 項目 | 作用 |
+| --- | --- |
+| **Golden query set（≥ 50 筆，每個 intent ≥ 5 筆）** | 任何 threshold / boost 的調整都用它驗 regression |
+| **Precision@3 / Recall@3** | 量化 top-3 citation 的相關性 |
+| **Per-intent eval breakdown** | `faq` / `changelog` / `status` 的表現可能差異很大，整體 metric 會被平均掉 |
+| **Temporal eval case set** | 專門針對時間詞的 query（「最近」「上個月」「5月的 X」），驗 Layer 2 不 regression |
+| **Confidence calibration curve** | 在 golden set 上畫 precision-recall curve，找 F1 最大的 threshold |
+| **A/B / Shadow eval** | Persona prompt、LLM model、boost 倍率變更都先 shadow run 比對 |
 
-每多走一步看到不一樣的數字，就是某一層在做隱形的事。**這個 layered debug methodology 是 RAG production 的核心 skill** — 比「會 tune embedding model」重要得多。
+### 已知失敗模式（尚未完全修復）
+
+以下模式在目前 pipeline 中仍會發生，列出做為 eval case set 的起點：
+
+- **Cleaned query 過短**：需要 embedding layer 的 length gate 或自動 query expansion
+- **無時間詞但意圖時間敏感**：如「近期發生問題的 service」— parser 抓不到具體日期，目前只靠 recency boost 軟性處理。理想做法是讓 intent classifier 回吐推測的日期範圍
+- **Query normalization 不足**：繁簡混用（「下各月」）、中英混用（「ticket 怎麼開」）、typo → regex miss，走 fallback。需要 normalization layer（繁簡轉換 + alias）
+- **Query expansion 生成品質未驗證**：擴寫的同義問法未經人工 sample 標註，質量未知
+- **Persona system prompt 對 confidence 的影響**：改 prompt 會不會讓 LLM 對 borderline citation 變得更激進？尚無 A/B 數據
 
 ---
 
-## 我們缺的不是 feature, 是 RAG Eval Infra
+## 跨層 Debug — 5-Step 排查 Checklist
 
-Lessons 1-6 全部修完後的真相：**所有 RAG threshold 都是猜的，沒有 golden set 驗過**。這是大多數 production RAG 的共同 dirty secret。
+RAG pipeline 的一個症狀（confidence 低、citation 錯）往往對應多個 root cause — 可能是 Layer 1 的 intent miss，可能是 Layer 2 L1 的 cleaning 過度，也可能是 L2 date filter 範圍不對。**靠看 endpoint output 很難定位根因**，必須逐層 bypass 驗證：
 
-### 散落在 RAG 程式碼裡的 Magic Numbers
-
-| 常數 | 現值 | 沒驗證的假設 |
+| Step | 做什麼 | 看什麼 |
 | --- | --- | --- |
-| `CONFIDENCE_THRESHOLD` | 0.6 | 0.55 → handoff 會少多少 false positive？沒人測過 |
-| `CITATION_MIN_SCORE` | 0.5 | 給 LLM 看 score 0.5 的 citation 會不會誤導它編答案？沒人測過 |
-| Intent boost 倍率 | × 1.3 | 1.2 vs 1.5 vs 1.3 差別？只知道「加了比沒加好」 |
-| Recency half-life | 90 天 | 高頻發版 vs 維護期同一個半衰期合理嗎？ |
-| Recency weight 分級 | 1.0 / 0.8 / 0.6 / 0.5 / 0.3 | 「上一次 w=1.0」vs「最近 w=0.8」分級沒有 user study 支撐 |
-| `MIN_EMBED_LEN` (Lesson 4) | < 20 / < 8 字 | 為什麼是 20 不是 15 或 25？拍腦袋 |
-| Intent classifier timeout | 5s | 太長 → 整體 latency 拖累；太短 → fallback 太頻繁。沒測過 |
+| 1 | `parse_temporal_query("下個月")` 直接呼叫 | date range 是否符合預期 |
+| 2 | `qdrant.scroll(collection, filter=date_filter)` | 該時段是否有實際資料 |
+| 3 | `embed(cleaned_query)` 並對候選 entries 算 cosine | 確認短 query 沒有在 latent space 落在中性區域 |
+| 4 | `rag.search(query, bypass_cache=True)` | 未經 cache 的 raw confidence |
+| 5 | 比對 step 4 的結果與 actual endpoint 回應 | 差異來源於 cache 或後續層 |
 
-### 該做但還沒做的 RAG Eval Infra
-
-| 項目 | 為什麼非做不可 |
-| --- | --- |
-| **Golden query set (≥ 50 筆)** | 每次改 threshold / boost，靠 3-5 個 smoke query 驗，改 A 壞 B 完全沒感覺 |
-| **Precision@3 / Recall@3** | 不知道 top-3 citation 有多少比例真的相關 |
-| **Confidence calibration curve** | 在 golden set 上畫 PR curve，找 F1 最大的 threshold，而不是「感覺 0.6 不錯」 |
-| **Per-intent eval breakdown** | `faq` 跟 `changelog` 跟 `status` intent 表現可能差很多，整體 metric 會被平均掉 |
-| **Temporal eval cases** | 專門測時間詞的 case set，驗 Lessons 2 + 5 修的東西沒 regression |
-| **A/B / Shadow eval** | Persona / system prompt 改版要有 rollback 機制 |
-
-### 已知 RAG 失敗模式（還沒修）
-
-- **Cleaned query 過短**（Lesson 4 的長期版）— Embedding layer 應拒絕 < N token 的 query 或自動擴寫，目前靠 caller 補 enrichment workaround
-- **無時間詞但意圖時間敏感** — 「最近壞掉的 service」parser 抓不到具體日期，只能靠軟性 recency boost。正解是 intent classifier 回吐推測的日期範圍（最近 = 7 天）
-- **Query 拼錯字 / 繁簡混用 / 中英混用** — 「下各月的 release」、「ticket 怎麼開」regex pattern miss，直接走 fallback。正解是 query normalization layer
-- **Query Expansion 生成品質未驗證** — N 倍量的 LLM 生成同義問法，沒人 sample 標註過。「重設密碼」可能被擴成「重啟伺服器」這種離題的東西也不知道
-- **Persona system prompt 對 confidence 的影響** — 改 prompt 會不會讓 LLM 對 borderline citation 變得更激進？沒測過
+每一層看到不同數字，代表該層有隱含副作用 — 定位到具體層後再修。
 
 ---
 
-## 建議的驗證順序（如果重來一次）
+## 總結 — 完整 Pipeline Checklist
 
-1. **先建 golden set（人工 ≥ 50 筆，每個 intent ≥ 5 筆）** — 否則所有後續調整都是瞎改
-2. **量測現狀 baseline** — Precision@3 / Recall@3 / confidence histogram，知道起點
-3. **再動 threshold / boost** — 優先改影響最大的 `CONFIDENCE_THRESHOLD` 和 intent boost
-4. **再修 Lessons 2 + 5（temporal + fallback）** — temporal eval 的 case set 是這時候用的
-5. **最後補資料缺口** — 沒資料再怎麼調 weight 也是 recall 天花板
+| 層 | 關鍵設計 | 為什麼 |
+| --- | --- | --- |
+| **Layer 1 — Intent Routing** | LLM classifier（fast model，~100ms），5s timeout + fallback 到 `faq` | chitchat / handoff 應 short-circuit；boost 應按 intent 條件套用 |
+| **Layer 2 L1 — Query Cleaning** | Regex strip 時間詞再 embed | 避免 dense embedding semantic match 到舊時間詞 entries |
+| **Layer 2 L2 — Date Filter** | Qdrant payload keyword index 範圍過濾 | Hard 排除過期資料，cleaning 做不到 |
+| **Layer 2 L3 — Recency Rerank** | 指數衰減，half-life 90 天，weight 由時間詞決定 | 範圍內也要偏好較新 entries |
+| **Soft Fallback** | 7 → 30 → 90 → off，分級擴大並 log level | 避免「0 結果」退化成「全歷史」 |
+| **Layer 3 — Calibrated Confidence** | Dense cosine re-scoring（非 RRF score） | 0~1 可解釋的 threshold |
+| **Eval Infrastructure** | Golden set + per-intent + temporal cases + calibration curve | 把 magic number 變成有數據背書的決策 |
+| **Layered Debug** | 5-step bypass checklist | 跨層問題無法只從 endpoint output 診斷 |
 
----
-
-## 總結
-
-| 教訓 | 一句話帶走 |
-| --- | --- |
-| L1 — Caller / callee 契約 | RAG library 不該偷偷覆寫 caller 的 query |
-| L2 — Temporal-aware RAG | 三層防線：Cleaning + Date Filter + Recency Rerank，缺一不可 |
-| L3 — Pre-RAG Intent Classification | 不是所有 query 都該走同一條 pipeline；chitchat / handoff 直接 short-circuit |
-| L4 — 短 Query 飄掉 | Cleaned query 過短會讓 embedding 落在 latent space 平均位置，要補長度 |
-| L5 — Soft Fallback | Date filter 0 結果別一刀切，漸進式擴大 7 → 30 → 90 → 移除 |
-| L6 — Layered Debug | RAG bug 幾乎都跨層，要 bypass 每層獨立驗證 |
-| Eval Debt | 所有 threshold 都是猜的，先建 golden set 才有資格 tune |
-
-**「Happy path 修通」不等於 "production ready"**。真正的 production RAG 是：(1) eval infra 存在、(2) 每個 threshold 有數據背書、(3) layered debug 是 team 的肌肉記憶。本帖是事後諸葛 — 寫成 checklist 給未來的自己 / 同事，下次少走幾條彎路。
-
-光是 RAG 就還可以再寫 1-2 篇 — 接下來會繼續拆 Eval Infra 怎麼從 0 建起來、以及跟 RAG 無關但同樣痛的 ingestion / cache invalidation / SPA 爬蟲議題。
-
-延伸閱讀：[FAQ Hybrid Search RAG Pipeline 實戰]({% post_url 2026-04-16-faq-hybrid-search-rag %}) — 同一個 pipeline 的搜尋端深度實作；[RAG 挑戰與突破]({% post_url 2026-03-25-rag-challenges-and-breakthroughs %}) — 更廣的 RAG 全景。
+延伸閱讀：[FAQ Hybrid Search RAG Pipeline 實戰]({% post_url 2026-04-16-faq-hybrid-search-rag %}) — 同一個 pipeline 的 hybrid search 骨架；[RAG 挑戰與突破]({% post_url 2026-03-25-rag-challenges-and-breakthroughs %}) — 更廣的 RAG 全景。
 
 ---
 
 ## References
 
 1. [Qdrant Hybrid Search](https://qdrant.tech/documentation/concepts/hybrid-queries/) — Named vectors + Prefetch + Fusion API
-2. [Qdrant Filtering](https://qdrant.tech/documentation/concepts/filtering/) — Payload index + date range filter (Lesson 2 的 L2)
+2. [Qdrant Filtering & Payload Index](https://qdrant.tech/documentation/concepts/filtering/) — Date range filter（Layer 2 L2）
 3. [BGE-M3 — BAAI](https://huggingface.co/BAAI/bge-m3) — Multi-lingual embedding model used throughout
-4. [前一篇：FAQ Hybrid Search RAG]({% post_url 2026-04-16-faq-hybrid-search-rag %}) — 搜尋端 dense + sparse + RRF + dense cosine 信心校準
-5. [更前一篇：RAG 挑戰與突破]({% post_url 2026-03-25-rag-challenges-and-breakthroughs %}) — RAG 全景
+4. [Reciprocal Rank Fusion (RRF)](https://plg.uwaterloo.ca/~gvcormac/cormacksigir09-rrf.pdf) — Cormack et al., SIGIR 2009
+5. [前一篇：FAQ Hybrid Search RAG]({% post_url 2026-04-16-faq-hybrid-search-rag %}) — 搜尋端 dense + sparse + RRF + dense cosine confidence
+6. [更前一篇：RAG 挑戰與突破]({% post_url 2026-03-25-rag-challenges-and-breakthroughs %}) — RAG 全景
