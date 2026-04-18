@@ -1,94 +1,34 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
-  <!-- layout: hybrid -->
-  <defs>
-    <linearGradient id="transitionGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#f1f5f9"/>
-      <stop offset="100%" style="stop-color:#1e293b"/>
-    </linearGradient>
-    <linearGradient id="detailBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#0f172a"/>
-      <stop offset="100%" style="stop-color:#1e293b"/>
-    </linearGradient>
-    <filter id="shadow">
-      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.12"/>
-    </filter>
-  </defs>
+  <!-- layout: cream -->
+  <rect width="1200" height="630" fill="#FDF6E3"/>
 
-  <!-- === BACKGROUND === -->
-  <rect width="1200" height="630" fill="#ffffff"/>
-  <rect y="390" width="1200" height="240" fill="url(#detailBgGrad)"/>
-  <rect y="370" width="1200" height="30" fill="url(#transitionGrad)"/>
+  <!-- Category (top-left) + accent rule -->
+  <text x="100" y="92" font-family='"JetBrains Mono", "Consolas", "Menlo", monospace' font-size="18" font-weight="700" fill="#CB4B16" letter-spacing="2px">AGENTS / LOCAL</text>
+  <line x1="100" y1="108" x2="188" y2="108" stroke="#CB4B16" stroke-width="3"/>
 
-  <!-- === HEAD ZONE === -->
-  <text x="600" y="68" text-anchor="middle"
-        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans TC, sans-serif"
-        font-size="32" font-weight="700" fill="#1e293b">
-    Local Agent Swarm Frameworks
-  </text>
-  <text x="600" y="105" text-anchor="middle"
-        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
-        font-size="18" font-weight="600" fill="#475569">
-    Multi-Agent Orchestration Patterns
-  </text>
-  <line x1="350" y1="125" x2="850" y2="125" stroke="#e2e8f0" stroke-width="1.5"/>
+  <!-- Blog wordmark (top-right) -->
+  <text x="1100" y="92" text-anchor="end" font-family='"JetBrains Mono", "Consolas", "Menlo", monospace' font-size="14" font-weight="500" fill="#93A1A1" letter-spacing="0.5px">Kevin&#8217;s Tech Blog</text>
 
-  <!-- Orchestrator hub (rounded rect to fit text) -->
-  <rect x="510" y="185" width="180" height="50" rx="25" fill="#bfdbfe" stroke="#2563eb" stroke-width="3"/>
-  <text x="600" y="207" text-anchor="middle" font-family="sans-serif" font-size="18" font-weight="700" fill="#1e3a5f">Orchestrator</text>
-  <text x="600" y="226" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="600" fill="#2563eb">/Router</text>
+  <!-- Headline (2 lines, left-aligned) -->
+  <text x="100" y="255" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif' font-size="52" font-weight="800" fill="#073642" letter-spacing="-1px">Running a Swarm of Agents</text>
+  <text x="100" y="317" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif' font-size="52" font-weight="800" fill="#073642" letter-spacing="-1px">On a Single Laptop</text>
 
-  <!-- 4 agent cards (no filter, saturated fills, thick borders) -->
-  <!-- Researcher (left) -->
-  <rect x="130" y="170" width="180" height="70" rx="12" fill="#bbf7d0" stroke="#16a34a" stroke-width="3"/>
-  <text x="220" y="200" text-anchor="middle" font-family="sans-serif" font-size="18" font-weight="700" fill="#166534">Researcher</text>
-  <text x="220" y="222" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#15803d">Web Search</text>
-  <line x1="310" y1="205" x2="510" y2="205" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="6,3"/>
+  <!-- Sub-hook -->
+  <text x="100" y="405" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif' font-size="26" font-weight="500" fill="#586E75">Local-first multi-agent orchestration.</text>
+  <!-- Anchor: chips (4 items) -->
+  <g>
+    <rect x="250" y="475" width="160" height="56" rx="14" fill="none" stroke="#CB4B16" stroke-width="3"/>
+    <text x="330" y="508" text-anchor="middle" font-family='"JetBrains Mono", "Consolas", "Menlo", monospace' font-size="14" font-weight="700" fill="#CB4B16" letter-spacing="1px">CREWAI</text>
+    <rect x="430" y="475" width="160" height="56" rx="14" fill="none" stroke="#CB4B16" stroke-width="3"/>
+    <text x="510" y="508" text-anchor="middle" font-family='"JetBrains Mono", "Consolas", "Menlo", monospace' font-size="14" font-weight="700" fill="#CB4B16" letter-spacing="1px">AUTOGEN</text>
+    <rect x="610" y="475" width="160" height="56" rx="14" fill="none" stroke="#CB4B16" stroke-width="3"/>
+    <text x="690" y="508" text-anchor="middle" font-family='"JetBrains Mono", "Consolas", "Menlo", monospace' font-size="14" font-weight="700" fill="#CB4B16" letter-spacing="1px">LANGGRAPH</text>
+    <rect x="790" y="475" width="160" height="56" rx="14" fill="#CB4B16" stroke="#CB4B16" stroke-width="3"/>
+    <text x="870" y="508" text-anchor="middle" font-family='"JetBrains Mono", "Consolas", "Menlo", monospace' font-size="14" font-weight="700" fill="#FDF6E3" letter-spacing="1px">SMOLAGENTS</text>
+  </g>
 
-  <!-- Writer (right) -->
-  <rect x="890" y="170" width="180" height="70" rx="12" fill="#fed7aa" stroke="#ea580c" stroke-width="3"/>
-  <text x="980" y="200" text-anchor="middle" font-family="sans-serif" font-size="18" font-weight="700" fill="#9a3412">Writer</text>
-  <text x="980" y="222" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#c2410c">Summarize</text>
-  <line x1="690" y1="205" x2="890" y2="205" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="6,3"/>
-
-  <!-- Coder (bottom-left) -->
-  <rect x="220" y="275" width="180" height="70" rx="12" fill="#ddd6fe" stroke="#7c3aed" stroke-width="3"/>
-  <text x="310" y="305" text-anchor="middle" font-family="sans-serif" font-size="18" font-weight="700" fill="#5b21b6">Coder</text>
-  <text x="310" y="327" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#6d28d9">Execute Code</text>
-  <line x1="400" y1="295" x2="530" y2="235" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="6,3"/>
-
-  <!-- Reviewer (bottom-right) -->
-  <rect x="800" y="275" width="180" height="70" rx="12" fill="#fbcfe8" stroke="#db2777" stroke-width="3"/>
-  <text x="890" y="305" text-anchor="middle" font-family="sans-serif" font-size="18" font-weight="700" fill="#9d174d">Reviewer</text>
-  <text x="890" y="327" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#be185d">Quality Check</text>
-  <line x1="670" y1="235" x2="800" y2="295" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="6,3"/>
-
-  <!-- === DETAIL ZONE: Framework comparison === -->
-  <text x="600" y="420" text-anchor="middle"
-        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
-        font-size="16" font-weight="700" fill="#cbd5e1">Frameworks Compared</text>
-
-  <rect x="60" y="438" width="250" height="56" rx="10" fill="#0f172a" stroke="#38bdf8" stroke-width="1.5"/>
-  <text x="185" y="460" text-anchor="middle" font-family="sans-serif" font-size="20" font-weight="700" fill="#38bdf8">CrewAI</text>
-  <text x="185" y="482" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="600" fill="#94a3b8">Role-based agents</text>
-
-  <rect x="335" y="438" width="250" height="56" rx="10" fill="#0f172a" stroke="#4ade80" stroke-width="1.5"/>
-  <text x="460" y="460" text-anchor="middle" font-family="sans-serif" font-size="20" font-weight="700" fill="#4ade80">AutoGen</text>
-  <text x="460" y="482" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="600" fill="#94a3b8">Conversation-driven</text>
-
-  <rect x="610" y="438" width="250" height="56" rx="10" fill="#0f172a" stroke="#fb923c" stroke-width="1.5"/>
-  <text x="735" y="460" text-anchor="middle" font-family="sans-serif" font-size="20" font-weight="700" fill="#fb923c">LangGraph</text>
-  <text x="735" y="482" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="600" fill="#94a3b8">Graph-based flow</text>
-
-  <rect x="885" y="438" width="250" height="56" rx="10" fill="#0f172a" stroke="#a78bfa" stroke-width="1.5"/>
-  <text x="1010" y="460" text-anchor="middle" font-family="sans-serif" font-size="20" font-weight="700" fill="#a78bfa">smolagents</text>
-  <text x="1010" y="482" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="600" fill="#94a3b8">Code-first</text>
-
-  <!-- Shared tools bar -->
-  <rect x="150" y="515" width="900" height="36" rx="8" fill="#1e293b" stroke="#475569" stroke-width="1"/>
-  <text x="600" y="539" text-anchor="middle"
-        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
-        font-size="15" font-weight="600" fill="#cbd5e1">Shared Tools: Search + Code + Files + APIs</text>
-
+  <!-- Meta (bottom-left) -->
+  <text x="100" y="585" font-family='"JetBrains Mono", "Consolas", "Menlo", monospace' font-size="16" font-weight="500" fill="#93A1A1" letter-spacing="0.5px">@osisdie &#183; 2026.04</text>
   <!-- Bottom attribution -->
   <g opacity="0.45">
     <text x="600" y="618" text-anchor="middle" fill="#64748b" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" letter-spacing="0.5px">osisdie.github.io · Local Agent Swarm</text>

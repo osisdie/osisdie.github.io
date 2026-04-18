@@ -13,7 +13,7 @@ toc:
   sidebar: left
 ---
 
-{% include figure.liquid loading="eager" path="assets/img/blog/2026/faq-hybrid-search-rag/faq-hybrid-search-rag-overview.png" class="img-fluid rounded z-depth-1" alt="FAQ Hybrid Search RAG Pipeline — Dense + Sparse → RRF Fusion → Confidence Scoring" caption="FAQ Hybrid Search RAG Pipeline 架構" %}
+{% include figure.liquid loading="eager" path="assets/img/blog/2026/faq-hybrid-search-rag/faq-hybrid-search-rag-architecture.png" class="img-fluid rounded z-depth-1" alt="FAQ Hybrid Search RAG Pipeline — Dense + Sparse → RRF Fusion → Confidence Scoring" caption="FAQ Hybrid Search RAG Pipeline 架構" %}
 
 > **Abstract** — A practical guide to building a hybrid search RAG pipeline over FAQ data using BGE-M3 dense embeddings + sparse TF vectors, Qdrant named vectors, and RRF fusion. Covers query expansion for recall, dense cosine re-ranking for calibrated confidence, and Redis cache warming for latency — with real eval numbers from production.
 

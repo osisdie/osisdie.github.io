@@ -10,7 +10,7 @@ toc:
   sidebar: left
 ---
 
-{% include figure.liquid loading="eager" path="assets/img/blog/2026/rag-challenges/rag-challenges-overview.png" class="img-fluid rounded z-depth-1" alt="RAG Challenges and Solutions Architecture" caption="RAG 核心挑戰與對應的突破解決方案" %}
+{% include figure.liquid loading="eager" path="assets/img/blog/2026/rag-challenges/rag-challenges-architecture.png" class="img-fluid rounded z-depth-1" alt="RAG Challenges and Solutions Architecture" caption="RAG 核心挑戰與對應的突破解決方案" %}
 
 > **English Abstract** — As RAG (Retrieval-Augmented Generation) moves from proof-of-concept to production in 2026, six core challenges have emerged: retrieval quality gaps, the "Lost in the Middle" attention problem, knowledge conflicts between retrieved documents and parametric memory, hallucination propagation from bad retrievals, inability to perform multi-hop reasoning, and latency/cost at scale. This article examines each challenge and maps them to four breakthrough solutions: Hybrid Search + Reranking, Agentic RAG / Graph RAG, Self-RAG, and the RAGAS evaluation framework — with pseudocode examples and production considerations.
 

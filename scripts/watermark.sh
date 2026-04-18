@@ -83,13 +83,19 @@ WM
     target_png="$png"
   elif [ -f "$alt_png" ]; then
     target_png="$alt_png"
+  elif [[ "$(basename "$svg")" == *-overview.svg ]]; then
+    # No PNG exists yet — create one at the expected overview path
+    target_png="$png"
   fi
 
   if [ -n "$target_png" ]; then
-    # Detect layout type: hybrid > dark > light
+    # Detect layout type: cream > hybrid > dark > light
+    local is_cream=false
     local is_hybrid=false
     local is_dark=false
-    if grep -q '<!-- layout: hybrid -->' "$svg" 2>/dev/null; then
+    if grep -q '<!-- layout: cream -->' "$svg" 2>/dev/null; then
+      is_cream=true
+    elif grep -q '<!-- layout: hybrid -->' "$svg" 2>/dev/null; then
       is_hybrid=true
     elif grep -qP 'stop-color:#[0-2][0-9a-f]{5}' "$svg" 2>/dev/null; then
       is_dark=true
@@ -98,7 +104,10 @@ WM
     local multiplier=2
     local bg_flag="-b white"
     local max_w=2800
-    if [ "$is_hybrid" = true ]; then
+    if [ "$is_cream" = true ]; then
+      multiplier=3
+      bg_flag="-b #FDF6E3"  # Pragmatic Cream background (Solarized base3)
+    elif [ "$is_hybrid" = true ]; then
       multiplier=3
       bg_flag="-b white"  # hybrid needs white for the head zone; dark zone has its own rect
     elif [ "$is_dark" = true ]; then
@@ -110,8 +119,9 @@ WM
     png_w=$(awk "BEGIN { w = $vb_w * $multiplier; if (w > $max_w) w = $max_w; printf \"%.0f\", w }")
     rsvg-convert "$svg" -w "$png_w" $bg_flag -o "$target_png"
     local bg_label="white"
+    [ "$is_cream" = true ]  && bg_label="cream (3x, #FDF6E3 bg)"
     [ "$is_hybrid" = true ] && bg_label="hybrid (3x, white bg)"
-    [ "$is_dark" = true ] && bg_label="dark (3x)"
+    [ "$is_dark" = true ]   && bg_label="dark (3x)"
     echo "  [PNG] $target_png — regenerated at ${png_w}px wide ($bg_label)"
   fi
 }

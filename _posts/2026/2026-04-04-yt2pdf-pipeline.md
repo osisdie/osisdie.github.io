@@ -13,7 +13,7 @@ toc:
   sidebar: left
 ---
 
-{% include figure.liquid loading="eager" path="assets/img/blog/2026/yt2pdf-pipeline/yt2pdf-pipeline-overview.png" class="img-fluid rounded z-depth-1" alt="yt2pdf 6-stage pipeline overview" caption="yt2pdf：從 YouTube URL 到雙語 PDF 的 6 階段 Pipeline" %}
+{% include figure.liquid loading="eager" path="assets/img/blog/2026/yt2pdf-pipeline/yt2pdf-pipeline-architecture.png" class="img-fluid rounded z-depth-1" alt="yt2pdf 6-stage pipeline overview" caption="yt2pdf：從 YouTube URL 到雙語 PDF 的 6 階段 Pipeline" %}
 
 > **English Abstract** — This post dissects `/yt2pdf`, a 6-stage automation pipeline that converts any YouTube video into bilingual (EN + Traditional Chinese) PDF summaries. The pipeline chains yt-dlp subtitle extraction with Whisper ASR fallback, AI-powered bilingual summarization, headless Chrome PDF rendering with base64-embedded images, and Backblaze B2 cloud upload with 7-day presigned URLs. We examine the transcript fallback strategy, the orchestrator pattern, and 6 key design decisions for production deployment.
 

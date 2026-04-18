@@ -1,115 +1,34 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
-  <!-- layout: hybrid -->
-  <defs>
-    <linearGradient id="transitionGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#f1f5f9"/>
-      <stop offset="100%" style="stop-color:#1e293b"/>
-    </linearGradient>
-    <linearGradient id="detailBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#0f172a"/>
-      <stop offset="100%" style="stop-color:#1e293b"/>
-    </linearGradient>
-  </defs>
+  <!-- layout: cream -->
+  <rect width="1200" height="630" fill="#FDF6E3"/>
 
-  <!-- === BACKGROUND === -->
-  <rect width="1200" height="630" fill="#ffffff"/>
-  <rect y="390" width="1200" height="240" fill="url(#detailBgGrad)"/>
-  <rect y="370" width="1200" height="30" fill="url(#transitionGrad)"/>
+  <!-- Category (top-left) + accent rule -->
+  <text x="100" y="92" font-family='"JetBrains Mono", "Consolas", "Menlo", monospace' font-size="18" font-weight="700" fill="#CB4B16" letter-spacing="2px">AI / RAG</text>
+  <line x1="100" y1="108" x2="188" y2="108" stroke="#CB4B16" stroke-width="3"/>
 
-  <!-- === HEAD ZONE === -->
-  <text x="600" y="68" text-anchor="middle"
-        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans TC, sans-serif"
-        font-size="32" font-weight="700" fill="#1e293b">
-    FAQ Hybrid Search RAG Pipeline
-  </text>
-  <text x="600" y="105" text-anchor="middle"
-        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
-        font-size="18" font-weight="600" fill="#475569">
-    Dense + Sparse → RRF Fusion → Confidence Scoring
-  </text>
-  <line x1="300" y1="128" x2="900" y2="128" stroke="#e2e8f0" stroke-width="1.5"/>
+  <!-- Blog wordmark (top-right) -->
+  <text x="1100" y="92" text-anchor="end" font-family='"JetBrains Mono", "Consolas", "Menlo", monospace' font-size="14" font-weight="500" fill="#93A1A1" letter-spacing="0.5px">Kevin&#8217;s Tech Blog</text>
 
-  <!-- 3 component cards -->
-  <!-- BGE-M3 Dense -->
-  <g transform="translate(200, 240)">
-    <rect x="-140" y="-65" width="280" height="170" rx="16" fill="#bfdbfe" stroke="#2563eb" stroke-width="3"/>
-    <text x="0" y="-20" text-anchor="middle"
-          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
-          font-size="26" font-weight="700" fill="#1e3a5f">BGE-M3</text>
-    <text x="0" y="12" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="600" fill="#1d4ed8">1024d Dense Embedding</text>
-    <text x="0" y="38" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#1d4ed8">Cosine Similarity</text>
-    <text x="0" y="62" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#1d4ed8">Asymmetric Retrieval</text>
-    <rect x="-44" y="74" width="88" height="22" rx="11" fill="#2563eb"/>
-    <text x="0" y="90" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#fff">Dense</text>
+  <!-- Headline (2 lines, left-aligned) -->
+  <text x="100" y="255" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif' font-size="58" font-weight="800" fill="#073642" letter-spacing="-1px">Hybrid Search Taught Me</text>
+  <text x="100" y="324" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif' font-size="58" font-weight="800" fill="#073642" letter-spacing="-1px">What Embeddings Miss</text>
+
+  <!-- Sub-hook -->
+  <text x="100" y="405" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif' font-size="26" font-weight="500" fill="#586E75">Dense + sparse retrieval for FAQ search.</text>
+  <!-- Anchor: 3-box flow (centered on x=600, y=500) -->
+  <g>
+    <rect x="320" y="465" width="160" height="72" rx="14" fill="none" stroke="#CB4B16" stroke-width="3"/>
+    <text x="400" y="508" text-anchor="middle" font-family='"JetBrains Mono", "Consolas", "Menlo", monospace' font-size="15" font-weight="700" fill="#CB4B16" letter-spacing="1px">DENSE</text>
+    <text x="500" y="510" text-anchor="middle" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif' font-size="28" font-weight="700" fill="#93A1A1">&#8594;</text>
+    <rect x="520" y="465" width="160" height="72" rx="14" fill="none" stroke="#CB4B16" stroke-width="3"/>
+    <text x="600" y="508" text-anchor="middle" font-family='"JetBrains Mono", "Consolas", "Menlo", monospace' font-size="15" font-weight="700" fill="#CB4B16" letter-spacing="1px">SPARSE</text>
+    <text x="700" y="510" text-anchor="middle" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif' font-size="28" font-weight="700" fill="#93A1A1">&#8594;</text>
+    <rect x="720" y="465" width="160" height="72" rx="14" fill="none" stroke="#CB4B16" stroke-width="3"/>
+    <text x="800" y="508" text-anchor="middle" font-family='"JetBrains Mono", "Consolas", "Menlo", monospace' font-size="15" font-weight="700" fill="#CB4B16" letter-spacing="1px">RRF</text>
   </g>
 
-  <!-- Sparse TF -->
-  <g transform="translate(600, 240)">
-    <rect x="-140" y="-65" width="280" height="170" rx="16" fill="#bbf7d0" stroke="#16a34a" stroke-width="3"/>
-    <text x="0" y="-20" text-anchor="middle"
-          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
-          font-size="26" font-weight="700" fill="#166534">Sparse TF</text>
-    <text x="0" y="12" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="600" fill="#15803d">Tokenizer Term Frequency</text>
-    <text x="0" y="38" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#15803d">Keyword Precision</text>
-    <text x="0" y="62" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#15803d">No Corpus Stats Needed</text>
-    <rect x="-44" y="74" width="88" height="22" rx="11" fill="#16a34a"/>
-    <text x="0" y="90" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#fff">Sparse</text>
-  </g>
-
-  <!-- RRF Fusion -->
-  <g transform="translate(1000, 240)">
-    <rect x="-140" y="-65" width="280" height="170" rx="16" fill="#fde68a" stroke="#d97706" stroke-width="3"/>
-    <text x="0" y="-20" text-anchor="middle"
-          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
-          font-size="26" font-weight="700" fill="#92400e">RRF Fusion</text>
-    <text x="0" y="12" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="600" fill="#b45309">Reciprocal Rank Fusion</text>
-    <text x="0" y="38" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#b45309">Rank-based Merging</text>
-    <text x="0" y="62" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#b45309">No Score Calibration</text>
-    <rect x="-44" y="74" width="88" height="22" rx="11" fill="#d97706"/>
-    <text x="0" y="90" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#fff">Fusion</text>
-  </g>
-
-  <!-- === DETAIL ZONE: Pipeline flow === -->
-  <text x="600" y="420" text-anchor="middle"
-        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
-        font-size="16" font-weight="700" fill="#cbd5e1">Search Pipeline</text>
-
-  <!-- 5-step flow, centered -->
-  <rect x="60" y="438" width="180" height="52" rx="8" fill="#0f172a" stroke="#2563eb" stroke-width="1.5"/>
-  <text x="150" y="458" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="700" fill="#60a5fa">Embed Query</text>
-  <text x="150" y="478" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="600" fill="#94a3b8">Dense + Sparse</text>
-
-  <text x="262" y="468" text-anchor="middle" font-family="sans-serif" font-size="18" font-weight="700" fill="#475569">→</text>
-
-  <rect x="284" y="438" width="180" height="52" rx="8" fill="#0f172a" stroke="#f59e0b" stroke-width="1.5"/>
-  <text x="374" y="458" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="700" fill="#fcd34d">RRF Fusion</text>
-  <text x="374" y="478" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="600" fill="#94a3b8">Candidate generation</text>
-
-  <text x="486" y="468" text-anchor="middle" font-family="sans-serif" font-size="18" font-weight="700" fill="#475569">→</text>
-
-  <rect x="508" y="438" width="180" height="52" rx="8" fill="#0f172a" stroke="#a78bfa" stroke-width="1.5"/>
-  <text x="598" y="458" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="700" fill="#a78bfa">Deduplicate</text>
-  <text x="598" y="478" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="600" fill="#94a3b8">Group by original Q</text>
-
-  <text x="710" y="468" text-anchor="middle" font-family="sans-serif" font-size="18" font-weight="700" fill="#475569">→</text>
-
-  <rect x="732" y="438" width="180" height="52" rx="8" fill="#0f172a" stroke="#22c55e" stroke-width="1.5"/>
-  <text x="822" y="458" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="700" fill="#4ade80">Dense Re-rank</text>
-  <text x="822" y="478" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="600" fill="#94a3b8">Calibrated scoring</text>
-
-  <text x="934" y="468" text-anchor="middle" font-family="sans-serif" font-size="18" font-weight="700" fill="#475569">→</text>
-
-  <rect x="956" y="438" width="180" height="52" rx="8" fill="#0f172a" stroke="#ef4444" stroke-width="1.5"/>
-  <text x="1046" y="458" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="700" fill="#f87171">Citations</text>
-  <text x="1046" y="478" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="600" fill="#94a3b8">Confidence ≥ 0.6</text>
-
-  <!-- Tagline -->
-  <text x="600" y="545" text-anchor="middle"
-        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
-        font-size="15" font-weight="600" fill="#64748b">
-    Qdrant Named Vectors · Query Expansion · Redis Cache Warming
-  </text>
-
+  <!-- Meta (bottom-left) -->
+  <text x="100" y="585" font-family='"JetBrains Mono", "Consolas", "Menlo", monospace' font-size="16" font-weight="500" fill="#93A1A1" letter-spacing="0.5px">@osisdie &#183; 2026.04</text>
   <!-- Bottom attribution -->
   <g opacity="0.45">
     <text x="600" y="618" text-anchor="middle" fill="#64748b" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" letter-spacing="0.5px">osisdie.github.io · FAQ Hybrid Search RAG</text>

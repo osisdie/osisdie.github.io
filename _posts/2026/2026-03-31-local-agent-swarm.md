@@ -10,7 +10,7 @@ toc:
   sidebar: left
 ---
 
-{% include figure.liquid loading="eager" path="assets/img/blog/2026/local-agent-swarm/local-agent-swarm-overview.png" class="img-fluid rounded z-depth-1" alt="Local Agent Swarm Frameworks Overview" caption="本地 Agent Swarm 框架架構總覽" %}
+{% include figure.liquid loading="eager" path="assets/img/blog/2026/local-agent-swarm/local-agent-swarm-architecture.png" class="img-fluid rounded z-depth-1" alt="Local Agent Swarm Frameworks Overview" caption="本地 Agent Swarm 框架架構總覽" %}
 
 > **English Abstract** — This post surveys the mainstream local agent swarm frameworks in 2026: CrewAI (role-based crews), AutoGen/AG2 (actor-model conversations), LangGraph (graph-based state machines), and smolagents (code-first minimal agents). We compare their architectures, learning curves, and trade-offs, then implement a minimal 2-agent swarm using Hugging Face's smolagents to demonstrate how lightweight multi-agent orchestration can be.
 
