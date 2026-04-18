@@ -187,7 +187,7 @@ YYYY年M月D日  →  YYYY年M月  →  M月D日  →  M月
                →  年度（今年 / 去年）
 ```
 
-同時使用 negative lookahead 避免誤抓，例如 `今年(?!球季)` 避免「今年的計畫」被抓成年度 token。
+同時使用 negative lookahead 避免誤抓 — 「今年」在 `今年的 release`（時間 token）和 `今年的規劃`（描述 token）語意不同，可以用類似 `今年(?!.{0,3}規劃|.{0,3}方向)` 的 pattern 排除非時間 context。
 
 ### Soft Fallback：漸進式擴大（Graceful Degradation）
 
