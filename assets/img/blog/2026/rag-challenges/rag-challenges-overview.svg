@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <!-- layout: cream -->
+  <rect width="1200" height="630" fill="#FDF6E3"/>
+
+  <!-- Category (top-left) + accent rule -->
+  <text x="100" y="92" font-family='"JetBrains Mono", "Consolas", "Menlo", monospace' font-size="18" font-weight="700" fill="#CB4B16" letter-spacing="2px">AI / RAG</text>
+  <line x1="100" y1="108" x2="188" y2="108" stroke="#CB4B16" stroke-width="3"/>
+
+  <!-- Blog wordmark (top-right) -->
+  <text x="1100" y="92" text-anchor="end" font-family='"JetBrains Mono", "Consolas", "Menlo", monospace' font-size="14" font-weight="500" fill="#93A1A1" letter-spacing="0.5px">Kevin&#8217;s Tech Blog</text>
+
+  <!-- Headline (2 lines, left-aligned) -->
+  <text x="100" y="255" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif' font-size="58" font-weight="800" fill="#073642" letter-spacing="-1px">The Five RAG Problems</text>
+  <text x="100" y="324" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif' font-size="58" font-weight="800" fill="#073642" letter-spacing="-1px">Nobody Warned Me About</text>
+
+  <!-- Sub-hook -->
+  <text x="100" y="405" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif' font-size="26" font-weight="500" fill="#586E75">Lessons from shipping RAG to production.</text>
+  <!-- Anchor: chips (5 items) -->
+  <g>
+    <rect x="218" y="475" width="140" height="56" rx="14" fill="none" stroke="#CB4B16" stroke-width="3"/>
+    <text x="288" y="508" text-anchor="middle" font-family='"JetBrains Mono", "Consolas", "Menlo", monospace' font-size="14" font-weight="700" fill="#CB4B16" letter-spacing="1px">RETRIEVAL</text>
+    <rect x="374" y="475" width="140" height="56" rx="14" fill="none" stroke="#CB4B16" stroke-width="3"/>
+    <text x="444" y="508" text-anchor="middle" font-family='"JetBrains Mono", "Consolas", "Menlo", monospace' font-size="14" font-weight="700" fill="#CB4B16" letter-spacing="1px">LOST-IN-MIDDLE</text>
+    <rect x="530" y="475" width="140" height="56" rx="14" fill="none" stroke="#CB4B16" stroke-width="3"/>
+    <text x="600" y="508" text-anchor="middle" font-family='"JetBrains Mono", "Consolas", "Menlo", monospace' font-size="14" font-weight="700" fill="#CB4B16" letter-spacing="1px">CONFLICTS</text>
+    <rect x="686" y="475" width="140" height="56" rx="14" fill="none" stroke="#CB4B16" stroke-width="3"/>
+    <text x="756" y="508" text-anchor="middle" font-family='"JetBrains Mono", "Consolas", "Menlo", monospace' font-size="14" font-weight="700" fill="#CB4B16" letter-spacing="1px">HALLUCINATION</text>
+    <rect x="842" y="475" width="140" height="56" rx="14" fill="none" stroke="#CB4B16" stroke-width="3"/>
+    <text x="912" y="508" text-anchor="middle" font-family='"JetBrains Mono", "Consolas", "Menlo", monospace' font-size="14" font-weight="700" fill="#CB4B16" letter-spacing="1px">MULTI-HOP</text>
+  </g>
+
+  <!-- Meta (bottom-left) -->
+  <text x="100" y="585" font-family='"JetBrains Mono", "Consolas", "Menlo", monospace' font-size="16" font-weight="500" fill="#93A1A1" letter-spacing="0.5px">@osisdie &#183; 2026.04</text>
+  <!-- Bottom attribution -->
+  <g opacity="0.45">
+    <text x="600" y="618" text-anchor="middle" fill="#64748b" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" letter-spacing="0.5px">osisdie.github.io · RAG Challenges and Breakthroughs</text>
+  </g>
+</svg>

@@ -13,7 +13,7 @@ toc:
   sidebar: left
 ---
 
-{% include figure.liquid loading="eager" path="assets/img/blog/2026/iot-architecture/iot-architecture-overview.png" class="img-fluid rounded z-depth-1" alt="IoT 1M Device Architecture Overview" caption="Phase 1 核心架構：EMQX + TimescaleDB + FastAPI + BFF + OpenTelemetry" %}
+{% include figure.liquid loading="eager" path="assets/img/blog/2026/iot-architecture/iot-architecture-architecture.png" class="img-fluid rounded z-depth-1" alt="IoT 1M Device Architecture Overview" caption="Phase 1 核心架構：EMQX + TimescaleDB + FastAPI + BFF + OpenTelemetry" %}
 
 > **English Abstract** — Part 1 of 3. Core architecture for 1M IoT devices: **EMQX** (Rule Engine direct write) → **TimescaleDB** (hot 7d + Continuous Aggregates) → **FastAPI** → **BFF** → Dashboard. Includes protocol selection, broker comparison, three-tier storage, BFF design, cost estimation (~$17-33K/month), and AWS/GCP mapping. Scale-out (>1M): add Redpanda + ClickHouse.
 

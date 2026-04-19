@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <!-- layout: hybrid -->
+  <defs>
+    <linearGradient id="transitionGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f1f5f9"/>
+      <stop offset="100%" style="stop-color:#1e293b"/>
+    </linearGradient>
+    <linearGradient id="detailBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="100%" style="stop-color:#1e293b"/>
+    </linearGradient>
+    <linearGradient id="telegramGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2AABEE"/>
+      <stop offset="100%" style="stop-color:#229ED9"/>
+    </linearGradient>
+    <linearGradient id="mcpGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f093fb"/>
+      <stop offset="100%" style="stop-color:#f5576c"/>
+    </linearGradient>
+    <linearGradient id="claudeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#D97706"/>
+      <stop offset="100%" style="stop-color:#F59E0B"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <!-- === BACKGROUND === -->
+  <rect width="1200" height="630" fill="#ffffff"/>
+  <rect y="390" width="1200" height="240" fill="url(#detailBgGrad)"/>
+  <rect y="370" width="1200" height="30" fill="url(#transitionGrad)"/>
+
+  <!-- === HEAD ZONE === -->
+  <text x="600" y="68" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans TC, sans-serif"
+        font-size="32" font-weight="700" fill="#1e293b">
+    Channel Plugin Architecture
+  </text>
+  <text x="600" y="105" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+        font-size="18" font-weight="600" fill="#475569">
+    Telegram Inline Buttons + MCP Server + Cache Patching
+  </text>
+  <line x1="350" y1="125" x2="850" y2="125" stroke="#e2e8f0" stroke-width="1.5"/>
+
+  <!-- 3 component cards -->
+  <!-- Telegram -->
+  <g transform="translate(200, 235)">
+    <rect x="-130" y="-65" width="260" height="170" rx="16" fill="#bfdbfe" stroke="#229ED9" stroke-width="3"/>
+    <circle cx="-90" cy="-20" r="16" fill="url(#telegramGrad)"/>
+    <text x="-90" y="-14" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="700" fill="#fff">T</text>
+    <text x="15" y="-14" text-anchor="middle"
+          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+          font-size="24" font-weight="700" fill="#1e3a5f">Telegram</text>
+    <text x="0" y="18" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#1d4ed8">grammy Bot Framework</text>
+    <text x="0" y="42" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#1d4ed8">Inline Buttons + Callback</text>
+    <text x="0" y="66" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#1d4ed8">Bidirectional Messaging</text>
+    <rect x="-44" y="78" width="88" height="22" rx="11" fill="#229ED9"/>
+    <text x="0" y="94" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#fff">Channel</text>
+  </g>
+
+  <!-- MCP Server -->
+  <g transform="translate(600, 235)">
+    <rect x="-130" y="-65" width="260" height="170" rx="16" fill="#f5d0fe" stroke="#d946ef" stroke-width="3"/>
+    <circle cx="-90" cy="-20" r="16" fill="none" stroke="#d946ef" stroke-width="2"/>
+    <circle cx="-90" cy="-20" r="5" fill="#d946ef" opacity="0.6"/>
+    <text x="20" y="-14" text-anchor="middle"
+          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+          font-size="24" font-weight="700" fill="#701a75">MCP Server</text>
+    <text x="0" y="18" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#a21caf">Bun Subprocess (stdio)</text>
+    <text x="0" y="42" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#a21caf">Cache Patching (--cwd)</text>
+    <text x="0" y="66" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#a21caf">Notification Bridge</text>
+    <rect x="-44" y="78" width="88" height="22" rx="11" fill="#d946ef"/>
+    <text x="0" y="94" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#fff">Bridge</text>
+  </g>
+
+  <!-- Claude Code -->
+  <g transform="translate(1000, 235)">
+    <rect x="-130" y="-65" width="260" height="170" rx="16" fill="#fde68a" stroke="#d97706" stroke-width="3"/>
+    <circle cx="-90" cy="-20" r="16" fill="url(#claudeGrad)" opacity="0.3"/>
+    <text x="-90" y="-14" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="700" fill="#d97706">C</text>
+    <text x="15" y="-14" text-anchor="middle"
+          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+          font-size="24" font-weight="700" fill="#92400e">Claude Code</text>
+    <text x="0" y="18" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#b45309">Session Management</text>
+    <text x="0" y="42" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#b45309">Tool Call Execution</text>
+    <text x="0" y="66" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#b45309">Hook Event System</text>
+    <rect x="-44" y="78" width="88" height="22" rx="11" fill="#d97706"/>
+    <text x="0" y="94" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#fff">Engine</text>
+  </g>
+
+  <!-- === DETAIL ZONE: Data flow (centered, with purpose) === -->
+  <text x="600" y="418" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+        font-size="16" font-weight="700" fill="#cbd5e1">Data Flow</text>
+
+  <!-- 4 boxes × 210px + 3 arrows × 30px = 930px. margin = (1200-930)/2 = 135 -->
+  <rect x="135" y="435" width="210" height="55" rx="8" fill="#0f172a" stroke="#229ED9" stroke-width="1.5"/>
+  <text x="240" y="457" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="700" fill="#229ED9">User Message</text>
+  <text x="240" y="477" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="600" fill="#94a3b8">Telegram bot receives</text>
+
+  <text x="370" y="467" text-anchor="middle" font-family="sans-serif" font-size="20" font-weight="700" fill="#cbd5e1">→</text>
+
+  <rect x="395" y="435" width="210" height="55" rx="8" fill="#0f172a" stroke="#d946ef" stroke-width="1.5"/>
+  <text x="500" y="457" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="700" fill="#d946ef">MCP Notify</text>
+  <text x="500" y="477" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="600" fill="#94a3b8">Bridge to session</text>
+
+  <text x="630" y="467" text-anchor="middle" font-family="sans-serif" font-size="20" font-weight="700" fill="#cbd5e1">→</text>
+
+  <rect x="655" y="435" width="210" height="55" rx="8" fill="#0f172a" stroke="#d97706" stroke-width="1.5"/>
+  <text x="760" y="457" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="700" fill="#F59E0B">Tool Call</text>
+  <text x="760" y="477" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="600" fill="#94a3b8">Execute + respond</text>
+
+  <text x="890" y="467" text-anchor="middle" font-family="sans-serif" font-size="20" font-weight="700" fill="#cbd5e1">→</text>
+
+  <rect x="915" y="435" width="210" height="55" rx="8" fill="#0f172a" stroke="#229ED9" stroke-width="1.5"/>
+  <text x="1020" y="457" text-anchor="middle" font-family="sans-serif" font-size="16" font-weight="700" fill="#229ED9">Reply + Buttons</text>
+  <text x="1020" y="477" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="600" fill="#94a3b8">Inline keyboard sent</text>
+
+  <!-- Return path -->
+  <text x="600" y="530" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+        font-size="15" font-weight="600" fill="#94a3b8">
+    callback_query → MCP → Tool Call → Reply (bidirectional loop)
+  </text>
+
+  <!-- Bottom attribution -->
+  <g opacity="0.45">
+    <text x="600" y="618" text-anchor="middle" fill="#64748b" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" letter-spacing="0.5px">osisdie.github.io · Channel Plugin Architecture</text>
+  </g>
+</svg>

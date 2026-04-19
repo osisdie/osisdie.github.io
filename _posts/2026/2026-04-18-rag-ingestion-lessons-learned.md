@@ -13,7 +13,7 @@ toc:
   sidebar: left
 ---
 
-{% include figure.liquid loading="eager" path="assets/img/blog/2026/rag-ingestion-lessons-learned/rag-ingestion-lessons-learned-overview.png" class="img-fluid rounded z-depth-1" alt="Production-Ready RAG Pipeline — Intent Routing + Temporal-Aware Retrieval + Calibrated Confidence" caption="Production-Ready RAG Pipeline — Intent Routing、Temporal-Aware Retrieval 與 Calibrated Confidence 三層完整架構" %}
+{% include figure.liquid loading="eager" path="assets/img/blog/2026/rag-ingestion-lessons-learned/rag-ingestion-lessons-learned-architecture.png" class="img-fluid rounded z-depth-1" alt="Production-Ready RAG Pipeline — Intent Routing + Temporal-Aware Retrieval + Calibrated Confidence" caption="Production-Ready RAG Pipeline — Intent Routing、Temporal-Aware Retrieval 與 Calibrated Confidence 三層完整架構" %}
 
 > **Abstract** — A complete production-ready RAG architecture covering three pillars that basic hybrid search alone doesn't solve: (1) pre-search intent classification for routing and short-circuiting, (2) three-layer temporal-aware retrieval (embedding query cleaning + Qdrant date filter + exponential-decay recency rerank with soft fallback), and (3) eval-driven confidence calibration to replace guessed thresholds. Includes concrete recency weight tables, final-score formula, pattern-priority rules, and a per-intent eval checklist.
 

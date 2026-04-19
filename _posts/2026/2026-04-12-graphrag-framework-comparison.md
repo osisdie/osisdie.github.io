@@ -13,7 +13,7 @@ toc:
   sidebar: left
 ---
 
-{% include figure.liquid loading="eager" path="assets/img/blog/2026/graphrag-comparison/graphrag-comparison-overview.png" class="img-fluid rounded z-depth-1" alt="GraphRAG Framework Comparison: Graphiti vs Neo4j vs T-GRAG" caption="Graphiti vs Neo4j GraphRAG vs T-GRAG — 九維度深度比較" %}
+{% include figure.liquid loading="eager" path="assets/img/blog/2026/graphrag-comparison/graphrag-comparison-architecture.png" class="img-fluid rounded z-depth-1" alt="GraphRAG Framework Comparison: Graphiti vs Neo4j vs T-GRAG" caption="Graphiti vs Neo4j GraphRAG vs T-GRAG — 九維度深度比較" %}
 
 > **English Abstract** — When building long-term RAG infrastructure, the choice of GraphRAG framework determines how painful future migrations will be — changing embedding models, chunking strategies, or adding temporal awareness. This article compares three leading approaches — Graphiti (getzep/graphiti), Neo4j GraphRAG, and Temporal GraphRAG (T-GRAG) — across 9 critical dimensions. Based on 2026 Q2 production evaluations, Graphiti emerges as the top recommendation for teams prioritizing zero-migration-pain temporal knowledge graphs with hybrid search.
 

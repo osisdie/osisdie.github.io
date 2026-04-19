@@ -1,128 +1,34 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
-  <!-- layout: hybrid -->
-  <defs>
-    <linearGradient id="transitionGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#f1f5f9"/>
-      <stop offset="100%" style="stop-color:#1e293b"/>
-    </linearGradient>
-    <linearGradient id="detailBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#0f172a"/>
-      <stop offset="100%" style="stop-color:#1e293b"/>
-    </linearGradient>
-  </defs>
+  <!-- layout: cream -->
+  <rect width="1200" height="630" fill="#FDF6E3"/>
 
-  <!-- === BACKGROUND === -->
-  <rect width="1200" height="630" fill="#ffffff"/>
-  <rect y="390" width="1200" height="240" fill="url(#detailBgGrad)"/>
-  <rect y="370" width="1200" height="30" fill="url(#transitionGrad)"/>
+  <!-- Category (top-left) + accent rule -->
+  <text x="100" y="92" font-family='"JetBrains Mono", "Consolas", "Menlo", monospace' font-size="18" font-weight="700" fill="#CB4B16" letter-spacing="2px">AI / RAG</text>
+  <line x1="100" y1="108" x2="188" y2="108" stroke="#CB4B16" stroke-width="3"/>
 
-  <!-- === HEAD ZONE === -->
-  <text x="600" y="68" text-anchor="middle"
-        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans TC, sans-serif"
-        font-size="32" font-weight="700" fill="#1e293b">
-    Production-Ready RAG Pipeline
-  </text>
-  <text x="600" y="105" text-anchor="middle"
-        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
-        font-size="18" font-weight="600" fill="#475569">
-    Intent Routing · Temporal-Aware Retrieval · Calibrated Confidence
-  </text>
-  <line x1="280" y1="128" x2="920" y2="128" stroke="#e2e8f0" stroke-width="1.5"/>
+  <!-- Blog wordmark (top-right) -->
+  <text x="1100" y="92" text-anchor="end" font-family='"JetBrains Mono", "Consolas", "Menlo", monospace' font-size="14" font-weight="500" fill="#93A1A1" letter-spacing="0.5px">Kevin&#8217;s Tech Blog</text>
 
-  <!-- 3 takeaway cards -->
-  <!-- Intent Routing -->
-  <g transform="translate(200, 240)">
-    <rect x="-140" y="-65" width="280" height="170" rx="16" fill="#bfdbfe" stroke="#2563eb" stroke-width="3"/>
-    <text x="0" y="-25" text-anchor="middle"
-          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
-          font-size="24" font-weight="700" fill="#1e3a5f">Intent</text>
-    <text x="0" y="2" text-anchor="middle"
-          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
-          font-size="24" font-weight="700" fill="#1e3a5f">Routing</text>
-    <text x="0" y="34" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#1d4ed8">Route + Conditional Boost</text>
-    <text x="0" y="56" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#1d4ed8">Short-circuit chitchat</text>
-    <rect x="-50" y="74" width="100" height="22" rx="11" fill="#2563eb"/>
-    <text x="0" y="90" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#fff">Layer 1</text>
+  <!-- Headline (2 lines, left-aligned) -->
+  <text x="100" y="255" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif' font-size="66" font-weight="800" fill="#073642" letter-spacing="-1px">Production-Ready RAG</text>
+  <text x="100" y="334" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif' font-size="66" font-weight="800" fill="#073642" letter-spacing="-1px">Is Three Layers Deep</text>
+
+  <!-- Sub-hook -->
+  <text x="100" y="405" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif' font-size="26" font-weight="500" fill="#586E75">Intent routing · temporal retrieval · calibrated confidence.</text>
+  <!-- Anchor: 3-box flow (centered on x=600, y=500) -->
+  <g>
+    <rect x="320" y="465" width="160" height="72" rx="14" fill="none" stroke="#CB4B16" stroke-width="3"/>
+    <text x="400" y="508" text-anchor="middle" font-family='"JetBrains Mono", "Consolas", "Menlo", monospace' font-size="15" font-weight="700" fill="#CB4B16" letter-spacing="1px">INTENT</text>
+    <text x="500" y="510" text-anchor="middle" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif' font-size="28" font-weight="700" fill="#93A1A1">&#8594;</text>
+    <rect x="520" y="465" width="160" height="72" rx="14" fill="none" stroke="#CB4B16" stroke-width="3"/>
+    <text x="600" y="508" text-anchor="middle" font-family='"JetBrains Mono", "Consolas", "Menlo", monospace' font-size="15" font-weight="700" fill="#CB4B16" letter-spacing="1px">TEMPORAL</text>
+    <text x="700" y="510" text-anchor="middle" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif' font-size="28" font-weight="700" fill="#93A1A1">&#8594;</text>
+    <rect x="720" y="465" width="160" height="72" rx="14" fill="none" stroke="#CB4B16" stroke-width="3"/>
+    <text x="800" y="508" text-anchor="middle" font-family='"JetBrains Mono", "Consolas", "Menlo", monospace' font-size="15" font-weight="700" fill="#CB4B16" letter-spacing="1px">CONFIDENCE</text>
   </g>
 
-  <!-- Temporal Layers -->
-  <g transform="translate(600, 240)">
-    <rect x="-140" y="-65" width="280" height="170" rx="16" fill="#bbf7d0" stroke="#16a34a" stroke-width="3"/>
-    <text x="0" y="-25" text-anchor="middle"
-          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
-          font-size="24" font-weight="700" fill="#166534">Temporal</text>
-    <text x="0" y="2" text-anchor="middle"
-          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
-          font-size="24" font-weight="700" fill="#166534">Layers</text>
-    <text x="0" y="34" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#15803d">Query Clean + Date Filter</text>
-    <text x="0" y="56" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#15803d">+ Recency Rerank</text>
-    <rect x="-50" y="74" width="100" height="22" rx="11" fill="#16a34a"/>
-    <text x="0" y="90" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#fff">Layer 2</text>
-  </g>
-
-  <!-- Calibrated Confidence -->
-  <g transform="translate(1000, 240)">
-    <rect x="-140" y="-65" width="280" height="170" rx="16" fill="#fde68a" stroke="#d97706" stroke-width="3"/>
-    <text x="0" y="-25" text-anchor="middle"
-          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
-          font-size="24" font-weight="700" fill="#92400e">Calibrated</text>
-    <text x="0" y="2" text-anchor="middle"
-          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
-          font-size="24" font-weight="700" fill="#92400e">Confidence</text>
-    <text x="0" y="34" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#b45309">Eval-driven thresholds,</text>
-    <text x="0" y="56" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#b45309">not guessed magic numbers</text>
-    <rect x="-50" y="74" width="100" height="22" rx="11" fill="#d97706"/>
-    <text x="0" y="90" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#fff">Layer 3</text>
-  </g>
-
-  <!-- === DETAIL ZONE: 5-stage pipeline flow === -->
-  <text x="600" y="420" text-anchor="middle"
-        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
-        font-size="16" font-weight="700" fill="#cbd5e1">Pipeline Flow</text>
-
-  <!-- 5-stage pipeline row with → arrows (5 × 180 + 4 × 22 = 988, margins = 106 each side) -->
-  <g font-family="sans-serif" font-size="13" font-weight="700">
-    <!-- Stage 1: Intent Classify -->
-    <rect x="106" y="445" width="180" height="56" rx="8" fill="#0f172a" stroke="#60a5fa" stroke-width="1.5"/>
-    <text x="196" y="468" text-anchor="middle" font-size="15" fill="#60a5fa">Intent Classify</text>
-    <text x="196" y="488" text-anchor="middle" font-size="12" font-weight="600" fill="#94a3b8">Route + boost + timeout</text>
-
-    <text x="296" y="478" text-anchor="middle" font-size="20" font-weight="700" fill="#475569">→</text>
-
-    <!-- Stage 2: Temporal Parse -->
-    <rect x="308" y="445" width="180" height="56" rx="8" fill="#0f172a" stroke="#22d3ee" stroke-width="1.5"/>
-    <text x="398" y="468" text-anchor="middle" font-size="15" fill="#22d3ee">Temporal Parse</text>
-    <text x="398" y="488" text-anchor="middle" font-size="12" font-weight="600" fill="#94a3b8">Clean + date range</text>
-
-    <text x="498" y="478" text-anchor="middle" font-size="20" font-weight="700" fill="#475569">→</text>
-
-    <!-- Stage 3: Hybrid Search -->
-    <rect x="510" y="445" width="180" height="56" rx="8" fill="#0f172a" stroke="#4ade80" stroke-width="1.5"/>
-    <text x="600" y="468" text-anchor="middle" font-size="15" fill="#4ade80">Hybrid Search</text>
-    <text x="600" y="488" text-anchor="middle" font-size="12" font-weight="600" fill="#94a3b8">Dense + Sparse + RRF</text>
-
-    <text x="700" y="478" text-anchor="middle" font-size="20" font-weight="700" fill="#475569">→</text>
-
-    <!-- Stage 4: Date Filter + Rerank -->
-    <rect x="712" y="445" width="180" height="56" rx="8" fill="#0f172a" stroke="#a78bfa" stroke-width="1.5"/>
-    <text x="802" y="468" text-anchor="middle" font-size="15" fill="#a78bfa">Filter + Rerank</text>
-    <text x="802" y="488" text-anchor="middle" font-size="12" font-weight="600" fill="#94a3b8">Date + recency decay</text>
-
-    <text x="902" y="478" text-anchor="middle" font-size="20" font-weight="700" fill="#475569">→</text>
-
-    <!-- Stage 5: Confidence -->
-    <rect x="914" y="445" width="180" height="56" rx="8" fill="#0f172a" stroke="#fbbf24" stroke-width="1.5"/>
-    <text x="1004" y="468" text-anchor="middle" font-size="15" fill="#fcd34d">Confidence</text>
-    <text x="1004" y="488" text-anchor="middle" font-size="12" font-weight="600" fill="#94a3b8">Calibrated threshold</text>
-  </g>
-
-  <!-- Tagline -->
-  <text x="600" y="545" text-anchor="middle"
-        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
-        font-size="15" font-weight="600" fill="#94a3b8">
-    Qdrant · BGE-M3 · Hybrid Search · Eval-Driven Tuning
-  </text>
-
+  <!-- Meta (bottom-left) -->
+  <text x="100" y="585" font-family='"JetBrains Mono", "Consolas", "Menlo", monospace' font-size="16" font-weight="500" fill="#93A1A1" letter-spacing="0.5px">@osisdie &#183; 2026.04</text>
   <!-- Bottom attribution -->
   <g opacity="0.45">
     <text x="600" y="618" text-anchor="middle" fill="#64748b" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" letter-spacing="0.5px">osisdie.github.io · Production-Ready RAG Pipeline</text>

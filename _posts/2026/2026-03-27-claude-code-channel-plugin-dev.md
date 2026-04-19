@@ -13,7 +13,7 @@ toc:
   sidebar: left
 ---
 
-{% include figure.liquid loading="eager" path="assets/img/blog/2026/channel-plugin-dev/channel-plugin-dev-overview.png" class="img-fluid rounded z-depth-1" alt="Claude Code Channel Plugin Architecture" caption="Channel Plugin 架構：Telegram Inline Buttons 與 Cache Patching 機制" %}
+{% include figure.liquid loading="eager" path="assets/img/blog/2026/channel-plugin-dev/channel-plugin-dev-architecture.png" class="img-fluid rounded z-depth-1" alt="Claude Code Channel Plugin Architecture" caption="Channel Plugin 架構：Telegram Inline Buttons 與 Cache Patching 機制" %}
 
 > **English Abstract** — Claude Code's `--channels` flag only accepts official plugin identifiers and re-extracts the plugin into a cache directory on every launch, overwriting local modifications. After trying 6 different approaches (pre-sync copy, background watcher, `--plugin-dir`, `--mcp-config`, symlink, and cache patching), we found that **cache patching** — rewriting the cached `.mcp.json` to redirect `--cwd` to a local fork — is the cleanest workaround: idempotent, no residual state, and compatible with inbound channel notifications. This article also covers implementing Telegram inline keyboard buttons via raw Bot API format (bypassing grammy's serialization issue), callback query handling, and credential isolation with `TELEGRAM_STATE_DIR`.
 

@@ -10,7 +10,7 @@ toc:
   sidebar: left
 ---
 
-{% include figure.liquid loading="eager" path="assets/img/blog/2026/claude-code-architecture/claude-code-architecture-overview.png" class="img-fluid rounded z-depth-1" alt="Agent Architecture Patterns Overview" caption="從 Claude Code 原始碼提煉的 8 個可複用架構模式" %}
+{% include figure.liquid loading="eager" path="assets/img/blog/2026/claude-code-architecture/claude-code-architecture-architecture.png" class="img-fluid rounded z-depth-1" alt="Agent Architecture Patterns Overview" caption="從 Claude Code 原始碼提煉的 8 個可複用架構模式" %}
 
 > **English Abstract** — This post dissects the internal architecture of a production agent system, extracting 8 reusable design patterns from 1,902 TypeScript source files: Tool Registration Pipeline, Side-Query for cost-efficient routing, Coordinator/Worker with XML result injection, Hook Event System (16×5×7 combinatorics), and Context Compaction three-layer strategy. Each pattern includes pseudocode and practical adoption guidance.
 

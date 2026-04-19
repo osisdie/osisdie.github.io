@@ -10,7 +10,7 @@ toc:
   sidebar: left
 ---
 
-{% include figure.liquid loading="eager" path="assets/img/blog/2026/ralph-loop/ralph-loop-overview.png" class="img-fluid rounded z-depth-1" alt="Ralph Loop Stop Hook Architecture" caption="Ralph Loop Stop Hook 運作流程與 State File 結構" %}
+{% include figure.liquid loading="eager" path="assets/img/blog/2026/ralph-loop/ralph-loop-architecture.png" class="img-fluid rounded z-depth-1" alt="Ralph Loop Stop Hook Architecture" caption="Ralph Loop Stop Hook 運作流程與 State File 結構" %}
 
 > **English Abstract** — The Ralph Loop Stop Hook is a bash-based hook for Claude Code that enables autonomous, iterative AI agent sessions. When Claude finishes a response, the Stop Hook intercepts the session exit, reads the agent's transcript, checks for a completion promise, and — if the task isn't done — re-injects the original prompt to continue the loop. This article dissects the 191-line script: state file architecture (YAML frontmatter + markdown prompt), session isolation to prevent cross-session interference, JSONL transcript parsing, Perl-based `<promise>` tag detection, and atomic state updates. Includes the actual source code with production safety considerations.
 
