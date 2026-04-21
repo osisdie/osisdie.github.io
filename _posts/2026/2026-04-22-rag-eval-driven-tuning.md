@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "RAG Pipeline Eval-Driven Tuning：Threshold Sweep、Progressive Fallback 與 Date Hint 的實證收束"
-date: 2026-04-22 10:00:00 +0800
+date: 2026-04-22 00:30:00 +0800
 description: "承接 Production-Ready RAG Pipeline 留下的三個 open item — confidence threshold 0.6 沒有數據背書、soft fallback 只是二元切換、intent classifier 抓不到「無時間詞但意圖時間敏感」— 用 21-value threshold sweep、四層 progressive fallback 與 date_hint_days schema 把三個 magic number 變成可驗證、可觀察、可回歸的 pipeline 行為"
 tags: rag evaluation pipeline python ai observability threshold-calibration
 featured: true
