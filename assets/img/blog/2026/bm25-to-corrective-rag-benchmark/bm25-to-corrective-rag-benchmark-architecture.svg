@@ -1,0 +1,134 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <!-- layout: hybrid -->
+  <defs>
+    <linearGradient id="transitionGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f1f5f9"/>
+      <stop offset="100%" style="stop-color:#1e293b"/>
+    </linearGradient>
+    <linearGradient id="detailBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="100%" style="stop-color:#1e293b"/>
+    </linearGradient>
+  </defs>
+
+  <!-- === BACKGROUND === -->
+  <rect width="1200" height="630" fill="#ffffff"/>
+  <rect y="390" width="1200" height="240" fill="url(#detailBgGrad)"/>
+  <rect y="370" width="1200" height="30" fill="url(#transitionGrad)"/>
+
+  <!-- === HEAD ZONE === -->
+  <text x="600" y="62" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans TC, sans-serif"
+        font-size="32" font-weight="700" fill="#1e293b">
+    One Staircase, Five Categories
+  </text>
+  <text x="600" y="98" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+        font-size="18" font-weight="600" fill="#475569">
+    T²-RAGBench · 23,088 financial QA queries · arXiv:2604.01733
+  </text>
+  <line x1="260" y1="120" x2="940" y2="120" stroke="#e2e8f0" stroke-width="1.5"/>
+
+  <!-- 3 takeaway cards -->
+  <!-- Card 1: Reranker Wins (Blue) -->
+  <g transform="translate(200, 240)">
+    <rect x="-150" y="-80" width="300" height="180" rx="16" fill="#bfdbfe" stroke="#2563eb" stroke-width="3"/>
+    <text x="0" y="-42" text-anchor="middle"
+          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+          font-size="22" font-weight="700" fill="#1e3a5f">Reranker Wins</text>
+    <text x="0" y="-12" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="600" fill="#1d4ed8">Hybrid + Cohere Rerank v4.0</text>
+    <text x="0" y="14" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="700" fill="#1d4ed8">R@5 = 0.816</text>
+    <text x="0" y="40" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="600" fill="#1d4ed8">+12.1pp R@5 / +17.2pp MRR@3</text>
+    <text x="0" y="62" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="600" fill="#1d4ed8">over unranked Hybrid RRF</text>
+    <rect x="-60" y="78" width="120" height="22" rx="11" fill="#2563eb"/>
+    <text x="0" y="94" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#fff">Best Overall</text>
+  </g>
+
+  <!-- Card 2: BM25 > Dense (Green) -->
+  <g transform="translate(600, 240)">
+    <rect x="-150" y="-80" width="300" height="180" rx="16" fill="#bbf7d0" stroke="#16a34a" stroke-width="3"/>
+    <text x="0" y="-42" text-anchor="middle"
+          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+          font-size="22" font-weight="700" fill="#166534">BM25 &gt; Dense</text>
+    <text x="0" y="-12" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="600" fill="#15803d">on every metric except R@20</text>
+    <text x="0" y="14" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="700" fill="#15803d">R@5: 0.644 vs 0.587</text>
+    <text x="0" y="40" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="600" fill="#15803d">Financial terminology favors</text>
+    <text x="0" y="62" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="600" fill="#15803d">lexical exact match</text>
+    <rect x="-60" y="78" width="120" height="22" rx="11" fill="#16a34a"/>
+    <text x="0" y="94" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#fff">Contrarian</text>
+  </g>
+
+  <!-- Card 3: CRAG Underperforms (Amber) -->
+  <g transform="translate(1000, 240)">
+    <rect x="-150" y="-80" width="300" height="180" rx="16" fill="#fde68a" stroke="#d97706" stroke-width="3"/>
+    <text x="0" y="-42" text-anchor="middle"
+          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+          font-size="22" font-weight="700" fill="#92400e">CRAG Underperforms</text>
+    <text x="0" y="-12" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="600" fill="#b45309">CRAG R@5 = 0.658</text>
+    <text x="0" y="14" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="700" fill="#b45309">below Hybrid RRF 0.695</text>
+    <text x="0" y="40" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="600" fill="#b45309">Query rewriting alone</text>
+    <text x="0" y="62" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="600" fill="#b45309">≠ complementary fusion</text>
+    <rect x="-60" y="78" width="120" height="22" rx="11" fill="#d97706"/>
+    <text x="0" y="94" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#fff">Surprise</text>
+  </g>
+
+  <!-- === DETAIL ZONE: Recall@5 staircase === -->
+  <text x="600" y="420" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+        font-size="16" font-weight="700" fill="#cbd5e1">Recall@5 Staircase · 7 methods on T²-RAGBench</text>
+
+  <!-- Staircase rows: bar width = R@5 * 600 (0.544 -> 326px, 0.816 -> 490px) -->
+  <!-- Each row at y_start + i*23 -->
+  <g font-family="sans-serif">
+    <!-- Row 1: HyDE 0.544 -->
+    <text x="270" y="450" text-anchor="end" font-size="15" font-weight="700" fill="#fb923c">HyDE</text>
+    <rect x="285" y="437" width="326" height="18" fill="#fb923c" opacity="0.85" rx="2"/>
+    <text x="625" y="450" font-size="14" font-weight="700" fill="#fb923c">0.544</text>
+
+    <!-- Row 2: Dense 0.587 -->
+    <text x="270" y="475" text-anchor="end" font-size="15" font-weight="700" fill="#fb923c">Dense</text>
+    <rect x="285" y="462" width="352" height="18" fill="#fb923c" opacity="0.85" rx="2"/>
+    <text x="651" y="475" font-size="14" font-weight="700" fill="#fb923c">0.587</text>
+
+    <!-- Row 3: BM25 0.644 -->
+    <text x="270" y="500" text-anchor="end" font-size="15" font-weight="700" fill="#22d3ee">BM25</text>
+    <rect x="285" y="487" width="386" height="18" fill="#22d3ee" opacity="0.85" rx="2"/>
+    <text x="685" y="500" font-size="14" font-weight="700" fill="#22d3ee">0.644</text>
+
+    <!-- Row 4: CRAG 0.658 -->
+    <text x="270" y="525" text-anchor="end" font-size="15" font-weight="700" fill="#22d3ee">CRAG</text>
+    <rect x="285" y="512" width="395" height="18" fill="#22d3ee" opacity="0.85" rx="2"/>
+    <text x="694" y="525" font-size="14" font-weight="700" fill="#22d3ee">0.658</text>
+
+    <!-- Row 5: Hybrid RRF 0.695 -->
+    <text x="270" y="550" text-anchor="end" font-size="15" font-weight="700" fill="#22d3ee">Hybrid RRF</text>
+    <rect x="285" y="537" width="417" height="18" fill="#22d3ee" opacity="0.85" rx="2"/>
+    <text x="716" y="550" font-size="14" font-weight="700" fill="#22d3ee">0.695</text>
+
+    <!-- Row 6: Ctx Hybrid 0.717 -->
+    <text x="270" y="575" text-anchor="end" font-size="15" font-weight="700" fill="#22d3ee">Ctx Hybrid</text>
+    <rect x="285" y="562" width="430" height="18" fill="#22d3ee" opacity="0.85" rx="2"/>
+    <text x="729" y="575" font-size="14" font-weight="700" fill="#22d3ee">0.717</text>
+
+    <!-- Row 7: Hybrid + Rerank 0.816 (highlighted) -->
+    <text x="270" y="600" text-anchor="end" font-size="15" font-weight="800" fill="#4ade80">Hybrid + Rerank</text>
+    <rect x="285" y="587" width="490" height="18" fill="#4ade80" opacity="0.95" rx="2"/>
+    <text x="789" y="600" font-size="14" font-weight="800" fill="#4ade80">0.816 ★</text>
+  </g>
+
+  <!-- Right-side caption -->
+  <text x="900" y="465" font-family="sans-serif" font-size="13" font-weight="700" fill="#fb923c" letter-spacing="0.5px">QUERY EXPANSION</text>
+  <text x="900" y="480" font-family="sans-serif" font-size="11" font-weight="600" fill="#94a3b8">underperforms baseline</text>
+
+  <text x="900" y="515" font-family="sans-serif" font-size="13" font-weight="700" fill="#22d3ee" letter-spacing="0.5px">SINGLE / FUSION</text>
+  <text x="900" y="530" font-family="sans-serif" font-size="11" font-weight="600" fill="#94a3b8">competitive band</text>
+
+  <text x="900" y="568" font-family="sans-serif" font-size="13" font-weight="700" fill="#4ade80" letter-spacing="0.5px">TWO-STAGE</text>
+  <text x="900" y="583" font-family="sans-serif" font-size="11" font-weight="600" fill="#94a3b8">cross-encoder rerank</text>
+  <text x="900" y="598" font-family="sans-serif" font-size="11" font-weight="600" fill="#94a3b8">recovers RRF's lost margin</text>
+
+  <!-- Bottom attribution -->
+  <g opacity="0.45">
+    <text x="600" y="618" text-anchor="middle" fill="#64748b" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" letter-spacing="0.5px">osisdie.github.io · From BM25 to Corrective RAG</text>
+  </g>
+</svg>
