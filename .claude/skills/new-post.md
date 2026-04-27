@@ -88,21 +88,34 @@ toc:
 > Source: [osisdie/osisdie.github.io](https://github.com/osisdie/osisdie.github.io) — PRs and Issues welcome!
 ```
 
-## Step 5: Hero Image (SVG → PNG)
+## Step 5: Hero Images (SVG → PNG)
 
-Create the hero SVG following these rules (see `assets/docs/svg-png-guide.md`):
+Create **article hero images plus a dedicated LinkedIn sharing image** in `assets/img/blog/{year}/{slug}/`:
 
-- **Fonts**: use system stack `-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif`
-- **Colors**: hardcode values only — NO `var(--*)`, NO proprietary fonts
-- **Layout**: vertical flow preferred (avoids horizontal overflow on mobile)
-- **viewBox**: fixed dimensions (e.g. `viewBox="0 0 680 780"`)
+1. `{slug}-overview.svg` — title card for `og_image`
+2. `{slug}-architecture.svg` — article body hero / explanatory visual
+3. `{slug}-linkedin.svg` — dedicated social sharing image for LinkedIn posts
+
+Follow these rules (see `assets/docs/svg-png-guide.md`):
+
+- **Canvas**: use `viewBox="0 0 1200 630"` for LinkedIn preview compatibility.
+- **Fonts**: use system stack `-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif`.
+- **Colors**: hardcode values only — NO `var(--*)`, NO proprietary fonts.
+- **Overview style**: keep the warm cream palette when possible (`#FDF6E3` background, dark solarized text, orange accent). This beige version has good blog identity and works well for LinkedIn.
+- **LinkedIn image**: `{slug}-linkedin.svg` should be a simplified cream social card derived from `{slug}-overview.svg`, not a dense article diagram. Use 1 headline, 1 subtitle, and 3-5 short labels.
+- **Readability**: headline >= 48px, key labels >= 24px, supporting labels >= 18px. Anything below 16px is watermark-only.
+- **Focus**: design around one visual idea, not a full architecture diagram. Prefer 3 or 4 balanced cards/circles/pillars depending on the content; do not force every post into exactly 3 items.
+- **Brand**: include `assets/img/brand/osisdie-author-cartoon.png` as a subtle corner watermark when it strengthens the image. Keep it outside the main reading path, around 70-100px wide in a 1200x630 SVG with `opacity="0.35"`-`0.5`, so it reads as blog identity / anti-theft marking rather than the main subject.
+- **Architecture rule**: `{slug}-architecture.svg` may be more explanatory than the LinkedIn image, but it must still avoid tiny text and excessive boxes.
 
 Convert to PNG:
 ```bash
-rsvg-convert {slug}-overview.svg -w 1360 -b white -o {slug}-overview.png
+rsvg-convert {slug}-overview.svg -w 2400 -b white -o {slug}-overview.png
+rsvg-convert {slug}-architecture.svg -w 2400 -b white -o {slug}-architecture.png
+rsvg-convert {slug}-linkedin.svg -w 2400 -b white -o {slug}-linkedin.png
 ```
 
-Verify: read the PNG to check Chinese text renders correctly.
+Verify by reading the PNG at chat thumbnail size: the headline, one core idea, and subtle author watermark must be recognizable without zooming. Use the LinkedIn image for manual social sharing; keep old articles unchanged unless explicitly asked.
 
 ## Step 6: Content Conventions
 
