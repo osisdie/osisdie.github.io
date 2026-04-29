@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <!-- layout: hybrid -->
+  <defs>
+    <linearGradient id="transitionGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f1f5f9"/>
+      <stop offset="100%" style="stop-color:#1e293b"/>
+    </linearGradient>
+    <linearGradient id="detailBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="100%" style="stop-color:#1e293b"/>
+    </linearGradient>
+  </defs>
+
+  <!-- === BACKGROUND === -->
+  <rect width="1200" height="630" fill="#ffffff"/>
+  <rect y="390" width="1200" height="240" fill="url(#detailBgGrad)"/>
+  <rect y="370" width="1200" height="30" fill="url(#transitionGrad)"/>
+
+  <!-- === HEAD ZONE === -->
+  <text x="600" y="62" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans TC, sans-serif"
+        font-size="32" font-weight="700" fill="#1e293b">
+    Three Paths for Temporal Query Parsing
+  </text>
+  <text x="600" y="98" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+        font-size="18" font-weight="600" fill="#475569">
+    Regex · Dedicated LLM · Co-located in Intent Classifier
+  </text>
+  <line x1="260" y1="120" x2="940" y2="120" stroke="#e2e8f0" stroke-width="1.5"/>
+
+  <!-- 3 takeaway cards -->
+
+  <!-- Card 1: Regex Patterns (Amber - brittle) -->
+  <g transform="translate(200, 240)">
+    <rect x="-150" y="-80" width="300" height="180" rx="16" fill="#fde68a" stroke="#d97706" stroke-width="3"/>
+    <text x="0" y="-42" text-anchor="middle"
+          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+          font-size="22" font-weight="700" fill="#92400e">Regex Patterns</text>
+    <text x="0" y="-12" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="600" fill="#b45309">Hard-coded 「明天 → +1」</text>
+    <text x="0" y="14" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="600" fill="#b45309">Brittle · doesn&#8217;t scale</text>
+    <text x="0" y="40" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="600" fill="#b45309">Implicit refs unreachable</text>
+    <text x="0" y="62" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="600" fill="#b45309">Maintenance creep</text>
+    <rect x="-60" y="78" width="120" height="22" rx="11" fill="#d97706"/>
+    <text x="0" y="94" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#fff">Brittle</text>
+  </g>
+
+  <!-- Card 2: Dedicated LLM (Orange - costly) -->
+  <g transform="translate(600, 240)">
+    <rect x="-150" y="-80" width="300" height="180" rx="16" fill="#fed7aa" stroke="#ea580c" stroke-width="3"/>
+    <text x="0" y="-42" text-anchor="middle"
+          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+          font-size="22" font-weight="700" fill="#9a3412">Dedicated LLM</text>
+    <text x="0" y="-12" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="600" fill="#c2410c">Separate date-range call</text>
+    <text x="0" y="14" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="700" fill="#c2410c">+200&#8211;400 ms p50</text>
+    <text x="0" y="40" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="600" fill="#c2410c">2&#215; tokens · 2&#215; retries</text>
+    <text x="0" y="62" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="600" fill="#c2410c">Two sources of truth</text>
+    <rect x="-60" y="78" width="120" height="22" rx="11" fill="#ea580c"/>
+    <text x="0" y="94" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#fff">Costly</text>
+  </g>
+
+  <!-- Card 3: Co-located (Green - selected) -->
+  <g transform="translate(1000, 240)">
+    <rect x="-150" y="-80" width="300" height="180" rx="16" fill="#bbf7d0" stroke="#16a34a" stroke-width="3"/>
+    <text x="0" y="-42" text-anchor="middle"
+          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+          font-size="22" font-weight="700" fill="#166534">Co-located &#9733;</text>
+    <text x="0" y="-12" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="600" fill="#15803d">Schema-extended intent LLM</text>
+    <text x="0" y="14" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="700" fill="#15803d">+0 round-trip · same call</text>
+    <text x="0" y="40" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="600" fill="#15803d">&lt; 50 extra output tokens</text>
+    <text x="0" y="62" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="600" fill="#15803d">Single source of truth</text>
+    <rect x="-60" y="78" width="120" height="22" rx="11" fill="#16a34a"/>
+    <text x="0" y="94" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#fff">Selected</text>
+  </g>
+
+  <!-- === DETAIL ZONE === -->
+  <text x="600" y="420" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+        font-size="16" font-weight="700" fill="#cbd5e1">Schema Before / After  ·  Vagueness Three-Tier Strategy</text>
+
+  <!-- LEFT: Schema before/after JSON -->
+  <text x="60" y="450" font-family="sans-serif" font-size="13" font-weight="700" fill="#94a3b8" letter-spacing="0.5px">BEFORE</text>
+  <text x="60" y="476" font-family='"JetBrains Mono", "Consolas", monospace' font-size="15" font-weight="600" fill="#fb923c">{"intent": "category_A"}</text>
+
+  <text x="60" y="510" font-family="sans-serif" font-size="13" font-weight="700" fill="#94a3b8" letter-spacing="0.5px">AFTER</text>
+  <text x="60" y="535" font-family='"JetBrains Mono", "Consolas", monospace' font-size="15" font-weight="600" fill="#4ade80">{</text>
+  <text x="60" y="555" font-family='"JetBrains Mono", "Consolas", monospace' font-size="15" font-weight="600" fill="#4ade80">  "intent": "category_B",</text>
+  <text x="60" y="575" font-family='"JetBrains Mono", "Consolas", monospace' font-size="15" font-weight="600" fill="#4ade80">  "temporal": true,</text>
+  <text x="60" y="595" font-family='"JetBrains Mono", "Consolas", monospace' font-size="15" font-weight="600" fill="#4ade80">  "date_range": {...},</text>
+  <text x="60" y="615" font-family='"JetBrains Mono", "Consolas", monospace' font-size="15" font-weight="600" fill="#4ade80">  "vagueness": "fuzzy" }</text>
+
+  <!-- Vertical divider -->
+  <line x1="600" y1="438" x2="600" y2="612" stroke="#475569" stroke-width="1" stroke-dasharray="3,4" opacity="0.5"/>
+
+  <!-- RIGHT: Vagueness three-tier strategy -->
+  <text x="640" y="450" font-family="sans-serif" font-size="13" font-weight="700" fill="#94a3b8" letter-spacing="0.5px">VAGUENESS &#183; DOWNSTREAM</text>
+
+  <!-- exact -->
+  <rect x="640" y="465" width="92" height="24" rx="4" fill="#22d3ee"/>
+  <text x="686" y="482" text-anchor="middle" font-family='"JetBrains Mono", monospace' font-size="13" font-weight="700" fill="#0f172a">exact</text>
+  <text x="744" y="482" font-family="sans-serif" font-size="14" font-weight="600" fill="#cbd5e1">直接套 date_range</text>
+
+  <!-- fuzzy -->
+  <rect x="640" y="497" width="92" height="24" rx="4" fill="#4ade80"/>
+  <text x="686" y="514" text-anchor="middle" font-family='"JetBrains Mono", monospace' font-size="13" font-weight="700" fill="#0f172a">fuzzy</text>
+  <text x="744" y="514" font-family="sans-serif" font-size="14" font-weight="600" fill="#cbd5e1">套 range &#43; UI 顯示 interpretation</text>
+
+  <!-- vague -->
+  <rect x="640" y="529" width="92" height="24" rx="4" fill="#fcd34d"/>
+  <text x="686" y="546" text-anchor="middle" font-family='"JetBrains Mono", monospace' font-size="13" font-weight="700" fill="#0f172a">vague</text>
+  <text x="744" y="546" font-family="sans-serif" font-size="14" font-weight="600" fill="#cbd5e1">default window &#43; 提示確認</text>
+
+  <!-- requires_context -->
+  <rect x="640" y="561" width="92" height="24" rx="4" fill="#f472b6"/>
+  <text x="686" y="578" text-anchor="middle" font-family='"JetBrains Mono", monospace' font-size="11" font-weight="700" fill="#0f172a">req_ctx</text>
+  <text x="744" y="578" font-family="sans-serif" font-size="14" font-weight="600" fill="#cbd5e1">chat-history pipeline</text>
+
+  <!-- Cost-zero summary -->
+  <text x="640" y="608" font-family="sans-serif" font-size="13" font-weight="600" fill="#94a3b8" letter-spacing="0.3px">
+    &#916; LLM calls: 0  ·  &#916; latency: 0 ms  ·  &#916; services: 0
+  </text>
+
+  <!-- Bottom attribution -->
+  <g opacity="0.45">
+    <text x="600" y="618" text-anchor="middle" fill="#64748b" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" letter-spacing="0.5px">osisdie.github.io · multi-task intent LLM</text>
+  </g>
+</svg>
