@@ -90,6 +90,8 @@ query → [LLM: intent + temporal + date_range + vagueness] → 一份結構化�
   "temporal": true,
   "date_range": {"start": "2026-04-22", "end": "2026-04-29"},
   "vagueness": "fuzzy",
+  "direction": "past",
+  "cardinality": "single",
   "interpretation": "把『最近』解讀為過去 7 天",
   "requires_context": false
 }
@@ -103,8 +105,10 @@ query → [LLM: intent + temporal + date_range + vagueness] → 一份結構化�
    - `"exact"` — 明確日期或範圍（「2026-04-30」、「明天」）
    - `"fuzzy"` — 有界但範圍由 LLM 推（「最近」 → 7 天；「上個月」 → 30 天）
    - `"vague"` — 無明確邊界（「以前」、「之後」），需要 fallback 或 clarification
-4. **`interpretation` 是自然語言字串** — LLM 把它對模糊 temporal 的解讀寫出來；UI 可以直接拿去顯示（「我把『最近』理解為過去 7 天，需要調整嗎？」）
-5. **`requires_context: bool` 處理 implicit reference** — 「那個」、「那次」 這類需要對話脈絡才能消歧的句子；下游切到 chat-history-aware retrieval
+4. **`direction` 是排序方向**（`past` / `future` / `interval` / `none`）— 「上一筆」要 newest-first、「下一筆」要 oldest-first；之前 LLM 已經在 prompt 內部推論方向，現在把它 promote 到 typed field
+5. **`cardinality` 是 single / plural** — 「上一筆」是 single（UI 只給 3 條 reference 就夠）；「本月所有」是 plural（10 條）。內部給 LLM context 的 top-K 仍寬，但外部 surface 收窄
+6. **`interpretation` 是自然語言字串** — LLM 把它對模糊 temporal 的解讀寫出來；UI 可以直接拿去顯示（「我把『最近』理解為過去 7 天，需要調整嗎？」）
+7. **`requires_context: bool` 處理 implicit reference** — 「那個」、「那次」 這類需要對話脈絡才能消歧的句子；下游切到 chat-history-aware retrieval
 
 落地建議：用 OpenAI / Anthropic 的 structured output（JSON mode 或 function calling）強制 LLM 回 valid JSON，parser 不必自己處理空白或格式異常。
 
@@ -126,6 +130,97 @@ query → [LLM: intent + temporal + date_range + vagueness] → 一份結構化�
 - 第二次仍然 `requires_context` 就改顯示 disambiguation prompt（「您指的是 X 還是 Y？」）
 
 關鍵：**模糊性是 first-class signal，不要把它藏在 retrieval 內部猜**。Schema 把它顯式 emit 給整個 pipeline，UI、retrieval、後續 ranker 都能各自對齊決策。
+
+---
+
+## 三個進階 schema-design patterns
+
+把 schema 多任務化只是起點。在實際運轉一段時間後，會自然演化出三個更廣的 design patterns，每個都是「把 LLM 不擅長的事情搬出去 / 把 LLM 已經做的事情顯式化 / 把 LLM 內部用的東西跟 user 看見的分開」。
+
+### Pattern A — 把 deterministic 計算搬出 LLM（Pre-compute）
+
+**LLM 不擅長算術**，尤其是日期算術。「今天減七天」這種句子在小模型（Gemini Flash Lite、GPT-4o-mini 等級）上會偶發出錯：把「昨天」算成今天、把「上個月」算成本月。Production 上一旦發生，使用者拿到的就是錯一天的資料 — debug 起來還很難重現。
+
+**反模式**：在 system prompt 裡寫「如果使用者說『昨天』，請輸出 today minus 1 day」，把日期算術交給 LLM。
+
+**正解**：在 host code 裡先把「今天」與所有相對日期片語預計算成具體日期，給 LLM 一個 phrase → date 的 lookup table：
+
+```text
+| 詞                | 對應日期                |
+| ---               | ---                    |
+| 今天 / 今日        | 2026-04-29             |
+| 昨天 / 昨日        | 2026-04-28             |
+| 前天              | 2026-04-27             |
+| 明天 / 明日        | 2026-04-30             |
+| 本週 (週一到今天)   | 2026-04-27 到 2026-04-29 |
+| 上週 (週一到週日)   | 2026-04-20 到 2026-04-26 |
+| 上個月 (1 號到月底) | 2026-03-01 到 2026-03-31 |
+```
+
+LLM 的工作從「算 day offset」收斂到「對 phrase 查表」，**錯誤率掉一個量級**。Boundary cases（年末跨年、月底跨月、閏年、週界線）由 Python + unit test 鎖；timezone 由 host code 在 upstream 處理（`Asia/Taipei` 還是 `Asia/Tokyo` 由 process env 決定），prompt 不認識 timezone offset 也不需要認識。
+
+**通則**：只要是 deterministic computation（rounding、percentage、currency conversion、date arithmetic），都該由 host code 算好再餵給 LLM。LLM 負責的應該是 fuzzy matching、自然語言理解、語境消歧 — 它擅長的事。
+
+### Pattern B — 把 LLM 內部 reasoning promote 到 schema（Promote）
+
+LLM 在 prompt 裡其實已經理解了某些 signal，只是沒 emit。
+
+最常見的兩個：
+
+- **Direction**：「上一筆」、「上次」要按 date desc 排（newest first）；「下一筆」、「接下來」要 asc 排（oldest first）。LLM 在生成回答時心裡知道方向，但這個 signal 留在 LLM 內部就只能透過 prompt instruction 影響它的選擇 — 而 prompt instruction 在多輪、多模型、跨語言時容易被 dropped 或 mistranslated。
+- **Cardinality**：「上一筆紀錄」是 single answer；「本月所有事項」是 plural list。LLM 知道差別，但回答時沒辦法影響到上游 retrieval 的 top-K 切片。
+
+**Promote pattern**：把這些內部 signal 加到 typed enum field，讓下游 host code 能 deterministic decision：
+
+```python
+direction: Literal["past", "future", "interval", "none"]
+cardinality: Literal["single", "plural"]
+```
+
+下游處理就乾淨了：
+
+```python
+if intent.direction == "past":
+    citations = sorted(citations, key=lambda c: c.date, reverse=True)
+elif intent.direction == "future":
+    citations = sorted(citations, key=lambda c: c.date)
+
+api_top_k = 3 if intent.cardinality == "single" else 10
+```
+
+四個好處（每個都跟「靠 prompt instruction」做對比）：
+
+- **Deterministic** — 排序的 sorted call 不會被 dropped；prompt 裡的 SHARED_RULES 規則會
+- **Single source of truth** — `direction` 在 typed schema，下游 code 直接 branch；不必再 parse 一次自然語言
+- **Self-explanatory** — `if direction == "past": sorted(..., reverse=True)` 不需要註解
+- **不累積 edge cases** — Prompt rules 隨著時間會累積一堆 special-case bullet point；typed schema 不會
+
+這個 pattern 的標準動作是：發現 LLM 已經在內部推論某件事 → 加 typed field 把它吐出 → 下游用 typed field 決策。
+
+### Pattern C — 分離 internal ranking 與 user-facing surface（Separate）
+
+retrieval 通常會做兩件事：
+
+1. **挑出 top-K 給 LLM 看**（generation context width）
+2. **挑出某個 K' 給 user 看**（UI display references）
+
+這兩個 K 不該是同一個。LLM context 寬一點對 generation accuracy 有好處（direction-aware ordering 也需要 candidates 才能挑最新的）；UI 顯示則該配合 query 的 cardinality — single 答案展 3 條 reference 就夠，展 15 條反而稀釋使用者注意力。
+
+**典型架構**：
+
+```python
+search_top_k = 15                                   # LLM 永遠寬看
+api_top_k    = 3 if intent.cardinality == "single" else 10  # UI 跟著 cardinality
+```
+
+同樣道理也適用於 score：
+
+- **內部 ranking score** — 含各種 boost / decay / source priority 的加權分數，給 handoff threshold、has-answer gate 這類 business logic 用
+- **User-facing match score** — 純 cosine similarity 或其他**直接可解釋**的指標，給使用者看
+
+很多 production 系統的 `Citation.score` 同時被當成兩種角色用，結果業務 boost 一加，所有 score 都飽和到 1.0，user 看見每筆 reference 都「滿分」 — score 失去 transparency。把它拆成兩個 field（一個內部、一個外部）就解決了。
+
+**通則**：給 LLM 看的 surface 跟給 user 看的 surface 可以完全不同；給 LLM 的優先 generation accuracy（寬、含內部 boost），給 user 的優先 transparency（窄、純 raw signal）。
 
 ---
 
@@ -154,9 +249,11 @@ query → [LLM: intent + temporal + date_range + vagueness] → 一份結構化�
 
 1. **不要為每個小抽取任務多開一次 LLM call** — 先試試合併到既有的 intent / parse / classify call
 2. **Output schema 是被低估的 cost lever** — 多 emit 幾個 field 幾乎免費；多開一次 call 是離散跳升
-3. **Vagueness 要分三檔（exact / fuzzy / vague）+ 一個 `requires_context` flag**，比 boolean 更實用
-4. **模糊性要顯式 emit 給 downstream**（含 UI），別讓 retrieval 自己猜 default window
-5. **Multi-task LLM 是常用招** — 同樣套路可用於 entity extraction、persona detection、clarification needed、safety classification 等多個子任務
+3. **Pre-compute deterministic computation** — 日期算術、rounding、currency conversion 都該由 host code 算好；LLM 收到的應該是 phrase → value 的 lookup table，不是公式
+4. **Promote internal reasoning to typed schema** — 如果 LLM 已經在 prompt 裡推論某件事（direction、cardinality），加 typed field 把它顯式吐出；下游 code 用 typed field 決策比靠 prompt instruction 穩定一個量級
+5. **Vagueness 要分三檔 + `requires_context` flag**，並把模糊性顯式 emit 給 UI，別讓 retrieval 自己猜 default window
+6. **分離 internal ranking 與 user-facing surface** — LLM context width、UI display K、ranking score、match score，內外應該是兩套不同的 surface
+7. **Multi-task LLM 是常用招** — 同樣套路可用於 entity extraction、persona detection、clarification needed、safety classification 等多個子任務
 
 ---
 
