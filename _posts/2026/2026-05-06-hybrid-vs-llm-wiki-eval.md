@@ -2,7 +2,7 @@
 layout: post
 title: "Hybrid RAG vs LLM-Wiki：把 Karpathy 的概念拉去做 13 題 A/B 評測"
 date: 2026-05-06 18:00:00 +0800
-description: "Karpathy 在 2026 年初提出的 LLM Wiki — 讓 LLM 把 raw sources 預先合成成可累積的 markdown 知識庫 — 是個吸引人的概念。把它跟 Hybrid RAG (BM25 + dense + RRF) 在同一個 60 篇知識庫、13 題 A/B 上對照後，硬數字是 accuracy 13/13 vs 12/13、tokens ×9.3、p50 latency ×2.5、LLM calls 2 vs 4。Wiki 的 single failure 不是輸幾個百分點，是跨 tenant 串味把另一個 tenant 的 policy 高 confidence 答給使用者。這篇講三個 failure mode 與為什麼 v2 修完之前 wiki 不該升 default。"
+description: "Karpathy 在 2026 年初提出的 LLM Wiki — 讓 LLM 把 raw sources 預先合成成可累積的 markdown 知識庫 — 是個吸引人的概念。把它跟 Hybrid RAG (BM25 + dense + RRF) 在同一個 60 篇知識庫、13 題 A/B 上對照後，硬數字是 accuracy 13/13 vs 12/13、tokens ×9.3、p50 latency ×2.5、LLM calls 2 vs 4。Wiki 的 single failure 不是輸幾個百分點，是跨 tenant 資料污染：把另一個 tenant 的 policy 高 confidence 答給使用者。這篇講三個 failure mode，並提醒在全面採用 LLM-Wiki 之前，先把現有 Hybrid 該有的 reranker / contextual retrieval / tenant filter 補齊。"
 tags: rag llm evaluation knowledge-base performance ai
 featured: false
 og_image: /assets/img/blog/2026/hybrid-vs-llm-wiki-eval/hybrid-vs-llm-wiki-eval-overview.png
@@ -10,7 +10,7 @@ toc:
   sidebar: left
 ---
 
-{% include figure.liquid loading="eager" path="assets/img/blog/2026/hybrid-vs-llm-wiki-eval/hybrid-vs-llm-wiki-eval-architecture.png" class="img-fluid rounded z-depth-1" alt="Hybrid RAG vs LLM-Wiki — head-to-head A/B comparison + three Wiki failure modes" caption="Hybrid RAG 與 LLM-Wiki 在同一知識庫上的 13 題 A/B 對照，與 Wiki 在跨 tenant、語系污染、paraphrase 過簡上的三個 failure mode" %}
+{% include figure.liquid loading="eager" path="assets/img/blog/2026/hybrid-vs-llm-wiki-eval/hybrid-vs-llm-wiki-eval-architecture.png" class="img-fluid rounded z-depth-1" alt="Hybrid RAG vs LLM-Wiki — head-to-head A/B comparison + three Wiki failure modes" caption="Hybrid RAG 與 LLM-Wiki 在同一知識庫上的 13 題 A/B 對照，與 Wiki 在跨 tenant 污染、語系污染、paraphrase 過簡上的三個 failure mode" %}
 
 > **Abstract** — [Karpathy's LLM Wiki](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) proposes letting an LLM pre-synthesize raw sources into a persistent, compounding markdown wiki, then answering queries by navigating that wiki — instead of doing classic RAG (BM25 + dense + RRF) from scratch on every question. The promise: amortize the synthesis cost once, get richer cross-references for free. We took an internal 60-article knowledge base and ran 13 hand-graded questions through both pipelines. The numbers: accuracy 13/13 vs 12/13, tokens ×9.3, p50 latency ×2.5, LLM calls 2 vs 4. The single Wiki miss isn't a percentage-point loss — it's the LLM confidently citing one tenant's policy in answer to another tenant's question, because page synthesis merged tenants when generating. This post breaks down the three failure modes and the routing decision tree.
 
@@ -118,6 +118,7 @@ Wiki avg:   13,055 tokens × 13 題 = 169,715 tokens
 ```
 
 Wiki 的 prompt 主要花在兩段：
+
 - `INDEX_PICK` — 餵一份完整的 `index.md`（13 篇 page summary），每次 ~2-3k tokens
 - `ANSWER` — 把選中的 1-4 篇 wiki 正文塞進 context，每篇 800-2,000 tokens
 
@@ -137,15 +138,18 @@ Wiki 的 prompt 主要花在兩段：
 
 ## 三個 Wiki failure mode
 
-### 1. 跨 tenant 串味（serious）
+### 1. 跨 tenant 資料污染（cross-tenant contamination）
+
+> **先說 tenant 在這篇是什麼**：在 multi-tenant 場景下，同一個 bot / 系統同時服務多個獨立的知識邊界（例如多個品牌、多個產品線、多個 region、多個客戶帳號），每個 tenant 的政策、價格、條件都不同、**不該互通**。檢索系統的責任之一，是只回傳「本 tenant 的事實」。
 
 題目：「[特定政策] 可以轉讓嗎？」
 
-Wiki 答案：「當然可以」+ 把另一個 tenant 的具體政策配額（X 張、Y 張、Z 張）列出來，confidence 0.9。
+Wiki 答案：「當然可以」+ 把另一個 tenant 的具體政策配額（X 份、Y 份、Z 份）列出來，confidence 0.9。
 
 實際 GT：「本 tenant 的政策是不可轉讓」。
 
 根因有三層：
+
 1. **Page grouping key 沒帶 `tenant_id`**：bulk-build 時，wiki page 的合併單位是 entity 名稱，不是 tenant + entity。多 tenant 的相同類型政策被合併成同一篇。
 2. **`INDEX_PICK` 沒做 tenant 後過濾**：拿到的 page 是混的。
 3. **Persona prompt 不規範事實過濾**：persona 只規範口吻，沒寫「請只引用本 tenant 的事實」這條 redline。
@@ -163,20 +167,22 @@ Wiki 答案：列出方式，但其中一行夾雜 `الالكتروني the ele
 這不是 retrieval 失敗。是 **bulk-build 階段** small LLM model 在某次 page synthesis 時引入了多語言污染，污染寫進了 page markdown，後續每個 query 都會原樣抄出來。
 
 特性：
+
 - 噪音「焊」在 wiki 上，每次 query 都重現
 - 比 Hybrid 偶發性 hallucination 更難偵測 — 因為是 deterministic
 - Confidence 可能很高（因為 wiki 自己沒矛盾）
 
-修：bulk-build 加 lint pass，檢查每篇 markdown 是否包含預期語系外的字元 / 重複條目 / 空 page。Karpathy 的 LLM Wiki ops 流程裡 lint 是 first-class step，但本次 v1 還沒實作 nightly lint。
+修：bulk-build 加 lint pass，檢查每篇 markdown 是否包含預期語系外的字元 / 重複條目 / 空 page。Karpathy 的 LLM Wiki ops 流程裡 lint 是 first-class step，但目前實作裡還沒做 nightly lint。
 
 ### 3. Paraphrase over-simplification
 
 短 paraphrase 問題（例：「[X] 怎麼做」）上，Wiki 傾向給單句答案，丟掉 Hybrid 會列的限制條件（A、B、C 三個 exception）。
 
 可能根因：
+
 - `WIKI_ANSWER` prompt 模板鼓勵簡潔
 - 遇到 paraphrase（GT 也很短）時 mirror GT 的簡潔度
-- Hybrid 的 chunk 直接餵進 persona prompt，persona 自然能 enumerate 條件
+- Hybrid 的 chunk 直接餵進 persona prompt，persona 自然能條列限制
 
 表面上 wiki 沒答錯，但 recall 缺很大。**這是更隱性的失敗** — 不會被 binary accuracy 捕捉到，要看 fact-point recall 才看得到。
 
@@ -189,24 +195,31 @@ Wiki 答案：列出方式，但其中一行夾雜 `الالكتروني the ele
 | 場景 | 推薦 mode | 理由 |
 | --- | --- | --- |
 | 短 / 直接 FAQ | Hybrid | 快、便宜、retrieval 已足夠 |
-| 需要枚舉條件的 paraphrase | Hybrid | Wiki 在本次測試常給過簡答案 |
-| 多文檔 synthesis（「最近有什麼變動」、「跨頁綜合」） | 理論上 Wiki 強，v1 沒測 | 需要新增 ground truth 才能驗證 |
-| 跨 tenant 比較 | **Hybrid only** | Wiki v1 的 page grouping 在跨 tenant 串味 |
+| 需要列出條件的 paraphrase | Hybrid | Wiki 在本次測試常給過簡答案 |
+| 多文檔 synthesis（「最近有什麼變動」、「跨頁綜合」） | 理論上 Wiki 強，本次 13 題沒覆蓋 | 需要新增 ground truth 才能驗證 |
+| 跨 tenant 比較 | **Hybrid only** | Wiki 目前的 page grouping 會跨 tenant 混 |
 | Out-of-scope deflect | 任一（Wiki 略快） | 兩邊都正確拒答 |
 | 高 confidence + 事實敏感（政策、限制） | Hybrid + 人工審 | Wiki 有 high-conf-on-wrong 風險 |
 
-**Default 維持 Hybrid**，Wiki 留作 per-request `rag_mode=wiki` 覆寫，等 v2 修完跨 tenant 串味 + page lint 再考慮預設化。
+**Default 維持 Hybrid**，Wiki 留作 per-request `rag_mode=wiki` 覆寫。下一節給「先在 Hybrid 上試這些」的實際清單。
 
 ---
 
-## v2 之前 Wiki 不該升 default — 優先序
+## 全面採用 LLM-Wiki 之前 — 先試試把 Hybrid 調好
 
-1. **修跨 tenant 串味** — page frontmatter 強制 `tenant_id` + `INDEX_PICK` / `ANSWER` 階段過濾。**唯一的 hard requirement**
-2. **Page lint pass** — 偵測非預期語系字元、空 page、重複條目；接到 nightly 排程
-3. **跑完整 RAGAS judge** — 把 faithfulness / answer_relevancy / context_precision / context_recall 補齊；沒有這些數字，accuracy 92.3 vs 100 的 confidence interval 過寬
-4. **擴測試集到全 43 題** — 本次 13 題的 FAQ-D 只 2 題就抓到 1 個 wiki failure，全集跑可能比例更高
-5. **合併 `INDEX_PICK` + `ANSWER` 成單 LLM call** — 降到 3 calls / query。代價是 prompt 更長、context 更大；要實測 token / latency 收益
-6. **Hybrid 路由**：paraphrase 走 Hybrid、synthesis-heavy 走 Wiki — 用 intent classifier 多輸出一個 `mode_preference` 欄位（與[前一篇 multi-task intent classifier](/blog/2026/multi-task-intent-llm/) 同個 pattern）
+在這次測試裡，Hybrid 已經 13/13。如果你正在考慮從 Hybrid 換到 LLM-Wiki，先停一下 — Wiki 想帶來的好處（更好的 cross-reference、知識 compounding），其實有相當程度可以在 Hybrid 上拿到，而且代價低得多。按優先序：
+
+1. **加 Cross-encoder reranker** — Hybrid + Cohere Rerank v4.0 在公開 benchmark 上能把 Recall@5 從 ~0.7 推到 ~0.82，是最 cost-effective 的下一步。前文 [BM25 to Corrective RAG benchmark](/blog/2026/bm25-to-corrective-rag-benchmark/) 有完整數字
+2. **Contextual retrieval (Anthropic 2024)** — chunk embedding 時把 doc-level summary prepend 進來，補回 chunk 失去的上下文。「不換 architecture 但補回 wiki 想要的 cross-reference」的最低成本路徑
+3. **Intent-aware routing** — 像[前一篇 multi-task intent classifier](/blog/2026/multi-task-intent-llm/) 描述的，把 query intent + temporal + cardinality 一次解析，讓不同 intent 走不同檢索分支或 default window
+4. **Metadata filters 切到 tenant 維度** — 多 tenant 系統下，retrieval 階段就該按 tenant filter；不要靠 LLM 在 generation 階段判斷事實邊界
+5. **RRF k 參數調校** — 標準預設 k=60；BM25 / dense margin 落差大時，調 k=30-100 區間實測 hit ratio 變化
+
+上面五條跑完還不夠的話，再考慮 LLM-Wiki — 但**至少要先補完三個 wiki failure mode**（順序與本文 §「三個 Wiki failure mode」相同）：
+
+- 跨 tenant 資料污染（page synthesis 沒帶 tenant filter）
+- Page synthesis lint pass（偵測非預期語系字元 / 重複條目 / 空 page）
+- Paraphrase over-simplification（ANSWER prompt 加 explicit「列出限制條件」instruction）
 
 ---
 
