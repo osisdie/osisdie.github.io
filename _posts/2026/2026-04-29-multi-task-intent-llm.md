@@ -261,7 +261,7 @@ api_top_k    = 3 if intent.cardinality == "single" else 10  # UI 跟著 cardinal
 
 - [OpenAI structured outputs](https://platform.openai.com/docs/guides/structured-outputs) — 用 JSON schema 強制輸出格式
 - [Anthropic tool use](https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/overview) — function calling 風格的 structured output
-- 自家 [RAG Pipeline Eval-Driven Tuning]({% post_url 2026-04-22-rag-eval-driven-tuning %}) — intent / temporal 計算的位置與觀察訊號
+- 自家 [RAG Pipeline Eval-Driven Tuning](/blog/2026/rag-eval-driven-tuning/) — intent / temporal 計算的位置與觀察訊號
 
 ---
 
