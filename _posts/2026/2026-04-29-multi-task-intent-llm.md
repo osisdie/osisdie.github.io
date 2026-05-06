@@ -135,13 +135,13 @@ query → [LLM: intent + temporal + date_range + vagueness] → 一份結構化�
 
 ## 三個進階 schema-design patterns
 
-把 schema 多任務化只是起點。在實際運轉一段時間後，會自然演化出三個更廣的 design patterns，每個都是「把 LLM 不擅長的事情搬出去 / 把 LLM 已經做的事情顯式化 / 把 LLM 內部用的東西跟 user 看見的分開」。
+把 schema 多任務化只是起點。在實際運轉一段時間後，會自然演化出三個更廣的 design patterns，分別處理：**LLM 不擅長的事**該搬到 host code、**LLM 內部已經在推論的 signal** 該顯式化到 schema、**LLM context 與 user-facing surface** 該各自獨立。
 
 ### Pattern A — 把 deterministic 計算搬出 LLM（Pre-compute）
 
 **LLM 不擅長算術**，尤其是日期算術。「今天減七天」這種句子在小模型（Gemini Flash Lite、GPT-4o-mini 等級）上會偶發出錯：把「昨天」算成今天、把「上個月」算成本月。Production 上一旦發生，使用者拿到的就是錯一天的資料 — debug 起來還很難重現。
 
-**反模式**：在 system prompt 裡寫「如果使用者說『昨天』，請輸出 today minus 1 day」，把日期算術交給 LLM。
+**Anti-pattern**：在 system prompt 裡寫「如果使用者說『昨天』，請輸出 today minus 1 day」，把日期算術交給 LLM。
 
 **正解**：在 host code 裡先把「今天」與所有相對日期片語預計算成具體日期，給 LLM 一個 phrase → date 的 lookup table：
 
@@ -209,7 +209,7 @@ retrieval 通常會做兩件事：
 **典型架構**：
 
 ```python
-search_top_k = 15                                   # LLM 永遠寬看
+search_top_k = 15                                   # LLM 端固定取寬
 api_top_k    = 3 if intent.cardinality == "single" else 10  # UI 跟著 cardinality
 ```
 
