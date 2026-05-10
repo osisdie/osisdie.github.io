@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <!-- layout: hybrid -->
+  <defs>
+    <linearGradient id="transitionGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f1f5f9"/>
+      <stop offset="100%" style="stop-color:#1e293b"/>
+    </linearGradient>
+    <linearGradient id="detailBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="100%" style="stop-color:#1e293b"/>
+    </linearGradient>
+  </defs>
+
+  <!-- === BACKGROUND === -->
+  <rect width="1200" height="630" fill="#ffffff"/>
+  <rect y="390" width="1200" height="240" fill="url(#detailBgGrad)"/>
+  <rect y="370" width="1200" height="30" fill="url(#transitionGrad)"/>
+
+  <!-- === HEAD ZONE === -->
+  <text x="600" y="62" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans TC, sans-serif"
+        font-size="30" font-weight="700" fill="#1e293b">
+    Ray Serve + vLLM on 2&#215; NVIDIA DGX Spark (GB10)
+  </text>
+  <text x="600" y="98" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+        font-size="16" font-weight="600" fill="#475569">
+    client &#8594; nginx (TLS) &#8594; LiteLLM (router) &#8594; Ray Serve :8000 &#8594; vLLM engine
+  </text>
+  <line x1="200" y1="120" x2="1000" y2="120" stroke="#e2e8f0" stroke-width="1.5"/>
+
+  <!-- 2 head-to-head Spark cards -->
+
+  <!-- LEFT: Spark-1 Gemma-4-31B dense (green) -->
+  <g transform="translate(310, 250)">
+    <rect x="-200" y="-100" width="400" height="200" rx="16" fill="#bbf7d0" stroke="#16a34a" stroke-width="3"/>
+    <text x="0" y="-58" text-anchor="middle"
+          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+          font-size="26" font-weight="800" fill="#166534">SPARK-1 &#9733;</text>
+    <text x="0" y="-30" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#15803d">GB10 &#183; 128 GB unified mem</text>
+
+    <text x="-180" y="0" font-family="sans-serif" font-size="15" font-weight="700" fill="#15803d">Model</text>
+    <text x="180" y="0" text-anchor="end" font-family='"JetBrains Mono", monospace' font-size="14" font-weight="700" fill="#166534">Gemma-4-31B (dense)</text>
+
+    <text x="-180" y="22" font-family="sans-serif" font-size="15" font-weight="700" fill="#15803d">GPU claim</text>
+    <text x="180" y="22" text-anchor="end" font-family='"JetBrains Mono", monospace' font-size="14" font-weight="700" fill="#166534">1.0 &#183; full</text>
+
+    <text x="-180" y="44" font-family="sans-serif" font-size="15" font-weight="700" fill="#15803d">Tier-1</text>
+    <text x="180" y="44" text-anchor="end" font-family='"JetBrains Mono", monospace' font-size="14" font-weight="700" fill="#166534">engine_kwargs ON</text>
+
+    <text x="-180" y="66" font-family="sans-serif" font-size="15" font-weight="700" fill="#15803d">Endpoint</text>
+    <text x="180" y="66" text-anchor="end" font-family='"JetBrains Mono", monospace' font-size="14" font-weight="700" fill="#166534">:8000 OpenAI-compat</text>
+
+    <rect x="-60" y="80" width="120" height="22" rx="11" fill="#16a34a"/>
+    <text x="0" y="96" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#fff">Default</text>
+  </g>
+
+  <!-- RIGHT: Spark-2 Qwen-3-30B-A3B MoE (yellow) -->
+  <g transform="translate(890, 250)">
+    <rect x="-200" y="-100" width="400" height="200" rx="16" fill="#fef3c7" stroke="#ca8a04" stroke-width="3"/>
+    <text x="0" y="-58" text-anchor="middle"
+          font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+          font-size="26" font-weight="800" fill="#854d0e">SPARK-2</text>
+    <text x="0" y="-30" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600" fill="#a16207">GB10 &#183; 128 GB unified mem</text>
+
+    <text x="-180" y="0" font-family="sans-serif" font-size="15" font-weight="700" fill="#a16207">Model</text>
+    <text x="180" y="0" text-anchor="end" font-family='"JetBrains Mono", monospace' font-size="14" font-weight="700" fill="#854d0e">Qwen-3-30B-A3B (MoE)</text>
+
+    <text x="-180" y="22" font-family="sans-serif" font-size="15" font-weight="700" fill="#a16207">GPU claim</text>
+    <text x="180" y="22" text-anchor="end" font-family='"JetBrains Mono", monospace' font-size="14" font-weight="700" fill="#854d0e">1.0 &#183; full</text>
+
+    <text x="-180" y="44" font-family="sans-serif" font-size="15" font-weight="700" fill="#a16207">Tier-1 + Tier-2</text>
+    <text x="180" y="44" text-anchor="end" font-family='"JetBrains Mono", monospace' font-size="14" font-weight="700" fill="#854d0e">MoE swap</text>
+
+    <text x="-180" y="66" font-family="sans-serif" font-size="15" font-weight="700" fill="#a16207">Decode</text>
+    <text x="180" y="66" text-anchor="end" font-family='"JetBrains Mono", monospace' font-size="14" font-weight="700" fill="#854d0e">66 ms/tok &#183; 4.2&#215;</text>
+
+    <rect x="-70" y="80" width="140" height="22" rx="11" fill="#ca8a04"/>
+    <text x="0" y="96" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#fff">4.2&#215; decode</text>
+  </g>
+
+  <!-- NVLink-C2C bridge label between cards -->
+  <text x="600" y="240" text-anchor="middle" font-family='"JetBrains Mono", monospace' font-size="12" font-weight="700" fill="#64748b" letter-spacing="0.5px">NVLink-C2C bridge</text>
+  <line x1="510" y1="250" x2="690" y2="250" stroke="#94a3b8" stroke-width="2" stroke-dasharray="6,4"/>
+  <text x="600" y="270" text-anchor="middle" font-family='"JetBrains Mono", monospace' font-size="11" font-weight="600" fill="#94a3b8">RoCE 192.168.200.x</text>
+
+  <!-- === DETAIL ZONE: 3 tuning lever chips === -->
+  <text x="600" y="420" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif"
+        font-size="16" font-weight="700" fill="#cbd5e1">Tuning Levers &#183; What Took Us From Baseline to 4.2&#215;</text>
+
+  <!-- Lever 1: Tier-1 (Green) -->
+  <g transform="translate(40, 450)">
+    <rect x="0" y="0" width="1120" height="46" rx="10" fill="#1e293b" stroke="#16a34a" stroke-width="2"/>
+    <rect x="0" y="0" width="120" height="46" rx="10" fill="#16a34a"/>
+    <text x="60" y="29" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="800" fill="#fff" letter-spacing="0.5px">TIER-1</text>
+    <text x="140" y="22" font-family="sans-serif" font-size="15" font-weight="700" fill="#86efac">Composable engine_kwargs &#183; 0.5 day, low risk</text>
+    <text x="140" y="40" font-family="sans-serif" font-size="13" font-weight="500" fill="#cbd5e1">prefix cache + FP8 KV + chunked prefill + ngram spec &#8594; 6.7&#215; TTFT cached &#183; 2.76&#215; throughput @ c=16 &#183; zero short-prompt regression</text>
+  </g>
+
+  <!-- Lever 2: Tier-2 (Yellow) -->
+  <g transform="translate(40, 506)">
+    <rect x="0" y="0" width="1120" height="46" rx="10" fill="#1e293b" stroke="#facc15" stroke-width="2"/>
+    <rect x="0" y="0" width="120" height="46" rx="10" fill="#facc15"/>
+    <text x="60" y="29" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="800" fill="#0f172a" letter-spacing="0.5px">TIER-2</text>
+    <text x="140" y="22" font-family="sans-serif" font-size="15" font-weight="700" fill="#fde68a">Dense &#8594; MoE model swap &#183; 1&#8211;3 day, medium risk</text>
+    <text x="140" y="40" font-family="sans-serif" font-size="13" font-weight="500" fill="#cbd5e1">Gemma-4-31B dense &#8594; Qwen-3-30B-A3B (~3B activated/token) &#8594; 4.2&#215; decode (277 &#8594; 66 ms/tok), 4.1&#215; end-to-end on 256 tokens (70s &#8594; 17s)</text>
+  </g>
+
+  <!-- Lever 3: Constraint / Gotcha (Red) -->
+  <g transform="translate(40, 562)">
+    <rect x="0" y="0" width="1120" height="46" rx="10" fill="#1e293b" stroke="#dc2626" stroke-width="2"/>
+    <rect x="0" y="0" width="120" height="46" rx="10" fill="#dc2626"/>
+    <text x="60" y="29" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="800" fill="#fff" letter-spacing="0.5px">GOTCHA</text>
+    <text x="140" y="22" font-family="sans-serif" font-size="15" font-weight="700" fill="#fca5a5">Ray Serve LLM hardcodes num_gpus=1.0 internally</text>
+    <text x="140" y="40" font-family="sans-serif" font-size="13" font-weight="500" fill="#cbd5e1">ray_actor_options.num_gpus=0.5 is silently overridden by the vLLM wrapper &#8594; forced 1 model per node &#183; constraint becomes asset at &lt; 5 nodes</text>
+  </g>
+
+  <!-- Bottom attribution -->
+  <g opacity="0.45">
+    <text x="600" y="624" text-anchor="middle" fill="#64748b" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" letter-spacing="0.5px">osisdie.github.io &#183; dgx-spark ray-serve tuning</text>
+  </g>
+</svg>
