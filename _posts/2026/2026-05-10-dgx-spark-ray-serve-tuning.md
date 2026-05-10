@@ -19,7 +19,7 @@ toc:
 >
 > 順序很重要：**Tier-1 先做完，再考慮 Tier-2**。Tier-2 量出來的數字會被「Tier-1 沒做的部分」污染。
 
-> **TL;DR**：在兩台 **NVIDIA DGX Spark（GB10 Grace Blackwell, 128 GB unified memory）**上跑 **Ray Serve LLM + vLLM + LiteLLM + nginx**。Ray Serve LLM 內部硬寫 `num_gpus=1.0`、無視 actor option，強制「一機一模型」；這個約束在 < 5 節點規模反而促成最簡潔的部署。**Tier-1**（純 `engine_kwargs`）拿 **6.7× TTFT cached / 2.76× aggregate throughput @ 16 並行串流（後文簡稱 `c=16`）**；**Tier-2**（dense → MoE 換模型）拿 **4.2× decode rate（3.6 → 15 tok/s 每串流）**。
+> **TL;DR**：在兩台 **NVIDIA DGX Spark（GB10 Grace Blackwell, 128 GB unified memory）**上跑 **Ray Serve LLM + vLLM + LiteLLM + nginx**。Ray Serve LLM 內部硬寫 `num_gpus=1.0`、無視 actor option，強制「一機一模型」；這個約束在 < 5 節點規模反而促成最簡潔的部署。**Tier-1**（純 `engine_kwargs`）拿 **6.7× TTFT cached / 2.76× aggregate throughput @ 16 並行請求（後文簡稱 `c=16`）**；**Tier-2**（dense → MoE 換模型）拿 **4.2× decode rate（3.6 → 15 tok/s）**。
 
 前兩篇談 RAG（[Hybrid vs LLM-Wiki 13 題 A/B](/blog/2026/hybrid-vs-llm-wiki-eval/) 與 [一次 LLM call 做兩件事](/blog/2026/multi-task-intent-llm/)），這篇換到下游：**承接 agent 流量的 LLM serving 怎麼讓兩台機台撐 30+ 並行 agent 串流**。重點不在「換更貴的硬體」，而是把現有硬體的 utilization 推到合理上限。
 
@@ -160,7 +160,7 @@ Tier-1 跑完還要更快，**兩條路擇一**：
 
 | 指標 | Gemma-4-31B (dense) | Qwen-3-30B-A3B (MoE) | Δ |
 | --- | --- | --- | --- |
-| Decode rate（每串流 tok/s） | 3.6 tok/s | 15 tok/s | **× 4.2** |
+| Decode rate | 3.6 tok/s | 15 tok/s | **× 4.2** |
 | Aggregate throughput @ production | 1.0× | 3.0× | **× 3** |
 | 256-token 端到端 | 70 s | 17 s | **× 4.1** |
 
