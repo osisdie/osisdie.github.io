@@ -41,10 +41,10 @@
     <text x="660" y="88" text-anchor="middle" font-family='"JetBrains Mono", "Consolas", monospace' font-size="18" font-weight="700" fill="#86efac">104 t/s</text>
     <text x="880" y="88" text-anchor="middle" font-family='"JetBrains Mono", "Consolas", monospace' font-size="17" font-weight="700" fill="#fb923c">&#215; 2.76</text>
 
-    <!-- Row 3: Decode latency (Tier-2) -->
-    <text x="24" y="114" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' font-size="17" font-weight="700" fill="#FDF6E3">Decode latency (Tier-2)</text>
-    <text x="420" y="114" text-anchor="middle" font-family='"JetBrains Mono", "Consolas", monospace' font-size="18" font-weight="700" fill="#93A1A1">277 ms/tok</text>
-    <text x="660" y="114" text-anchor="middle" font-family='"JetBrains Mono", "Consolas", monospace' font-size="18" font-weight="700" fill="#fcd34d">66 ms/tok</text>
+    <!-- Row 3: Decode rate (Tier-2) -->
+    <text x="24" y="114" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' font-size="17" font-weight="700" fill="#FDF6E3">Decode rate (Tier-2)</text>
+    <text x="420" y="114" text-anchor="middle" font-family='"JetBrains Mono", "Consolas", monospace' font-size="18" font-weight="700" fill="#93A1A1">3.6 tok/s</text>
+    <text x="660" y="114" text-anchor="middle" font-family='"JetBrains Mono", "Consolas", monospace' font-size="18" font-weight="700" fill="#fcd34d">15 tok/s</text>
     <text x="880" y="114" text-anchor="middle" font-family='"JetBrains Mono", "Consolas", monospace' font-size="17" font-weight="700" fill="#fb923c">&#215; 4.2</text>
 
     <!-- Row 4: Architecture change -->
