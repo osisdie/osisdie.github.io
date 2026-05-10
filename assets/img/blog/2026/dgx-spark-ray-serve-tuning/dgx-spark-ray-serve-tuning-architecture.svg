@@ -94,7 +94,7 @@
     <rect x="0" y="0" width="1120" height="46" rx="10" fill="#1e293b" stroke="#16a34a" stroke-width="2"/>
     <rect x="0" y="0" width="120" height="46" rx="10" fill="#16a34a"/>
     <text x="60" y="29" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="800" fill="#fff" letter-spacing="0.5px">TIER-1</text>
-    <text x="140" y="22" font-family="sans-serif" font-size="15" font-weight="700" fill="#86efac">Composable engine_kwargs &#183; 0.5 day, low risk</text>
+    <text x="140" y="22" font-family="sans-serif" font-size="15" font-weight="700" fill="#86efac">Config-only &#183; vLLM engine_kwargs &#183; no model / no architecture change</text>
     <text x="140" y="40" font-family="sans-serif" font-size="13" font-weight="500" fill="#cbd5e1">prefix cache + FP8 KV + chunked prefill + ngram spec &#8594; 6.7&#215; TTFT cached &#183; 2.76&#215; throughput @ c=16 &#183; zero short-prompt regression</text>
   </g>
 
@@ -103,7 +103,7 @@
     <rect x="0" y="0" width="1120" height="46" rx="10" fill="#1e293b" stroke="#facc15" stroke-width="2"/>
     <rect x="0" y="0" width="120" height="46" rx="10" fill="#facc15"/>
     <text x="60" y="29" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="800" fill="#0f172a" letter-spacing="0.5px">TIER-2</text>
-    <text x="140" y="22" font-family="sans-serif" font-size="15" font-weight="700" fill="#fde68a">Dense &#8594; MoE model swap &#183; 1&#8211;3 day, medium risk</text>
+    <text x="140" y="22" font-family="sans-serif" font-size="15" font-weight="700" fill="#fde68a">Model identity change &#183; dense &#8594; MoE swap &#183; re-eval required</text>
     <text x="140" y="40" font-family="sans-serif" font-size="13" font-weight="500" fill="#cbd5e1">Gemma-4-31B dense &#8594; Qwen-3-30B-A3B (~3B activated/token) &#8594; 4.2&#215; decode (277 &#8594; 66 ms/tok), 4.1&#215; end-to-end on 256 tokens (70s &#8594; 17s)</text>
   </g>
 

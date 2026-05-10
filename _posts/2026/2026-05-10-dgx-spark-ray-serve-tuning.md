@@ -12,7 +12,14 @@ toc:
 
 {% include figure.liquid loading="eager" path="assets/img/blog/2026/dgx-spark-ray-serve-tuning/dgx-spark-ray-serve-tuning-architecture.png" class="img-fluid rounded z-depth-1" alt="Ray Serve + vLLM on 2× DGX Spark — 2 head-to-head GB10 nodes with three tuning-lever chips (Tier-1, Tier-2, Gotcha)" caption="Ray Serve + vLLM 在 2× DGX Spark 上的部署形狀，與三層 tuning lever。" %}
 
-> **TL;DR**：在兩台 **NVIDIA DGX Spark（GB10 Grace Blackwell, 128 GB unified memory）**上跑 **Ray Serve LLM + vLLM + LiteLLM + nginx**。Ray Serve LLM 內部硬寫 `num_gpus=1.0`、無視 actor option，強制「一機一模型」；這個約束在 < 5 節點規模反而促成最簡潔的部署。**Tier-1**（純 `engine_kwargs`，0.5 day）拿 **6.7× TTFT cached / 2.76× throughput @ c=16**；**Tier-2**（dense → MoE 換模型，1–3 day）拿 **4.2× decode（277 → 66 ms/token）**。
+> **本文用語**：把 LLM serving 的調整分兩層 ——
+>
+> - **Tier-1 = config-only 調整**：只動 vLLM 的 `engine_kwargs`（prefix cache、KV dtype、batch 上限等），**不換 model、不動架構、quality 風險近 0**
+> - **Tier-2 = model identity 改動**：換 model（dense → MoE）或量化權重（FP16 → FP8），**需要重跑下游 eval 確認 quality 沒退**
+>
+> 順序很重要：**Tier-1 先做完，再考慮 Tier-2**。Tier-2 量出來的數字會被「Tier-1 沒做的部分」污染。
+
+> **TL;DR**：在兩台 **NVIDIA DGX Spark（GB10 Grace Blackwell, 128 GB unified memory）**上跑 **Ray Serve LLM + vLLM + LiteLLM + nginx**。Ray Serve LLM 內部硬寫 `num_gpus=1.0`、無視 actor option，強制「一機一模型」；這個約束在 < 5 節點規模反而促成最簡潔的部署。**Tier-1**（純 `engine_kwargs`）拿 **6.7× TTFT cached / 2.76× throughput @ c=16**；**Tier-2**（dense → MoE 換模型）拿 **4.2× decode（277 → 66 ms/token）**。
 
 前兩篇談 RAG（[Hybrid vs LLM-Wiki 13 題 A/B](/blog/2026/hybrid-vs-llm-wiki-eval/) 與 [一次 LLM call 做兩件事](/blog/2026/multi-task-intent-llm/)），這篇換到下游：**承接 agent 流量的 LLM serving 怎麼讓兩台機台撐 30+ 並行 agent 串流**。重點不在「換更貴的硬體」，而是把現有硬體的 utilization 推到合理上限。
 
@@ -92,7 +99,7 @@ toc:
 
 ---
 
-## 5. Tier-1：0.5 day 拿到 6.7× TTFT / 2.76× throughput
+## 5. Tier-1：純 config 調 engine_kwargs，6.7× TTFT / 2.76× throughput
 
 純 `engine_kwargs` 改動，不換 model、不換 hardware、不改架構。每條都是 vLLM 已經實作的 flag。
 
@@ -134,7 +141,7 @@ TIER1_ENGINE_KWARGS = dict(
 
 ---
 
-## 6. Tier-2：1–3 day 換模型拿 4.2× decode
+## 6. Tier-2：換 model identity，4.2× decode
 
 Tier-1 跑完還要更快，**兩條路擇一**：
 
@@ -143,7 +150,6 @@ Tier-1 跑完還要更快，**兩條路擇一**：
 把 dense FP16 權重壓成 FP8 → memory 半 → 可以拉更大 batch。
 
 - **風險**：quality regression（要重跑下游 eval）
-- **工作量**：~1 day（quantize + smoke test）
 - **適用**：原 model 已經在 production 驗證過、不想動 model identity 的場景
 
 ### Option B：Dense → MoE 換模型（本架構走這條）
@@ -182,7 +188,7 @@ Tier-1 跑完還要更快，**兩條路擇一**：
 
 ## 8. 結論：一個 GB10-class 的通用 playbook
 
-- **Tier-1 一定先做**：composable、low risk、no architecture change，可以一條一條開、量、確認沒 regression
+- **Tier-1 一定先做**：config-only、不動 model 與架構、quality 風險近 0，可以一條一條開、量、確認沒 regression
 - **Tier-2 是「架構選擇」題**：quantize 留原 model 可控（quality 風險自己擔）；MoE 直接拿 4× 但 quality 與 tool-calling shape 要重新 evaluate
 - **Ray Serve LLM 的 `num_gpus=1.0` 強制 1-model-per-node**：這個 gotcha 把架構簡化成可預測的形狀，**規模小時這是優點**
 - **不上 K8s 的時機**：< 5 node、model 數量 ≤ node 數量、ops 團隊規模小
