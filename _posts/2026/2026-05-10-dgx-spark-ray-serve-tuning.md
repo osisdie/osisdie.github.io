@@ -1,18 +1,18 @@
 ---
+layout: post
 title: "DGX Spark + Ray Serve + vLLM：拿 6.7× TTFT、4.2× decode 的 tuning playbook"
 date: 2026-05-10 18:00:00 +0800
-categories: [Engineering]
-tags: [llm, inference, vllm, ray-serve, gpu, performance, ai, infrastructure]
 description: "兩台 NVIDIA DGX Spark (GB10) 撐 30+ agent 串流，Ray Serve LLM 強制一機一模型反而促成簡潔架構；Tier-1 engine_kwargs 拿 6.7× TTFT、2.76× throughput @ c=16，Tier-2 dense→MoE 拿 4.2× decode speedup。"
-image:
-  path: /assets/img/blog/2026/dgx-spark-ray-serve-tuning/dgx-spark-ray-serve-tuning-overview.png
-  alt: "DGX Spark + Ray Serve + vLLM tuning playbook overview"
+tags: llm inference vllm ray-serve gpu performance ai infrastructure
+featured: false
+og_image: /assets/img/blog/2026/dgx-spark-ray-serve-tuning/dgx-spark-ray-serve-tuning-overview.png
+toc:
+  sidebar: left
 ---
 
-> **TL;DR**：在兩台 **NVIDIA DGX Spark（GB10 Grace Blackwell, 128 GB unified memory）**上跑 **Ray Serve LLM + vLLM + LiteLLM + nginx**。Ray Serve LLM 內部硬寫 `num_gpus=1.0`、無視 actor option，強制「一機一模型」；這個約束在 < 5 節點規模反而促成最簡潔的部署。**Tier-1**（純 `engine_kwargs`，0.5 day）拿 **6.7× TTFT cached / 2.76× throughput @ c=16**；**Tier-2**（dense → MoE 換模型，1–3 day）拿 **4.2× decode（277 → 66 ms/token）**。
+{% include figure.liquid loading="eager" path="assets/img/blog/2026/dgx-spark-ray-serve-tuning/dgx-spark-ray-serve-tuning-architecture.png" class="img-fluid rounded z-depth-1" alt="Ray Serve + vLLM on 2× DGX Spark — 2 head-to-head GB10 nodes with three tuning-lever chips (Tier-1, Tier-2, Gotcha)" caption="Ray Serve + vLLM 在 2× DGX Spark 上的部署形狀，與三層 tuning lever。" %}
 
-![Architecture overview](/assets/img/blog/2026/dgx-spark-ray-serve-tuning/dgx-spark-ray-serve-tuning-architecture.png)
-_Ray Serve + vLLM 在 2× DGX Spark 上的部署形狀，與三層 tuning lever。_
+> **TL;DR**：在兩台 **NVIDIA DGX Spark（GB10 Grace Blackwell, 128 GB unified memory）**上跑 **Ray Serve LLM + vLLM + LiteLLM + nginx**。Ray Serve LLM 內部硬寫 `num_gpus=1.0`、無視 actor option，強制「一機一模型」；這個約束在 < 5 節點規模反而促成最簡潔的部署。**Tier-1**（純 `engine_kwargs`，0.5 day）拿 **6.7× TTFT cached / 2.76× throughput @ c=16**；**Tier-2**（dense → MoE 換模型，1–3 day）拿 **4.2× decode（277 → 66 ms/token）**。
 
 前兩篇談 RAG（[Hybrid vs LLM-Wiki 13 題 A/B](/blog/2026/hybrid-vs-llm-wiki-eval/) 與 [一次 LLM call 做兩件事](/blog/2026/multi-task-intent-llm/)），這篇換到下游：**承接 agent 流量的 LLM serving 怎麼讓兩台機台撐 30+ 並行 agent 串流**。重點不在「換更貴的硬體」，而是把現有硬體的 utilization 推到合理上限。
 
