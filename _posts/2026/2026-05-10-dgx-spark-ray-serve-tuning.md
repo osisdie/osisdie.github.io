@@ -21,7 +21,7 @@ _Ray Serve + vLLM 在 2× DGX Spark 上的部署形狀，與三層 tuning lever�
 ## 1. 整體架構
 
 | 層 | 元件 | 職責 |
-|---|---|---|
+| --- | --- | --- |
 | Edge | nginx | TLS 終結、vhost routing |
 | Gateway | LiteLLM | model registry、tenant routing、OpenAI-shape adapter |
 | Serving | Ray Serve LLM `:8000` | replica 管理、OpenAI-compatible endpoint |
@@ -113,9 +113,9 @@ TIER1_ENGINE_KWARGS = dict(
 每個 lever 各自的貢獻與適用場景：
 
 | Lever | 個別貢獻 | 為什麼有效 |
-|---|---|---|
+| --- | --- | --- |
 | `enable_prefix_caching=True` | TTFT 30–70% ↓ | agent loop 的 system prompt 永遠重，命中 cache 後 prefill 直接跳過 |
-| `kv_cache_dtype="fp8"` | 36 → 104 t/s @ c=16（2.87×）| KV cache 半精度，batch capacity 翻倍 |
+| `kv_cache_dtype="fp8"` | 36 → 104 t/s @ c=16（2.87×） | KV cache 半精度，batch capacity 翻倍 |
 | `enable_chunked_prefill=True` | p95 latency 抑制 | 並行下 prefill 不卡 decode 的 forward pass |
 | `max_num_seqs=64` | 撐 30+ agent 並行 | 上限拉高才能讓 batching 發揮 |
 | ngram speculative (n=5) | repeated-token 加速 | structured output / tool call 重複 token 多 |
@@ -153,7 +153,7 @@ Tier-1 跑完還要更快，**兩條路擇一**：
 實測（同樣的 GB10、同樣的 c=16 workload）：
 
 | 指標 | Gemma-4-31B (dense) | Qwen-3-30B-A3B (MoE) | Δ |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | Decode latency | 277 ms/token | 66 ms/token | **× 4.2** |
 | Throughput @ production load | 1.0× | 3.0× | **× 3** |
 | 256-token 端到端 | 70 s | 17 s | **× 4.1** |
