@@ -1,0 +1,163 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <!-- layout: dual-flow + chips -->
+  <defs>
+    <linearGradient id="transitionGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f1f5f9"/>
+      <stop offset="100%" style="stop-color:#1e293b"/>
+    </linearGradient>
+    <linearGradient id="detailBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="100%" style="stop-color:#1e293b"/>
+    </linearGradient>
+  </defs>
+
+  <!-- BACKGROUND -->
+  <rect width="1200" height="630" fill="#ffffff"/>
+  <rect y="390" width="1200" height="240" fill="url(#detailBgGrad)"/>
+  <rect y="370" width="1200" height="30" fill="url(#transitionGrad)"/>
+
+  <!-- HEAD: title -->
+  <text x="600" y="58" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans TC, sans-serif"
+        font-size="28" font-weight="700" fill="#1e293b">
+    Two Skills, Same Pattern &#183; Heterogeneous Toolchain &#8594; One Verb
+  </text>
+  <text x="600" y="92" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans TC, sans-serif"
+        font-size="16" font-weight="600" fill="#475569">
+    <tspan font-family='"JetBrains Mono", monospace' fill="#2563eb">/test-report</tspan> &#8594; HTML draft email &#183; <tspan font-family='"JetBrains Mono", monospace' fill="#7c3aed">/demo</tspan> &#8594; narrated MP4
+  </text>
+  <line x1="280" y1="112" x2="920" y2="112" stroke="#e2e8f0" stroke-width="1.5"/>
+
+  <!-- ============ ROW A: /test-report (blue) ============ -->
+  <g transform="translate(0, 175)">
+    <!-- Pill label -->
+    <rect x="20" y="-22" width="120" height="44" rx="22" fill="#2563eb"/>
+    <text x="80" y="6" text-anchor="middle" font-family='"JetBrains Mono", "Consolas", monospace' font-size="14" font-weight="800" fill="#fff">/test-report</text>
+
+    <!-- Stage 1 -->
+    <g>
+      <rect x="165" y="-26" width="160" height="52" rx="10" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
+      <text x="245" y="-7" text-anchor="middle" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif' font-size="13" font-weight="700" fill="#1e3a8a">parse args</text>
+      <text x="245" y="13" text-anchor="middle" font-family='"JetBrains Mono", monospace' font-size="11" font-weight="600" fill="#1d4ed8">spec + recipient</text>
+    </g>
+    <text x="345" y="6" text-anchor="middle" font-family="sans-serif" font-size="22" font-weight="700" fill="#94a3b8">&#8594;</text>
+
+    <!-- Stage 2 -->
+    <g>
+      <rect x="365" y="-26" width="160" height="52" rx="10" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
+      <text x="445" y="-7" text-anchor="middle" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif' font-size="13" font-weight="700" fill="#1e3a8a">Playwright</text>
+      <text x="445" y="13" text-anchor="middle" font-family='"JetBrains Mono", monospace' font-size="11" font-weight="600" fill="#1d4ed8">--reporter=json</text>
+    </g>
+    <text x="545" y="6" text-anchor="middle" font-family="sans-serif" font-size="22" font-weight="700" fill="#94a3b8">&#8594;</text>
+
+    <!-- Stage 3 -->
+    <g>
+      <rect x="565" y="-26" width="160" height="52" rx="10" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
+      <text x="645" y="-7" text-anchor="middle" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif' font-size="13" font-weight="700" fill="#1e3a8a">screenshots</text>
+      <text x="645" y="13" text-anchor="middle" font-family='"JetBrains Mono", monospace' font-size="11" font-weight="600" fill="#1d4ed8">MCP &#183; 1440&#215;900</text>
+    </g>
+    <text x="745" y="6" text-anchor="middle" font-family="sans-serif" font-size="22" font-weight="700" fill="#94a3b8">&#8594;</text>
+
+    <!-- Stage 4 -->
+    <g>
+      <rect x="765" y="-26" width="160" height="52" rx="10" fill="#dbeafe" stroke="#2563eb" stroke-width="1.5"/>
+      <text x="845" y="-7" text-anchor="middle" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif' font-size="13" font-weight="700" fill="#1e3a8a">HTML body</text>
+      <text x="845" y="13" text-anchor="middle" font-family='"JetBrains Mono", monospace' font-size="11" font-weight="600" fill="#1d4ed8">cid: inline refs</text>
+    </g>
+    <text x="945" y="6" text-anchor="middle" font-family="sans-serif" font-size="22" font-weight="700" fill="#94a3b8">&#8594;</text>
+
+    <!-- Stage 5 -->
+    <g>
+      <rect x="965" y="-26" width="170" height="52" rx="10" fill="#1e3a8a" stroke="#2563eb" stroke-width="2"/>
+      <text x="1050" y="-7" text-anchor="middle" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif' font-size="13" font-weight="800" fill="#fff">Graph draft</text>
+      <text x="1050" y="13" text-anchor="middle" font-family='"JetBrains Mono", monospace' font-size="11" font-weight="700" fill="#bfdbfe">POST /me/messages</text>
+    </g>
+  </g>
+
+  <!-- ============ ROW B: /demo (violet) ============ -->
+  <g transform="translate(0, 295)">
+    <!-- Pill label -->
+    <rect x="20" y="-22" width="120" height="44" rx="22" fill="#7c3aed"/>
+    <text x="80" y="6" text-anchor="middle" font-family='"JetBrains Mono", "Consolas", monospace' font-size="14" font-weight="800" fill="#fff">/demo</text>
+
+    <!-- Stage 1 -->
+    <g>
+      <rect x="165" y="-26" width="160" height="52" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/>
+      <text x="245" y="-7" text-anchor="middle" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif' font-size="13" font-weight="700" fill="#4c1d95">parse args</text>
+      <text x="245" y="13" text-anchor="middle" font-family='"JetBrains Mono", monospace' font-size="11" font-weight="600" fill="#6d28d9">headed + email</text>
+    </g>
+    <text x="345" y="6" text-anchor="middle" font-family="sans-serif" font-size="22" font-weight="700" fill="#94a3b8">&#8594;</text>
+
+    <!-- Stage 2 -->
+    <g>
+      <rect x="365" y="-26" width="160" height="52" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/>
+      <text x="445" y="-7" text-anchor="middle" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif' font-size="13" font-weight="700" fill="#4c1d95">Playwright headed</text>
+      <text x="445" y="13" text-anchor="middle" font-family='"JetBrains Mono", monospace' font-size="11" font-weight="600" fill="#6d28d9">19 scenes &#183; WebM</text>
+    </g>
+    <text x="545" y="6" text-anchor="middle" font-family="sans-serif" font-size="22" font-weight="700" fill="#94a3b8">&#8594;</text>
+
+    <!-- Stage 3 -->
+    <g>
+      <rect x="565" y="-26" width="160" height="52" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/>
+      <text x="645" y="-7" text-anchor="middle" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif' font-size="13" font-weight="700" fill="#4c1d95">edge-tts</text>
+      <text x="645" y="13" text-anchor="middle" font-family='"JetBrains Mono", monospace' font-size="11" font-weight="600" fill="#6d28d9">zh-TW &#215; 19 MP3</text>
+    </g>
+    <text x="745" y="6" text-anchor="middle" font-family="sans-serif" font-size="22" font-weight="700" fill="#94a3b8">&#8594;</text>
+
+    <!-- Stage 4 -->
+    <g>
+      <rect x="765" y="-26" width="160" height="52" rx="10" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/>
+      <text x="845" y="-7" text-anchor="middle" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif' font-size="13" font-weight="700" fill="#4c1d95">ffmpeg burn-in</text>
+      <text x="845" y="13" text-anchor="middle" font-family='"JetBrains Mono", monospace' font-size="11" font-weight="600" fill="#6d28d9">MP4 + SRT subs</text>
+    </g>
+    <text x="945" y="6" text-anchor="middle" font-family="sans-serif" font-size="22" font-weight="700" fill="#94a3b8">&#8594;</text>
+
+    <!-- Stage 5 -->
+    <g>
+      <rect x="965" y="-26" width="170" height="52" rx="10" fill="#4c1d95" stroke="#7c3aed" stroke-width="2"/>
+      <text x="1050" y="-7" text-anchor="middle" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif' font-size="13" font-weight="800" fill="#fff">SMTP send</text>
+      <text x="1050" y="13" text-anchor="middle" font-family='"JetBrains Mono", monospace' font-size="11" font-weight="700" fill="#ddd6fe">nodemailer attach</text>
+    </g>
+  </g>
+
+  <!-- Pattern annotation between rows -->
+  <text x="80" y="245" text-anchor="middle" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif' font-size="11" font-weight="700" fill="#94a3b8" letter-spacing="1px">SAME SHAPE</text>
+
+  <!-- ============ DETAIL ZONE: 3 chips ============ -->
+  <text x="600" y="420" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans TC, sans-serif"
+        font-size="15" font-weight="700" fill="#cbd5e1">Three Lessons From Wiring These Skills</text>
+
+  <!-- Chip 1: PATTERN (green) -->
+  <g transform="translate(40, 450)">
+    <rect x="0" y="0" width="1120" height="46" rx="10" fill="#1e293b" stroke="#16a34a" stroke-width="2"/>
+    <rect x="0" y="0" width="120" height="46" rx="10" fill="#16a34a"/>
+    <text x="60" y="29" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="800" fill="#fff" letter-spacing="0.5px">PATTERN</text>
+    <text x="140" y="22" font-family="sans-serif" font-size="15" font-weight="700" fill="#86efac">Heterogeneous toolchain &#8594; one verb &#183; setup cost &#8776; 0 &#183; usage frequency 3&#8211;4&#215;</text>
+    <text x="140" y="40" font-family="sans-serif" font-size="13" font-weight="500" fill="#cbd5e1">Playwright &#183; MCP &#183; edge-tts &#183; ffmpeg &#183; Microsoft Graph &#183; Nodemailer &#183; curl &#183; git &#8212; 8 tools collapsed into 2 slash commands</text>
+  </g>
+
+  <!-- Chip 2: GOTCHA (red) -->
+  <g transform="translate(40, 506)">
+    <rect x="0" y="0" width="1120" height="46" rx="10" fill="#1e293b" stroke="#dc2626" stroke-width="2"/>
+    <rect x="0" y="0" width="120" height="46" rx="10" fill="#dc2626"/>
+    <text x="60" y="29" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="800" fill="#fff" letter-spacing="0.5px">GOTCHA</text>
+    <text x="140" y="22" font-family="sans-serif" font-size="15" font-weight="700" fill="#fca5a5">isInline: true &#160;&#8226;&#160; unique contentId per attachment &#160;&#8226;&#160; testStartMs = videoStartMs</text>
+    <text x="140" y="40" font-family="sans-serif" font-size="13" font-weight="500" fill="#cbd5e1">Outlook silently demotes inline image to plain attachment if isInline missing &#183; /demo audio drifts if anchor set after TTS pre-gen</text>
+  </g>
+
+  <!-- Chip 3: HUMAN GATE (yellow) -->
+  <g transform="translate(40, 562)">
+    <rect x="0" y="0" width="1120" height="46" rx="10" fill="#1e293b" stroke="#facc15" stroke-width="2"/>
+    <rect x="0" y="0" width="120" height="46" rx="10" fill="#facc15"/>
+    <text x="60" y="29" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="800" fill="#0f172a" letter-spacing="0.5px">HUMAN GATE</text>
+    <text x="140" y="22" font-family="sans-serif" font-size="15" font-weight="700" fill="#fde68a">Draft only, never auto-send &#183; retry creates a new draft, no recall mishap</text>
+    <text x="140" y="40" font-family="sans-serif" font-size="13" font-weight="500" fill="#cbd5e1">/test-report posts to /me/messages only &#183; user reviews webLink and clicks Send manually &#183; the cheapest form of HITL</text>
+  </g>
+
+  <!-- Bottom attribution -->
+  <g opacity="0.45">
+    <text x="600" y="624" text-anchor="middle" fill="#64748b" font-family="Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" letter-spacing="0.5px">osisdie.github.io &#183; e2e-test-report skill pipeline</text>
+  </g>
+</svg>
