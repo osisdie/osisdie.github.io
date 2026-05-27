@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "一行 /test-report：把 Playwright 跑完、截圖、組 HTML、draft email 串成一條龍"
+title: "一行 /handoff：把 E2E 跑完、截圖、組 HTML、draft email 一路串到 reviewer 信箱"
 date: 2026-05-27 18:00:00 +0800
-description: "Claude Code skill 怎麼把 E2E 測試、截圖、HTML 報告、Microsoft Graph draft email 五個步驟封裝成一個 slash command；進階版 /demo skill 再加 edge-tts + ffmpeg 直接生出帶字幕的導覽影片。重點不在工具，在「把異質 toolchain 攤平成一個動詞」這個 pattern。"
+description: "Claude Code skill 怎麼把 E2E 測試、截圖、HTML 報告、Microsoft Graph draft email 五個步驟封裝成一個 slash command；進階版 /walkthrough skill 再加 edge-tts + ffmpeg 直接生出帶字幕的導覽影片。重點不在工具，在「把異質 toolchain 攤平成一個動詞」這個 pattern。"
 tags: claude-code skills automation playwright e2e testing devops ai
 featured: false
 og_image: /assets/img/blog/2026/e2e-test-report-skill-pipeline/e2e-test-report-skill-pipeline-overview.png
@@ -10,14 +10,14 @@ toc:
   sidebar: left
 ---
 
-{% include figure.liquid loading="eager" path="assets/img/blog/2026/e2e-test-report-skill-pipeline/e2e-test-report-skill-pipeline-architecture.png" class="img-fluid rounded z-depth-1" alt="兩個 Claude Code skill 的對照流程圖：/test-report 把 Playwright 跑完、組 HTML、推到 Graph API 變草稿；/demo 用 edge-tts + ffmpeg 把 19 場景燒成帶字幕的 MP4 寄出" caption="兩個 skill、同一個 pattern：把異質 toolchain 攤平成一個動詞。" %}
+{% include figure.liquid loading="eager" path="assets/img/blog/2026/e2e-test-report-skill-pipeline/e2e-test-report-skill-pipeline-architecture.png" class="img-fluid rounded z-depth-1" alt="兩個 Claude Code skill 的對照流程圖：/handoff 把 Playwright 跑完、組 HTML、推到 Graph API 變草稿；/walkthrough 用 edge-tts + ffmpeg 把 19 場景燒成帶字幕的 MP4 寄出" caption="兩個 skill、同一個 pattern：把異質 toolchain 攤平成一個動詞。" %}
 
 > **本文用語**：
 >
 > - **Skill** — Claude Code 的 slash command 機制。一個 `.md` 檔放在 `~/.claude/skills/` 或專案層 `.claude/skills/`，用自然語言 + bash + 偶爾 typescript 描述一條 workflow，輸入 `/<name>` 就跑完整條
-> - **test-report 流程** — 「跑測試 → 收 artifact → 整理結果 → 通知人」這條 dev workflow
-
-> **TL;DR**：用 Claude Code 的 skill 系統把 **Playwright → screenshot → HTML 組裝 → Microsoft Graph draft email** 5 個步驟封成一個 `/test-report`；進階版 `/demo` 再加 **edge-tts + ffmpeg subtitle burn-in**，產出有字幕的 zh-TW 導覽 MP4 直接寄出。重點不在工具——用到的全是現成的——重點在 **「把異質 toolchain 攤平成一個動詞」** 這個 pattern：步驟少了一階心智成本，使用頻率就上去；使用頻率上去，那個動詞才有存在意義。
+> - **handoff 流程** — 「跑測試 → 收 artifact → 整理結果 → 交給 reviewer」這條 dev workflow
+>
+> **TL;DR**：用 Claude Code 的 skill 系統把 **Playwright → screenshot → HTML 組裝 → Microsoft Graph draft email** 5 個步驟封成一個 `/handoff`；進階版 `/walkthrough` 再加 **edge-tts + ffmpeg subtitle burn-in**，產出有字幕的 zh-TW 導覽 MP4 直接寄出。重點不在工具——用到的全是現成的——重點在 **「把異質 toolchain 攤平成一個動詞」** 這個 pattern：步驟少了一階心智成本，使用頻率就上去；使用頻率上去，那個動詞才有存在意義。
 
 跑完一輪 E2E 測試、把結果寄給隊友 review，是每個小團隊都會做的事。但這件事的步驟以前長這樣：
 
@@ -30,15 +30,15 @@ toc:
 
 每次 25–30 分鐘。多數時間花在 step 4–5：截圖要排版、表格格式要對、附件 `cid:` 要對齊——對不齊 inline image 在 Outlook 不顯示，整封信變紅色 X。
 
-後來把整套流程封裝成一個 Claude Code skill：`/test-report`。一行指令把 step 1–6 全部跑完，結果落在 Outlook 的草稿匣，**人類只負責 review + 按送出**。本文拆這條 pipeline 怎麼接，以及更進階的 `/demo` skill 怎麼用同樣的 pattern 把整個平台導覽錄成有字幕的 MP4。
+後來把整套流程封裝成一個 Claude Code skill：`/handoff`。一行指令把 step 1–6 全部跑完，結果落在 Outlook 的草稿匣，**人類只負責 review + 按送出**。本文拆這條 pipeline 怎麼接，以及更進階的 `/walkthrough` skill 怎麼用同樣的 pattern 把整個平台導覽錄成有字幕的 MP4。
 
 ---
 
-## 1. /test-report skill 做了什麼
+## 1. /handoff skill 做了什麼
 
-`~/.claude/skills/test-report.md` 描述一條 6 階段 pipeline，輸入 `/test-report` 就觸發：
+`~/.claude/skills/handoff.md` 描述一條 6 階段 pipeline，輸入 `/handoff` 就觸發：
 
-1. **parse arguments** — `/test-report login you@example.com` 解出 spec 檔名 + 收件人。沒給就跑全部 `e2e/*.spec.ts`、寄給 `git config user.email`
+1. **parse arguments** — `/handoff login you@example.com` 解出 spec 檔名 + 收件人。沒給就跑全部 `e2e/*.spec.ts`、寄給 `git config user.email`
 2. **pre-flight** — `curl -sf` 探 dev server，跑不起來就警告並停手
 3. **run Playwright** — `npx playwright test e2e/$SPEC --reporter=list,json --output=test-reports/playwright/`，把 JSON 餵下游
 4. **截圖** — 透過 Playwright MCP 連到瀏覽器、導航到 key pages 截 1440×900 PNG，存到 `.playwright-mcp/`。MCP 不在的話降級用既有截圖
@@ -49,9 +49,9 @@ toc:
 
 ```bash
 # 三種用法
-/test-report                          # 跑全部，寄給 git user.email
-/test-report login                    # 只跑 login.spec.ts
-/test-report login you@example.com    # 指定 spec + 收件人
+/handoff                          # 跑全部，寄給 git user.email
+/handoff login                    # 只跑 login.spec.ts
+/handoff login you@example.com    # 指定 spec + 收件人
 ```
 
 ---
@@ -103,11 +103,11 @@ toc:
 
 ---
 
-## 4. 進階版 — /demo skill：直接生帶字幕的導覽影片
+## 4. 進階版 — /walkthrough skill：直接生帶字幕的導覽影片
 
-`/test-report` 的輸出是 email + 截圖。下一步：**把整個平台導覽錄成有字幕的 MP4 直接寄出**。
+`/handoff` 的輸出是 email + 截圖。下一步：**把整個平台導覽錄成有字幕的 MP4 直接寄出**。
 
-`/demo` skill 串的 toolchain 比 `/test-report` 又多兩層：
+`/walkthrough` skill 串的 toolchain 比 `/handoff` 又多兩層：
 
 1. **Playwright headed** 跑 5 幕 19 場景的 walkthrough spec
 2. 每個場景開始前用 `page.evaluate()` 注入紅框（`position: fixed`, `z-index: 99999`）highlight 對應 UI 元素，下一場景前自動移除
@@ -124,9 +124,9 @@ toc:
 
 ## 5. Skill 系統的價值 — 把異質 toolchain 攤平成一個動詞
 
-放大鏡頭看，`/test-report` 跟 `/demo` 的共同骨架是：
+放大鏡頭看，`/handoff` 跟 `/walkthrough` 的共同骨架是：
 
-| 階段 | /test-report | /demo |
+| 階段 | /handoff | /walkthrough |
 | --- | --- | --- |
 | 啟動 | parse args + curl 探 server | 同左 |
 | 跑東西 | Playwright JSON reporter | Playwright headed + video |
@@ -145,6 +145,8 @@ toc:
 
 **動詞越單純，使用頻率越高**。五個步驟封成一個動詞後，我跑 E2E 的頻率變 3–4×，因為 setup cost 趨近 0。
 
+**命名也是這個道理：把 skill 命到 outcome、不要命到 implementation**。`/handoff` 講的是「把 review 結果交出去」這個動作，不是「跑 Playwright + 截圖 + 寄 email」這串實作；`/walkthrough` 講的是「帶人逛一遍平台」這個結果，不是「Playwright headed + TTS + ffmpeg burn-in」。命名綁 implementation 就會綁住認知——讀到 skill 名只想到工具鏈、看不到 outcome；命到 outcome 之後，底層工具未來怎麼換都不影響使用者怎麼思考。
+
 ---
 
 ## 6. 幾個踩到的坑
@@ -153,7 +155,7 @@ toc:
 - **MCP 不在時的 fallback** — 第一版 hard-require Playwright MCP，沒裝就跑不動。改成「MCP 沒裝就用 `docs/screenshots/` 或 `.playwright-mcp/` 既有圖」——降級而不是中止
 - **Graph token 過期** — 寫一個 wrapper function `resolveGraphAccessToken()` 把 refresh 邏輯封起來；skill 本身只 `await accessToken`，refresh 透明
 - **CID collision** — 第 3 節提過，每張 inline 圖的 `contentId` 必須 unique
-- **Audio / video desync (/demo only)** — 第 4 節提過，`testStartMs` anchor 在 TTS 預生成之前
+- **Audio / video desync (/walkthrough only)** — 第 4 節提過，`testStartMs` anchor 在 TTS 預生成之前
 
 ---
 
@@ -163,17 +165,18 @@ toc:
 2. **Failure-only mode** — 只有 fail 時才 draft（pass-all 直接 Slack 一行 ✅），現在不管結果都建草稿，多餘
 3. **Retry-flake detector** — 同一隻 spec 連跑 3 次有 2 次 pass 就標 flaky，draft 裡 highlight
 4. **Diff 截圖** — 連 baseline 圖一起截，跟前次 run 做 visual diff，UI regression 自動框出
-5. **Skill composition** — 讓 `/demo` 內部呼叫 `/test-report`（demo 跑完順便產 test-report），現在兩個 skill 各自獨立、artifacts 沒共用
+5. **Skill composition** — 讓 `/walkthrough` 內部呼叫 `/handoff`（walkthrough 跑完順便產 handoff report），現在兩個 skill 各自獨立、artifacts 沒共用
+6. **換 HF 上比較擬真的 TTS 模型** — 現在用 `edge-tts` 的 `zh-TW-HsiaoChenNeural` voice，產出乾淨但聽起來明顯機器音。HuggingFace 上的 `coqui/XTTS-v2`、`SparkAudio/Spark-TTS-0.5B`、`fishaudio/fish-speech-1.5` 都支援 zh-TW 且更接近真人，差別是要起 GPU container 跑（edge-tts 是免費 API call）。`/walkthrough` 的 demo 影片用擬真語音更好賣相，trade-off 是 generation 從 ~30 秒拉到 ~3 分鐘
 
 ---
 
 ## 8. 收尾
 
-`/test-report` 跟 `/demo` 都不是技術突破。用到的工具全是現成的：Playwright、edge-tts、ffmpeg、Graph API、Nodemailer、curl。**價值在「把 toolchain 攤平成一個動詞」**：步驟少了一階心智成本，使用頻率就上去；使用頻率上去，那個動詞才有存在意義。
+`/handoff` 跟 `/walkthrough` 都不是技術突破。用到的工具全是現成的：Playwright、edge-tts、ffmpeg、Graph API、Nodemailer、curl。**價值在「把 toolchain 攤平成一個動詞」**：步驟少了一階心智成本，使用頻率就上去；使用頻率上去，那個動詞才有存在意義。
 
 寫 skill 的成本不高（兩個 skill 各 ~150 行 markdown 描述、加起來不到 500 行 tsx 補完），但每用一次省 25–30 分鐘。寫一次、用一年。
 
-下一篇想拆 `/demo` 裡頭 audio / video 同步的細節——為什麼 `videoStartMs` 一定要 anchor 在 TTS 預生成之前，跟 ffmpeg burn-in 字幕怎麼跟 Playwright video timing 對齊。那條時序圖比想像中複雜。
+下一篇想拆 `/walkthrough` 裡頭 audio / video 同步的細節——為什麼 `videoStartMs` 一定要 anchor 在 TTS 預生成之前，跟 ffmpeg burn-in 字幕怎麼跟 Playwright video timing 對齊。那條時序圖比想像中複雜。
 
 ---
 

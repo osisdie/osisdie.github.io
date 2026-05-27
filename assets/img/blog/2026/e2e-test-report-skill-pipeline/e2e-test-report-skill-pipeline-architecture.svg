@@ -25,15 +25,15 @@
   <text x="600" y="92" text-anchor="middle"
         font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Noto Sans TC, sans-serif"
         font-size="16" font-weight="600" fill="#475569">
-    <tspan font-family='"JetBrains Mono", monospace' fill="#2563eb">/test-report</tspan> &#8594; HTML draft email &#183; <tspan font-family='"JetBrains Mono", monospace' fill="#7c3aed">/demo</tspan> &#8594; narrated MP4
+    <tspan font-family='"JetBrains Mono", monospace' fill="#2563eb">/handoff</tspan> &#8594; HTML draft email &#183; <tspan font-family='"JetBrains Mono", monospace' fill="#7c3aed">/walkthrough</tspan> &#8594; narrated MP4
   </text>
   <line x1="280" y1="112" x2="920" y2="112" stroke="#e2e8f0" stroke-width="1.5"/>
 
-  <!-- ============ ROW A: /test-report (blue) ============ -->
+  <!-- ============ ROW A: /handoff (blue) ============ -->
   <g transform="translate(0, 175)">
     <!-- Pill label -->
     <rect x="20" y="-22" width="120" height="44" rx="22" fill="#2563eb"/>
-    <text x="80" y="6" text-anchor="middle" font-family='"JetBrains Mono", "Consolas", monospace' font-size="14" font-weight="800" fill="#fff">/test-report</text>
+    <text x="80" y="6" text-anchor="middle" font-family='"JetBrains Mono", "Consolas", monospace' font-size="14" font-weight="800" fill="#fff">/handoff</text>
 
     <!-- Stage 1 -->
     <g>
@@ -75,11 +75,11 @@
     </g>
   </g>
 
-  <!-- ============ ROW B: /demo (violet) ============ -->
+  <!-- ============ ROW B: /walkthrough (violet) ============ -->
   <g transform="translate(0, 295)">
     <!-- Pill label -->
     <rect x="20" y="-22" width="120" height="44" rx="22" fill="#7c3aed"/>
-    <text x="80" y="6" text-anchor="middle" font-family='"JetBrains Mono", "Consolas", monospace' font-size="14" font-weight="800" fill="#fff">/demo</text>
+    <text x="80" y="6" text-anchor="middle" font-family='"JetBrains Mono", "Consolas", monospace' font-size="14" font-weight="800" fill="#fff">/walkthrough</text>
 
     <!-- Stage 1 -->
     <g>
@@ -144,7 +144,7 @@
     <rect x="0" y="0" width="120" height="46" rx="10" fill="#dc2626"/>
     <text x="60" y="29" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="800" fill="#fff" letter-spacing="0.5px">GOTCHA</text>
     <text x="140" y="22" font-family="sans-serif" font-size="15" font-weight="700" fill="#fca5a5">isInline: true &#160;&#8226;&#160; unique contentId per attachment &#160;&#8226;&#160; testStartMs = videoStartMs</text>
-    <text x="140" y="40" font-family="sans-serif" font-size="13" font-weight="500" fill="#cbd5e1">Outlook silently demotes inline image to plain attachment if isInline missing &#183; /demo audio drifts if anchor set after TTS pre-gen</text>
+    <text x="140" y="40" font-family="sans-serif" font-size="13" font-weight="500" fill="#cbd5e1">Outlook silently demotes inline image to plain attachment if isInline missing &#183; /walkthrough audio drifts if anchor set after TTS pre-gen</text>
   </g>
 
   <!-- Chip 3: HUMAN GATE (yellow) -->
@@ -153,7 +153,7 @@
     <rect x="0" y="0" width="120" height="46" rx="10" fill="#facc15"/>
     <text x="60" y="29" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="800" fill="#0f172a" letter-spacing="0.5px">HUMAN GATE</text>
     <text x="140" y="22" font-family="sans-serif" font-size="15" font-weight="700" fill="#fde68a">Draft only, never auto-send &#183; retry creates a new draft, no recall mishap</text>
-    <text x="140" y="40" font-family="sans-serif" font-size="13" font-weight="500" fill="#cbd5e1">/test-report posts to /me/messages only &#183; user reviews webLink and clicks Send manually &#183; the cheapest form of HITL</text>
+    <text x="140" y="40" font-family="sans-serif" font-size="13" font-weight="500" fill="#cbd5e1">/handoff posts to /me/messages only &#183; user reviews webLink and clicks Send manually &#183; the cheapest form of HITL</text>
   </g>
 
   <!-- Bottom attribution -->
