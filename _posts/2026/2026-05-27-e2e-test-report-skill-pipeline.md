@@ -145,7 +145,7 @@ toc:
 
 **動詞越單純，使用頻率越高**。五個步驟封成一個動詞後，我跑 E2E 的頻率變 3–4×，因為 setup cost 趨近 0。
 
-**命名也是這個道理：把 skill 命到 outcome、不要命到 implementation**。第一版本來叫 `/test-report` 跟 `/demo`，跑久了發現命名綁住認知——看到 `/test-report` 大腦只想到「跑測試 → 寄 email」，但這個 skill 真正的價值是把「結果交給 reviewer」這件事 friction 降到 0；`/demo` 則太通用、跟「製作 demo」（剪片、寫 slide、寫 doc）所有事混在一起。後來改名 **`/handoff`**（把 review 交出去）跟 **`/walkthrough`**（帶人逛一遍平台）—— implementation 細節未來會換，outcome 不會。
+**命名也是這個道理：把 skill 命到 outcome、不要命到 implementation**。`/handoff` 講的是「把 review 結果交出去」這個動作，不是「跑 Playwright + 截圖 + 寄 email」這串實作；`/walkthrough` 講的是「帶人逛一遍平台」這個結果，不是「Playwright headed + TTS + ffmpeg burn-in」。命名綁 implementation 就會綁住認知——讀到 skill 名只想到工具鏈、看不到 outcome；命到 outcome 之後，底層工具未來怎麼換都不影響使用者怎麼思考。
 
 ---
 
