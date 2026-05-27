@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <!-- layout: flow-subway -->
+  <!-- Background: Solarized cream -->
+  <rect width="1200" height="630" fill="#FDF6E3"/>
+
+  <!-- Category tag (top-left) + accent rule -->
+  <text x="100" y="78" font-family='"JetBrains Mono", "Consolas", "Menlo", monospace' font-size="16" font-weight="700" fill="#CB4B16" letter-spacing="2px">DEV WORKFLOW &#183; CLAUDE CODE SKILLS</text>
+  <line x1="100" y1="94" x2="240" y2="94" stroke="#CB4B16" stroke-width="3"/>
+
+  <!-- Blog wordmark (top-right) -->
+  <text x="1100" y="78" text-anchor="end" font-family='"JetBrains Mono", "Consolas", "Menlo", monospace' font-size="13" font-weight="500" fill="#93A1A1" letter-spacing="0.5px">Kevin&#8217;s Tech Blog</text>
+
+  <!-- Headline (2 lines) -->
+  <text x="100" y="175" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif' font-size="54" font-weight="800" fill="#073642" letter-spacing="-1px">&#19968;&#34892; <tspan font-family='"JetBrains Mono", "Consolas", monospace' fill="#268BD2">/test-report</tspan></text>
+  <text x="100" y="235" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif' font-size="54" font-weight="800" fill="#073642" letter-spacing="-1px">&#25226; 5 &#20491;&#27493;&#39538;&#25974;&#24179;&#25104;&#19968;&#20491;&#21205;&#35422;</text>
+
+  <!-- Sub-hook -->
+  <text x="100" y="285" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif' font-size="19" font-weight="500" fill="#586E75">Playwright &#8594; screenshot &#8594; HTML &#8594; Microsoft Graph draft &#8212; Claude Code skill &#24590;&#40636;&#25509;</text>
+
+  <!-- ============ FLOW SECTION ============ -->
+  <!-- Track line -->
+  <line x1="100" y1="430" x2="1100" y2="430" stroke="#073642" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- Direction arrows on track segments -->
+  <text x="200" y="424" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="700" fill="#93A1A1">&#9656;</text>
+  <text x="400" y="424" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="700" fill="#93A1A1">&#9656;</text>
+  <text x="600" y="424" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="700" fill="#93A1A1">&#9656;</text>
+  <text x="800" y="424" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="700" fill="#93A1A1">&#9656;</text>
+  <text x="1000" y="424" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="700" fill="#93A1A1">&#9656;</text>
+
+  <!-- ============ STATION 1: /test-report ============ -->
+  <g transform="translate(100, 430)">
+    <circle r="24" fill="#268BD2"/>
+    <text y="6" text-anchor="middle" font-family='"JetBrains Mono", "Consolas", monospace' font-size="16" font-weight="800" fill="#FDF6E3">1</text>
+  </g>
+  <text x="100" y="395" text-anchor="middle" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif' font-size="15" font-weight="700" fill="#073642">slash command</text>
+  <!-- Artifact card 1 -->
+  <g transform="translate(100, 500)">
+    <rect x="-72" y="0" width="144" height="56" rx="8" fill="#FDF6E3" stroke="#268BD2" stroke-width="1.5"/>
+    <text y="22" text-anchor="middle" font-family='"JetBrains Mono", "Consolas", monospace' font-size="13" font-weight="700" fill="#268BD2">/test-report</text>
+    <text y="42" text-anchor="middle" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif' font-size="11" font-weight="600" fill="#586E75">spec + recipient</text>
+  </g>
+
+  <!-- ============ STATION 2: Playwright ============ -->
+  <g transform="translate(300, 430)">
+    <circle r="24" fill="#2AA198"/>
+    <text y="6" text-anchor="middle" font-family='"JetBrains Mono", "Consolas", monospace' font-size="16" font-weight="800" fill="#FDF6E3">2</text>
+  </g>
+  <text x="300" y="395" text-anchor="middle" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif' font-size="15" font-weight="700" fill="#073642">Playwright run</text>
+  <g transform="translate(300, 500)">
+    <rect x="-72" y="0" width="144" height="56" rx="8" fill="#FDF6E3" stroke="#2AA198" stroke-width="1.5"/>
+    <text y="22" text-anchor="middle" font-family='"JetBrains Mono", "Consolas", monospace' font-size="12" font-weight="700" fill="#2AA198">npx playwright test</text>
+    <text y="42" text-anchor="middle" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif' font-size="11" font-weight="600" fill="#586E75">run.log + tests.json</text>
+  </g>
+
+  <!-- ============ STATION 3: Screenshots ============ -->
+  <g transform="translate(500, 430)">
+    <circle r="24" fill="#859900"/>
+    <text y="6" text-anchor="middle" font-family='"JetBrains Mono", "Consolas", monospace' font-size="16" font-weight="800" fill="#FDF6E3">3</text>
+  </g>
+  <text x="500" y="395" text-anchor="middle" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif' font-size="15" font-weight="700" fill="#073642">screenshots</text>
+  <g transform="translate(500, 500)">
+    <rect x="-72" y="0" width="144" height="56" rx="8" fill="#FDF6E3" stroke="#859900" stroke-width="1.5"/>
+    <text y="22" text-anchor="middle" font-family='"JetBrains Mono", "Consolas", monospace' font-size="13" font-weight="700" fill="#859900">MCP capture</text>
+    <text y="42" text-anchor="middle" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif' font-size="11" font-weight="600" fill="#586E75">1440&#215;900 PNG &#215;6</text>
+  </g>
+
+  <!-- ============ STATION 4: HTML body ============ -->
+  <g transform="translate(700, 430)">
+    <circle r="24" fill="#B58900"/>
+    <text y="6" text-anchor="middle" font-family='"JetBrains Mono", "Consolas", monospace' font-size="16" font-weight="800" fill="#FDF6E3">4</text>
+  </g>
+  <text x="700" y="395" text-anchor="middle" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif' font-size="15" font-weight="700" fill="#073642">HTML body</text>
+  <g transform="translate(700, 500)">
+    <rect x="-72" y="0" width="144" height="56" rx="8" fill="#FDF6E3" stroke="#B58900" stroke-width="1.5"/>
+    <text y="22" text-anchor="middle" font-family='"JetBrains Mono", "Consolas", monospace' font-size="13" font-weight="700" fill="#B58900">inline cid: refs</text>
+    <text y="42" text-anchor="middle" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif' font-size="11" font-weight="600" fill="#586E75">table + screenshots</text>
+  </g>
+
+  <!-- ============ STATION 5: Graph API ============ -->
+  <g transform="translate(900, 430)">
+    <circle r="24" fill="#D33682"/>
+    <text y="6" text-anchor="middle" font-family='"JetBrains Mono", "Consolas", monospace' font-size="16" font-weight="800" fill="#FDF6E3">5</text>
+  </g>
+  <text x="900" y="395" text-anchor="middle" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif' font-size="15" font-weight="700" fill="#073642">Microsoft Graph</text>
+  <g transform="translate(900, 500)">
+    <rect x="-72" y="0" width="144" height="56" rx="8" fill="#FDF6E3" stroke="#D33682" stroke-width="1.5"/>
+    <text y="22" text-anchor="middle" font-family='"JetBrains Mono", "Consolas", monospace' font-size="12" font-weight="700" fill="#D33682">POST /me/messages</text>
+    <text y="42" text-anchor="middle" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif' font-size="11" font-weight="600" fill="#586E75">isInline: true</text>
+  </g>
+
+  <!-- ============ STATION 6: Outlook draft ============ -->
+  <g transform="translate(1100, 430)">
+    <circle r="24" fill="#CB4B16"/>
+    <text y="6" text-anchor="middle" font-family='"JetBrains Mono", "Consolas", monospace' font-size="16" font-weight="800" fill="#FDF6E3">6</text>
+  </g>
+  <text x="1100" y="395" text-anchor="middle" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif' font-size="15" font-weight="700" fill="#073642">Outlook draft</text>
+  <g transform="translate(1100, 500)">
+    <rect x="-72" y="0" width="144" height="56" rx="8" fill="#FDF6E3" stroke="#CB4B16" stroke-width="1.5"/>
+    <text y="22" text-anchor="middle" font-family='"JetBrains Mono", "Consolas", monospace' font-size="13" font-weight="700" fill="#CB4B16">webLink &#8599;</text>
+    <text y="42" text-anchor="middle" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif' font-size="11" font-weight="600" fill="#586E75">human review &amp; send</text>
+  </g>
+
+  <!-- Tagline -->
+  <text x="600" y="585" text-anchor="middle" font-family='-apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif' font-size="14" font-weight="600" fill="#586E75">5&#8211;6 &#38542;&#27573; toolchain &#8594; 1 &#20491;&#21205;&#35422; &#183; setup cost &#36235;&#36817; 0 &#183; HITL: draft only, never auto-send</text>
+
+  <!-- Meta + attribution -->
+  <text x="100" y="608" font-family='"JetBrains Mono", "Consolas", "Menlo", monospace' font-size="12" font-weight="500" fill="#93A1A1" letter-spacing="0.5px">@osisdie &#183; 2026.05.27</text>
+  <g opacity="0.55">
+    <text x="1100" y="608" text-anchor="end" fill="#93A1A1" font-family='"JetBrains Mono", "Consolas", monospace' font-size="11" font-weight="500" letter-spacing="0.5px">osisdie.github.io &#183; e2e-test-report skill pipeline</text>
+  </g>
+</svg>
